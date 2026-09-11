@@ -19,9 +19,9 @@ button,input{font:inherit}.header{position:sticky;top:0;z-index:20;padding:15px 
 </style>
 </head>
 <body>
-<header class="header"><div class="logo">🎓 Sajjad Academy</div><nav class="nav"><a href="#home">Home</a><a href="#about">About</a><a href="#gallery">Gallery</a><a href="#contact">Contact</a></nav><button class="topbtn" onclick="openLogin('student')">👤 Login</button></header>
+<header class="header"><div class="logo">🎓 <span id="siteName">Sajjad Academy</span></div><nav class="nav"><a href="#home">Home</a><a href="#about">About</a><a href="#gallery">Gallery</a><a href="#contact">Contact</a></nav><button class="topbtn" onclick="openLogin('student')">👤 Login</button></header>
 
-<section class="hero" id="home"><div class="heroText"><div class="tag">Learn | Grow | Succeed</div><h1>Sajjad <span>Academy</span></h1><h2>Quality Education for a Brighter Future</h2><p>Students can securely view their profile and marks, while the admin can manage students and results from one simple portal.</p><button class="topbtn" onclick="document.getElementById('about').scrollIntoView()">Our Vision →</button></div>
+<section class="hero" id="home"><div class="heroText"><div class="tag">Learn | Grow | Succeed</div><h1 id="heroName">Sajjad <span>Academy</span></h1><h2>Quality Education for a Brighter Future</h2><p>Students can securely view their profile and marks, while the admin can manage students and results from one simple portal.</p><button class="topbtn" onclick="document.getElementById('about').scrollIntoView()">Our Vision →</button></div>
 <div class="loginCard"><h2>👥 Login to Continue</h2><p>Choose your login type</p><button class="loginChoice admin" onclick="openLogin('admin')">🛡️ <b>Admin Login</b><br><small>Manage students & results →</small></button><button class="loginChoice student" onclick="openLogin('student')">🎓 <b>Student Login</b><br><small>View your profile & marks →</small></button></div></section>
 
 <section class="features"><div class="feature"><i>👥</i><h3>Student Management</h3><p>Add, edit and delete student records easily.</p></div><div class="feature"><i>📋</i><h3>Marks Management</h3><p>Add, edit and delete marks for subjects.</p></div><div class="feature"><i>📈</i><h3>View Results</h3><p>Students can check marks and percentage.</p></div><div class="feature"><i>🔐</i><h3>Secure & Reliable</h3><p>Data is protected with Firebase security.</p></div></section>
@@ -29,28 +29,45 @@ button,input{font:inherit}.header{position:sticky;top:0;z-index:20;padding:15px 
 <section class="section" id="about"><h2 class="title">About Sajjad Academy</h2><p style="max-width:800px;margin:auto;text-align:center;color:#65748b;line-height:1.8">Our aim is to provide quality education and a simple digital platform for students. Students can use the portal from a phone or computer to check their academic information.</p></section>
 
 <section class="section" id="gallery"><h2 class="title">Our Academy</h2><div class="gallery">
-<div class="photo"><img src="https://images.unsplash.com/photo-1562774053-701939374585?auto=format&fit=crop&w=1200&q=80" alt="Academy"><div class="caption"><b>📷 Our Academy</b><br>Peaceful environment for better learning</div></div>
-<div class="photo"><img src="https://images.unsplash.com/photo-1509062522246-3755977927d7?auto=format&fit=crop&w=1200&q=80" alt="Classroom"><div class="caption"><b>🎓 Our Students</b><br>Learning today for a better tomorrow</div></div>
+<div class="photo"><img id="photo1" src="https://images.unsplash.com/photo-1562774053-701939374585?auto=format&fit=crop&w=1200&q=80" alt="Academy"><div class="caption"><b>📷 Our Academy</b><br>Peaceful environment for better learning</div></div>
+<div class="photo"><img id="photo2" src="https://images.unsplash.com/photo-1509062522246-3755977927d7?auto=format&fit=crop&w=1200&q=80" alt="Classroom"><div class="caption"><b>🎓 Our Students</b><br>Learning today for a better tomorrow</div></div>
 </div></section>
 
-<section class="contact" id="contact"><h2>Contact Us</h2><p>Feel free to contact us for any query, support or information.</p><div class="contactGrid"><div class="contactItem"><div class="ico">📞</div><b>Phone</b><p>+92 300 1234567</p></div><div class="contactItem"><div class="ico">💬</div><b>WhatsApp</b><p>+92 300 1234567</p></div><div class="contactItem"><div class="ico">✉️</div><b>Email</b><p>sajjadacademy@gmail.com</p></div><div class="contactItem"><div class="ico">📍</div><b>Address</b><p>Sajjad Academy<br>Lahore, Pakistan</p></div></div></section>
+<section class="contact" id="contact"><h2>Contact Us</h2><p>Feel free to contact us for any query, support or information.</p><div class="contactGrid"><div class="contactItem"><div class="ico">📞</div><b>Phone</b><p id="contactPhone">+92 300 1234567</p></div><div class="contactItem"><div class="ico">💬</div><b>WhatsApp</b><p id="contactWhatsapp">+92 300 1234567</p></div><div class="contactItem"><div class="ico">✉️</div><b>Email</b><p id="contactEmail">sajjadacademy@gmail.com</p></div><div class="contactItem"><div class="ico">📍</div><b>Address</b><p id="contactAddress">Sajjad Academy<br>Lahore, Pakistan</p></div></div></section>
 <footer class="footer"><span>© 2026 Sajjad Academy. All rights reserved.</span><span>Education is the key to success 🎓 ❤️</span></footer>
 
 <div class="modalBg" id="loginModal"><div class="modal"><button class="x" onclick="closeLogin()">×</button><h2 id="loginTitle">Student Login</h2><div class="form"><input id="loginEmail" placeholder="Student ID"><input id="loginPassword" type="password" placeholder="Password"><button class="primary" style="width:100%" onclick="doLogin()">Login</button><div class="msg" id="loginMsg"></div></div></div></div>
 
-<div class="dash" id="adminDash"><div class="dashHead"><h1>Admin Dashboard</h1><button class="smallBtn" onclick="logout()">Logout</button></div><div class="card"><h2>Add Student</h2><div class="form"><input id="sId" placeholder="Student ID (e.g. SA001)"><input id="sName" placeholder="Student name"><input id="sPhone" placeholder="Phone"><input id="sClass" placeholder="Class"><input id="sPass" type="password" placeholder="Password"><button class="primary" onclick="addStudent()">Add Student</button><div class="msg" id="adminMsg"></div></div></div><div class="card"><h2>Students</h2><input id="search" placeholder="Search student..." oninput="renderStudents()" style="width:100%;padding:11px;border:1px solid #ccd7e8;border-radius:9px"><div class="tableWrap"><table><thead><tr><th>ID</th><th>Name</th><th>Class</th><th>Actions</th></tr></thead><tbody id="studentRows"></tbody></table></div></div></div>
+<div class="dash" id="adminDash"><div class="dashHead"><h1>Admin Dashboard</h1><div><button class="smallBtn green" onclick="openSettings()">⚙️ Website Settings</button> <button class="smallBtn" onclick="logout()">Logout</button></div></div><div class="card"><h2>Add Student</h2><div class="form"><input id="sId" placeholder="Student ID (e.g. SA001)"><input id="sName" placeholder="Student name"><input id="sPhone" placeholder="Phone"><input id="sClass" placeholder="Class"><input id="sPass" type="password" placeholder="Password"><button class="primary" onclick="addStudent()">Add Student</button><div class="msg" id="adminMsg"></div></div></div><div class="card"><h2>Students</h2><input id="search" placeholder="Search student..." oninput="renderStudents()" style="width:100%;padding:11px;border:1px solid #ccd7e8;border-radius:9px"><div class="tableWrap"><table><thead><tr><th>ID</th><th>Name</th><th>Class</th><th>Actions</th></tr></thead><tbody id="studentRows"></tbody></table></div></div></div>
 
 <div class="dash" id="studentDash"><div class="dashHead"><h1>Student Dashboard</h1><button class="smallBtn" onclick="logout()">Logout</button></div><div class="card" id="profileCard"></div><div class="card"><h2>My Result</h2><div class="tableWrap"><table><thead><tr><th>Subject</th><th>Obtained</th><th>Total</th><th>%</th></tr></thead><tbody id="resultRows"></tbody></table></div><h3 id="overall"></h3></div></div>
 
 <div class="modalBg" id="marksModal"><div class="modal"><button class="x" onclick="closeMarks()">×</button><h2>Manage Marks</h2><p id="marksStudentName"></p><div class="form"><input id="mSubject" placeholder="Subject"><input id="mObtained" type="number" placeholder="Obtained marks"><input id="mTotal" type="number" placeholder="Total marks"><button class="primary" onclick="saveMark()">Add / Save Mark</button><div class="msg" id="marksMsg"></div></div><div class="tableWrap"><table><thead><tr><th>Subject</th><th>Obt.</th><th>Total</th><th>Action</th></tr></thead><tbody id="marksRows"></tbody></table></div></div></div>
 
+
+<div class="modalBg" id="settingsModal"><div class="modal"><button class="x" onclick="closeSettings()">×</button>
+<h2>⚙️ Website Settings</h2>
+<p style="color:#667;margin-bottom:15px">Yahan se contact details aur website ki 2 pictures change karein. Code edit karne ki zaroorat nahi.</p>
+<div class="form">
+<label><b>Academy Name</b></label><input id="setName" placeholder="Sajjad Academy">
+<label><b>Phone</b></label><input id="setPhone" placeholder="+92 300 1234567">
+<label><b>WhatsApp</b></label><input id="setWhatsapp" placeholder="+92 300 1234567">
+<label><b>Email</b></label><input id="setEmail" placeholder="academy@gmail.com">
+<label><b>Address</b></label><input id="setAddress" placeholder="Sajjad Academy, Lahore, Pakistan">
+<label><b>Picture 1</b></label><input id="setPhoto1" type="file" accept="image/*">
+<label><b>Picture 2</b></label><input id="setPhoto2" type="file" accept="image/*">
+<button class="primary" style="width:100%;margin-top:12px" onclick="saveSettings()">💾 Save Website Settings</button>
+<div class="msg" id="settingsMsg"></div>
+</div></div></div>
+
 <script type="module">
 import {initializeApp,getApps,getApp} from "https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
 import {getAuth,signInWithEmailAndPassword,createUserWithEmailAndPassword,signOut} from "https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
 import {getFirestore,doc,getDoc,setDoc,updateDoc,deleteDoc,collection,getDocs} from "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
+import {getStorage,ref,uploadBytes,getDownloadURL} from "https://www.gstatic.com/firebasejs/12.1.0/firebase-storage.js";
 
 const firebaseConfig={apiKey:"AIzaSyDFFPKMLCSEsXFbnvujjTBYOn3sY0o129k",authDomain:"sajjad-academy.firebaseapp.com",projectId:"sajjad-academy",storageBucket:"sajjad-academy.firebasestorage.app",messagingSenderId:"784589371437",appId:"1:784589371437:web:02e3a54958e8d1209120a4"};
-const app=initializeApp(firebaseConfig),auth=getAuth(app),db=getFirestore(app);
+const app=initializeApp(firebaseConfig),auth=getAuth(app),db=getFirestore(app),storage=getStorage(app);
 const secondary=initializeApp(firebaseConfig,"studentCreator"),secondaryAuth=getAuth(secondary);
 
 let mode="student",students=[],activeStudent=null,editingMark=-1;
@@ -71,6 +88,61 @@ window.editMark=i=>{const m=activeStudent.marks[i];editingMark=i;document.getEle
 window.saveMark=async()=>{const subject=document.getElementById("mSubject").value.trim(),obt=Number(document.getElementById("mObtained").value),total=Number(document.getElementById("mTotal").value);if(!subject||total<=0||obt<0||obt>total){document.getElementById("marksMsg").textContent="Enter valid marks.";return}const arr=[...(activeStudent.marks||[])];const item={subject,obtained:obt,total};if(editingMark<0)arr.push(item);else arr[editingMark]=item;await updateDoc(doc(db,"students",activeStudent.id),{marks:arr});activeStudent.marks=arr;editingMark=-1;document.getElementById("mSubject").value="";document.getElementById("mObtained").value="";document.getElementById("mTotal").value="";document.getElementById("marksMsg").textContent="Saved.";renderMarks();await loadStudents();activeStudent=students.find(x=>x.id===activeStudent.id)}
 window.removeMark=async i=>{if(!confirm("Delete this mark?"))return;const arr=[...(activeStudent.marks||[])];arr.splice(i,1);await updateDoc(doc(db,"students",activeStudent.id),{marks:arr});activeStudent.marks=arr;renderMarks();await loadStudents();activeStudent=students.find(x=>x.id===activeStudent.id)}
 async function showStudent(uid){const snap=await getDoc(doc(db,"students",uid));if(!snap.exists())throw new Error("Student record not found.");activeStudent={id:snap.id,...snap.data()};closeLogin();document.querySelectorAll(".hero,.features,.section,.contact,.footer").forEach(x=>x.classList.add("hidden"));document.getElementById("studentDash").style.display="block";document.getElementById("profileCard").innerHTML=`<h2>${esc(activeStudent.name)}</h2><p><b>Student ID:</b> ${esc(activeStudent.studentId)}<br><b>Class:</b> ${esc(activeStudent.className||"")}<br><b>Phone:</b> ${esc(activeStudent.phone||"")}</p>`;const marks=activeStudent.marks||[];document.getElementById("resultRows").innerHTML=marks.map(m=>`<tr><td>${esc(m.subject)}</td><td>${m.obtained}</td><td>${m.total}</td><td>${((m.obtained/m.total)*100).toFixed(1)}%</td></tr>`).join("")||"<tr><td colspan='4'>No marks added yet.</td></tr>";const ob=marks.reduce((a,m)=>a+Number(m.obtained),0),to=marks.reduce((a,m)=>a+Number(m.total),0);document.getElementById("overall").textContent=to?`Overall: ${ob}/${to} (${((ob/to)*100).toFixed(1)}%)`:"Overall: —"}
+
+window.openSettings=async()=>{
+  document.getElementById("settingsModal").style.display="flex";
+  const s=await getDoc(doc(db,"settings","website"));
+  const d=s.exists()?s.data():{};
+  document.getElementById("setName").value=d.name||"Sajjad Academy";
+  document.getElementById("setPhone").value=d.phone||"+92 300 1234567";
+  document.getElementById("setWhatsapp").value=d.whatsapp||"+92 300 1234567";
+  document.getElementById("setEmail").value=d.email||"sajjadacademy@gmail.com";
+  document.getElementById("setAddress").value=d.address||"Sajjad Academy, Lahore, Pakistan";
+  document.getElementById("settingsMsg").textContent="";
+};
+window.closeSettings=()=>document.getElementById("settingsModal").style.display="none";
+window.saveSettings=async()=>{
+  const msg=document.getElementById("settingsMsg"); msg.style.color="#d33"; msg.textContent="Saving...";
+  try{
+    const name=document.getElementById("setName").value.trim()||"Sajjad Academy";
+    const phone=document.getElementById("setPhone").value.trim();
+    const whatsapp=document.getElementById("setWhatsapp").value.trim();
+    const email=document.getElementById("setEmail").value.trim();
+    const address=document.getElementById("setAddress").value.trim();
+    const data={name,phone,whatsapp,email,address};
+    for(const [id,key] of [["setPhoto1","photo1"],["setPhoto2","photo2"]]){
+      const file=document.getElementById(id).files[0];
+      if(file){
+        if(file.size>5*1024*1024) throw new Error("Picture 5MB se chhoti honi chahiye.");
+        const r=ref(storage,`website/${key}`);
+        await uploadBytes(r,file,{contentType:file.type});
+        data[key]=await getDownloadURL(r);
+      }
+    }
+    const old=await getDoc(doc(db,"settings","website"));
+    if(old.exists()){
+      const od=old.data(); if(!data.photo1&&od.photo1)data.photo1=od.photo1; if(!data.photo2&&od.photo2)data.photo2=od.photo2;
+    }
+    await setDoc(doc(db,"settings","website"),data,{merge:true});
+    applySettings(data);
+    msg.style.color="#087443";msg.textContent="Settings save ho gayi hain.";
+    document.getElementById("setPhoto1").value="";document.getElementById("setPhoto2").value="";
+  }catch(e){msg.textContent=e.message}
+};
+function applySettings(d){
+  if(d.name){document.getElementById("siteName").textContent=d.name;document.title=d.name+" | Student Portal";document.getElementById("heroName").innerHTML=esc(d.name.replace(/ (.+)$/,""))+" <span>"+esc((d.name.match(/[^ ]+$/)||[""])[0])+"</span>";document.getElementById("contactAddress").innerHTML=esc(d.address||"").replace(/, /g,"<br>")}
+  if(d.phone)document.getElementById("contactPhone").textContent=d.phone;
+  if(d.whatsapp)document.getElementById("contactWhatsapp").textContent=d.whatsapp;
+  if(d.email)document.getElementById("contactEmail").textContent=d.email;
+  if(d.address)document.getElementById("contactAddress").innerHTML=esc(d.address).replace(/, /g,"<br>");
+  if(d.photo1)document.getElementById("photo1").src=d.photo1;
+  if(d.photo2)document.getElementById("photo2").src=d.photo2;
+}
+async function loadPublicSettings(){
+  try{const s=await getDoc(doc(db,"settings","website"));if(s.exists())applySettings(s.data())}catch(e){}
+}
+loadPublicSettings();
+
 window.logout=async()=>{await signOut(auth);location.reload()};
 function esc(v){return String(v??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[c]))}
 </script>
