@@ -196,6 +196,48 @@ loadAnnouncements();
 
 window.logout=async()=>{await signOut(auth);location.reload()};
 function esc(v){return String(v??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[c]))}
+window.esc=esc;
+// Teacher dashboard functions are inside the Firebase module so Firestore is available.
+let teacherStudentsCache=[];
+window.showTeacher=async function(user,data){
+  closeLogin();
+  document.querySelectorAll("header,.hero,.features,.section,.contact,.footer").forEach(el=>el.style.display="none");
+  document.getElementById("adminDash").style.display="none";
+  document.getElementById("studentDash").style.display="none";
+  const td=document.getElementById("teacherDash");
+  if(td) td.style.display="block";
+  const w=document.getElementById("teacherWelcome");
+  if(w) w.textContent="Welcome, "+(data?.name || user.email || "Teacher")+" — marks access only";
+  try{
+    await loadStudents();
+    teacherStudentsCache=[...students];
+    window.renderTeacherStudents();
+  }catch(e){
+    const body=document.getElementById("teacherStudentsBody");
+    if(body) body.innerHTML='<tr><td colspan="5" style="text-align:center;color:#d33;padding:20px">'+esc(e.message.replace("Firebase: ",""))+'</td></tr>';
+  }
+};
+window.renderTeacherStudents=function(){
+  const body=document.getElementById("teacherStudentsBody");
+  if(!body)return;
+  const q=(document.getElementById("teacherSearch")?.value||"").trim().toLowerCase();
+  const list=teacherStudentsCache.filter(s=>
+    !q ||
+    String(s.studentId||"").toLowerCase().includes(q) ||
+    String(s.name||"").toLowerCase().includes(q) ||
+    String(s.className||"").toLowerCase().includes(q)
+  );
+  body.innerHTML=list.length?list.map(s=>`
+    <tr>
+      <td>${esc(s.studentId||"")}</td>
+      <td>${esc(s.name||"")}</td>
+      <td>${esc(s.className||"")}</td>
+      <td>${Array.isArray(s.marks)?s.marks.length:0}</td>
+      <td><button class="smallBtn green" onclick="openMarks('${s.id}')">📊 Marks</button></td>
+    </tr>`).join(""):
+    '<tr><td colspan="5" style="text-align:center;padding:20px">No students found.</td></tr>';
+};
+
 </script>
 
 <div class="dash" id="teacherDash" style="display:none">
@@ -218,59 +260,6 @@ function esc(v){return String(v??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&l
   </div>
 </div>
 
-
-<script>
-let loginMode = "student";
-let teacherStudentsCache = [];
-
-function showOnlyDashboard(id){
-  ["adminDash","studentDash","teacherDash"].forEach(x=>{
-    const el=document.getElementById(x);
-    if(el) el.style.display=(x===id)?"block":"none";
-  });
-  document.querySelectorAll("header, main > section, footer").forEach(el=>{
-    if(id!=="") el.style.display="none";
-  });
-}
-
-async function verifyUserRole(uid){
-  const snap = await getDoc(doc(db,"users",uid));
-  return snap.exists() ? snap.data() : null;
-}
-
-async function showTeacher(user, data){
-  document.querySelectorAll("header, main > section, footer").forEach(el=>el.style.display="none");
-  const ad=document.getElementById("adminDash"); if(ad) ad.style.display="none";
-  const sd=document.getElementById("studentDash"); if(sd) sd.style.display="none";
-  const td=document.getElementById("teacherDash"); if(td) td.style.display="block";
-  const w=document.getElementById("teacherWelcome");
-  if(w) w.textContent="Welcome, "+(data?.name || user.email || "Teacher")+" — marks access only";
-  await loadStudents();
-  teacherStudentsCache=[...students];
-  renderTeacherStudents();
-}
-
-function renderTeacherStudents(){
-  const body=document.getElementById("teacherStudentsBody");
-  if(!body) return;
-  const q=(document.getElementById("teacherSearch")?.value||"").trim().toLowerCase();
-  const list=teacherStudentsCache.filter(s=>
-    !q ||
-    String(s.studentId||"").toLowerCase().includes(q) ||
-    String(s.name||"").toLowerCase().includes(q) ||
-    String(s.className||"").toLowerCase().includes(q)
-  );
-  body.innerHTML=list.length ? list.map(s=>`
-    <tr>
-      <td>${escapeHtml(s.studentId||"")}</td>
-      <td>${escapeHtml(s.name||"")}</td>
-      <td>${escapeHtml(s.className||"")}</td>
-      <td>${Array.isArray(s.marks)?s.marks.length:0}</td>
-      <td><button class="btn primary" onclick="openMarks('${s.id}')">📊 Marks</button></td>
-    </tr>`).join("") :
-    '<tr><td colspan="5" style="text-align:center;padding:20px">No students found.</td></tr>';
-}
-</script>
 
 </body>
 </html>
