@@ -41,6 +41,29 @@ button,input{font:inherit}.header{position:sticky;top:0;z-index:20;padding:15px 
 <div class="modalBg" id="loginModal"><div class="modal"><button class="x" onclick="closeLogin()">×</button><h2 id="loginTitle">Student Login</h2><div class="form"><input id="loginEmail" placeholder="Student ID"><input id="loginPassword" type="password" placeholder="Password"><button class="primary" style="width:100%" onclick="doLogin()">Login</button><div class="msg" id="loginMsg"></div></div></div></div>
 
 <div class="dash" id="adminDash"><div class="dashHead"><h1>Admin Dashboard</h1><div><button class="smallBtn green" onclick="openSettings()">⚙️ Website Settings</button> <button class="smallBtn" onclick="openPasswordChange()">🔑 Change Password</button> <button class="smallBtn" onclick="logout()">Logout</button></div></div><div class="card"><h2>Add Student</h2><div class="form"><input id="sId" placeholder="Student ID (e.g. SA001)"><input id="sName" placeholder="Student name"><input id="sPhone" placeholder="Phone"><input id="sClass" placeholder="Class"><input id="sPass" type="password" placeholder="Password"><button class="primary" onclick="addStudent()">Add Student</button><div class="msg" id="adminMsg"></div></div></div><div class="card"><h2>📢 Announcements</h2><p style="color:#667">Yahan announcement add karein. Students website par aur apne dashboard mein dekh sakenge.</p><div class="form"><input id="aTitle" placeholder="Announcement title (e.g. Test on Monday)"><textarea id="aMessage" placeholder="Announcement details..." style="width:100%;min-height:100px;padding:11px;margin:6px 0;border:1px solid #ccd7e8;border-radius:9px;resize:vertical;font:inherit"></textarea><button class="primary" onclick="addAnnouncement()">📢 Add Announcement</button><div class="msg" id="announcementMsg"></div></div><div class="tableWrap"><table><thead><tr><th>Announcement</th><th>Date</th><th>Action</th></tr></thead><tbody id="adminAnnouncementRows"></tbody></table></div></div>
+<div class="card"><h2>📝 Easy Marks Entry</h2>
+<p style="color:#667">Pehle Subject aur Total Marks add karein, phir students select karke marks ek hi jagah se save karein. Jis student ke marks nahi hain uska 0 save ho jayega.</p>
+<div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin:10px 0">
+  <input id="subjectName" placeholder="Subject (e.g. English)" style="flex:1;min-width:190px;padding:11px;border:1px solid #ccd7e8;border-radius:9px">
+  <input id="subjectTotal" type="number" min="1" placeholder="Total marks (e.g. 100)" style="width:180px;padding:11px;border:1px solid #ccd7e8;border-radius:9px">
+  <button class="primary" onclick="addSubject()">➕ Add Subject</button>
+</div>
+<div class="msg" id="subjectMsg"></div>
+<div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-top:8px">
+  <select id="subjectSelect" onchange="renderBatchStudents()" style="flex:1;min-width:240px;padding:11px;border:1px solid #ccd7e8;border-radius:9px;background:#fff">
+    <option value="">Select Subject</option>
+  </select>
+  <button class="smallBtn" onclick="selectAllBatchStudents(true)">Select All</button>
+  <button class="smallBtn" onclick="selectAllBatchStudents(false)">Clear All</button>
+  <button class="primary" onclick="saveBatchMarks()">💾 Save All Marks</button>
+</div>
+<div class="tableWrap" style="margin-top:12px">
+  <table><thead><tr><th>Select</th><th>Student ID</th><th>Name</th><th>Class</th><th>Obtained Marks</th></tr></thead>
+  <tbody id="batchMarkRows"><tr><td colspan="5">Add/select a subject first.</td></tr></tbody></table>
+</div>
+<div class="msg" id="batchMarksMsg"></div>
+<div id="subjectList" style="margin-top:12px"></div>
+</div>
 <div class="card"><h2>Students</h2><input id="search" placeholder="Search student..." oninput="renderStudents()" style="width:100%;padding:11px;border:1px solid #ccd7e8;border-radius:9px"><div class="tableWrap"><table><thead><tr><th>ID</th><th>Name</th><th>Class</th><th>Actions</th></tr></thead><tbody id="studentRows"></tbody></table></div></div></div>
 
 <div class="dash" id="studentDash"><div class="dashHead"><h1>Student Dashboard</h1><button class="smallBtn" onclick="logout()">Logout</button></div><div class="card" id="profileCard"></div><div class="card"><h2>📢 Latest Announcements</h2><div id="studentAnnouncements"><p style="color:#69778d">Loading announcements...</p></div></div><div class="card"><h2>My Result</h2><div class="tableWrap"><table><thead><tr><th>Subject</th><th>Obtained</th><th>Total</th><th>%</th></tr></thead><tbody id="resultRows"></tbody></table></div><h3 id="overall"></h3></div></div>
@@ -68,7 +91,7 @@ button,input{font:inherit}.header{position:sticky;top:0;z-index:20;padding:15px 
 <script type="module">
 import {initializeApp,getApps,getApp} from "https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
 import {getAuth,signInWithEmailAndPassword,createUserWithEmailAndPassword,signOut,EmailAuthProvider,reauthenticateWithCredential,updatePassword} from "https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
-import {getFirestore,doc,getDoc,setDoc,updateDoc,deleteDoc,collection,getDocs,addDoc} from "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
+import {getFirestore,doc,getDoc,setDoc,updateDoc,deleteDoc,collection,getDocs,addDoc,writeBatch} from "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
 import {getStorage,ref,uploadBytes,getDownloadURL} from "https://www.gstatic.com/firebasejs/12.1.0/firebase-storage.js";
 
 const firebaseConfig={apiKey:"AIzaSyDFFPKMLCSEsXFbnvujjT0YOn3sYOol29k",authDomain:"sajjad-academy.firebaseapp.com",projectId:"sajjad-academy",storageBucket:"sajjad-academy.firebasestorage.app",messagingSenderId:"784589371437",appId:"1:784589371437:web:02e3a54958e8d1209120a4"};
@@ -80,7 +103,7 @@ let mode="student",students=[],activeStudent=null,editingMark=-1;
 window.openLogin=m=>{mode=m;document.getElementById("loginTitle").textContent=m==="admin"?"Admin Login":"Student Login";document.getElementById("loginEmail").placeholder=m==="admin"?"Admin email":"Student ID";document.getElementById("loginMsg").textContent="";document.getElementById("loginModal").style.display="flex"};
 window.closeLogin=()=>document.getElementById("loginModal").style.display="none";
 window.doLogin=async()=>{const id=document.getElementById("loginEmail").value.trim(),pw=document.getElementById("loginPassword").value;const msg=document.getElementById("loginMsg");msg.textContent="Logging in...";try{const email=mode==="student"?id.toLowerCase()+"@students.sajjadacademy.local":id;await signInWithEmailAndPassword(auth,email,pw);const u=auth.currentUser;if(mode==="admin"){const ud=await getDoc(doc(db,"users",u.uid));if(!ud.exists()||ud.data().role!=="admin")throw new Error("This account is not an admin.");await showAdmin()}else await showStudent(u.uid)}catch(e){msg.textContent=e.message.replace("Firebase: ","")}};
-async function showAdmin(){closeLogin();document.querySelectorAll(".hero,.features,.section,.contact,.footer").forEach(x=>x.classList.add("hidden"));document.getElementById("adminDash").style.display="block";await loadStudents();await loadAnnouncements()}
+async function showAdmin(){closeLogin();document.querySelectorAll(".hero,.features,.section,.contact,.footer").forEach(x=>x.classList.add("hidden"));document.getElementById("adminDash").style.display="block";await loadStudents();await loadAnnouncements();await loadSubjects()}
 async function loadStudents(){const snap=await getDocs(collection(db,"students"));students=snap.docs.map(d=>({id:d.id,...d.data()}));renderStudents()}
 
 let announcements=[];
@@ -117,6 +140,93 @@ window.renderStudents=()=>{const q=(document.getElementById("search")?.value||""
 window.addStudent=async()=>{const id=document.getElementById("sId").value.trim().toUpperCase(),name=document.getElementById("sName").value.trim(),phone=document.getElementById("sPhone").value.trim(),className=document.getElementById("sClass").value.trim(),pw=document.getElementById("sPass").value, msg=document.getElementById("adminMsg");if(!id||!name||pw.length<6){msg.textContent="Student ID, name and password (6+ characters) are required.";return}try{const email=id.toLowerCase()+"@students.sajjadacademy.local";const cred=await createUserWithEmailAndPassword(secondaryAuth,email,pw);await setDoc(doc(db,"students",cred.user.uid),{studentId:id,name,phone,className,marks:[]});msg.style.color="#087443";msg.textContent="Student added successfully.";["sId","sName","sPhone","sClass","sPass"].forEach(x=>document.getElementById(x).value="");await loadStudents();await signOut(secondaryAuth)}catch(e){msg.style.color="#d33";msg.textContent=e.message}}
 window.editStudent=async uid=>{const s=students.find(x=>x.id===uid);const name=prompt("Student name:",s.name);if(name===null)return;const phone=prompt("Phone:",s.phone||"");const cls=prompt("Class:",s.className||"");await updateDoc(doc(db,"students",uid),{name,phone,className:cls});await loadStudents()}
 window.deleteStudent=async uid=>{if(!confirm("Delete this student's record?"))return;await deleteDoc(doc(db,"students",uid));await loadStudents();alert("Firestore record deleted. Firebase Auth account is still active; full Auth deletion needs an Admin SDK/Cloud Function.")}
+let subjects=[];
+async function loadSubjects(){
+  try{
+    const snap=await getDocs(collection(db,"subjects"));
+    subjects=snap.docs.map(d=>({id:d.id,...d.data()})).sort((a,b)=>String(a.name||"").localeCompare(String(b.name||"")));
+    const sel=document.getElementById("subjectSelect");
+    if(sel){
+      const current=sel.value;
+      sel.innerHTML='<option value="">Select Subject</option>'+subjects.map(s=>`<option value="${s.id}">${esc(s.name)} — Total ${s.total}</option>`).join("");
+      if(subjects.some(s=>s.id===current))sel.value=current;
+    }
+    const list=document.getElementById("subjectList");
+    if(list)list.innerHTML=subjects.length
+      ? '<b>Subjects:</b> '+subjects.map(s=>`<span style="display:inline-flex;align-items:center;gap:5px;background:#eef4ff;border-radius:20px;padding:6px 10px;margin:4px">${esc(s.name)} (${s.total}) <button class="smallBtn danger" style="padding:3px 7px" onclick="deleteSubject('${s.id}')">×</button></span>`).join("")
+      : '';
+    renderBatchStudents();
+  }catch(e){
+    const msg=e.message.replace("Firebase: ","");
+    const el=document.getElementById("subjectMsg");if(el){el.style.color="#d33";el.textContent=msg}
+  }
+}
+window.addSubject=async()=>{
+  const name=document.getElementById("subjectName").value.trim();
+  const total=Number(document.getElementById("subjectTotal").value);
+  const msg=document.getElementById("subjectMsg");
+  msg.style.color="#d33";msg.textContent="";
+  if(!name||total<=0){msg.textContent="Subject aur valid total marks enter karein.";return}
+  if(subjects.some(s=>String(s.name).toLowerCase()===name.toLowerCase())){msg.textContent="Ye subject already added hai.";return}
+  try{
+    await addDoc(collection(db,"subjects"),{name,total,createdAt:Date.now()});
+    document.getElementById("subjectName").value="";
+    document.getElementById("subjectTotal").value="";
+    msg.style.color="#087443";msg.textContent="Subject add ho gaya.";
+    await loadSubjects();
+    const last=subjects.find(s=>String(s.name).toLowerCase()===name.toLowerCase());
+    if(last){document.getElementById("subjectSelect").value=last.id;renderBatchStudents()}
+  }catch(e){msg.textContent=e.message.replace("Firebase: ","")}
+};
+window.deleteSubject=async id=>{
+  if(!confirm("Is subject ko delete karna hai? Purane student marks delete nahi honge."))return;
+  try{await deleteDoc(doc(db,"subjects",id));await loadSubjects()}
+  catch(e){alert(e.message.replace("Firebase: ",""))}
+};
+function renderBatchStudents(){
+  const tbody=document.getElementById("batchMarkRows");
+  const sel=document.getElementById("subjectSelect");
+  if(!tbody||!sel)return;
+  const sub=subjects.find(s=>s.id===sel.value);
+  if(!sub){tbody.innerHTML='<tr><td colspan="5">Add/select a subject first.</td></tr>';return}
+  tbody.innerHTML=students.length?students.map(s=>{
+    const existing=(s.marks||[]).find(m=>String(m.subject).toLowerCase()===String(sub.name).toLowerCase());
+    const val=existing?Number(existing.obtained):0;
+    return `<tr>
+      <td><input class="batchCheck" data-id="${s.id}" type="checkbox" checked></td>
+      <td>${esc(s.studentId)}</td><td>${esc(s.name)}</td><td>${esc(s.className||"")}</td>
+      <td><input class="batchObtained" data-id="${s.id}" type="number" min="0" max="${sub.total}" value="${val}" style="width:120px;padding:8px;border:1px solid #ccd7e8;border-radius:7px"></td>
+    </tr>`
+  }).join(""):'<tr><td colspan="5">No students added yet.</td></tr>';
+}
+window.selectAllBatchStudents=flag=>document.querySelectorAll(".batchCheck").forEach(x=>x.checked=flag);
+window.saveBatchMarks=async()=>{
+  const sub=subjects.find(s=>s.id===document.getElementById("subjectSelect").value);
+  const msg=document.getElementById("batchMarksMsg");
+  msg.style.color="#d33";msg.textContent="";
+  if(!sub){msg.textContent="Pehle subject select karein.";return}
+  const checks=[...document.querySelectorAll(".batchCheck")];
+  if(!checks.length){msg.textContent="Students available nahi hain.";return}
+  const selected=checks.filter(x=>x.checked).map(x=>x.dataset.id);
+  try{
+    msg.textContent="Saving marks...";
+    const batch=writeBatch(db);
+    students.forEach(s=>{
+      const obtained=selected.includes(s.id)?Number(document.querySelector(`.batchObtained[data-id="${s.id}"]`)?.value||0):0;
+      if(obtained<0||obtained>Number(sub.total))throw new Error(`${s.name}: marks 0 se ${sub.total} ke darmiyan honi chahiye.`);
+      const arr=[...(s.marks||[])];
+      const idx=arr.findIndex(m=>String(m.subject).toLowerCase()===String(sub.name).toLowerCase());
+      const item={subject:sub.name,obtained,total:Number(sub.total)};
+      if(idx<0)arr.push(item);else arr[idx]=item;
+      batch.update(doc(db,"students",s.id),{marks:arr});
+    });
+    await batch.commit();
+    await loadStudents();
+    renderBatchStudents();
+    msg.style.color="#087443";msg.textContent="Sab students ke marks save ho gaye. Jis ko marks nahi mile, uska 0 save hua.";
+  }catch(e){msg.textContent=e.message.replace("Firebase: ","")}
+};
+
 window.openMarks=async uid=>{activeStudent=students.find(x=>x.id===uid);editingMark=-1;document.getElementById("marksStudentName").textContent=activeStudent.name+" ("+activeStudent.studentId+")";document.getElementById("marksModal").style.display="flex";document.getElementById("mSubject").value="";document.getElementById("mObtained").value="";document.getElementById("mTotal").value="";renderMarks()}
 window.closeMarks=()=>document.getElementById("marksModal").style.display="none";
 function renderMarks(){const a=activeStudent.marks||[];document.getElementById("marksRows").innerHTML=a.map((m,i)=>`<tr><td>${esc(m.subject)}</td><td>${m.obtained}</td><td>${m.total}</td><td><button class="smallBtn" onclick="editMark(${i})">Edit</button><button class="smallBtn danger" onclick="removeMark(${i})">Delete</button></td></tr>`).join("")}
@@ -188,4 +298,3 @@ function esc(v){return String(v??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&l
 </script>
 </body>
 </html>
- 
