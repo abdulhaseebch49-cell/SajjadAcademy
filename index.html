@@ -51,6 +51,16 @@ button,input,select,textarea{font:inherit}
 .overviewRow .meta{font-size:12px;color:#718096;margin-top:2px}
 .overviewBadge{white-space:nowrap;border-radius:999px;padding:5px 9px;background:#e9f8f0;color:#087443;font-weight:700;font-size:12px}
 @media(max-width:760px){.marksOverview{grid-template-columns:1fr}}
+.studentMarksFilters{display:grid;grid-template-columns:1fr 1fr 1.4fr;gap:10px;margin:14px 0}
+.studentMarksFilters label{font-size:12px;font-weight:700;color:#64748b;display:block;margin-bottom:5px}
+.studentMarksFilters select,.studentMarksFilters input{width:100%;padding:11px;border:1px solid #ccd7e8;border-radius:10px;background:#fff}
+.studentMarksTable td,.studentMarksTable th{vertical-align:top}
+.marksChips{display:flex;flex-wrap:wrap;gap:6px}
+.markChip{background:#eef4ff;border:1px solid #d9e5ff;border-radius:9px;padding:6px 9px;font-size:12px;color:#183a70}
+.markChip b{color:#234fc7}
+.noMarks{color:#718096;font-size:13px}
+@media(max-width:760px){.studentMarksFilters{grid-template-columns:1fr}.studentMarksTable{min-width:700px}}
+
 </style>
 </head>
 <body>
@@ -72,7 +82,18 @@ button,input,select,textarea{font:inherit}
 <div class="card"><h2>➕ Add Student</h2><div class="form"><input id="sId" placeholder="Student ID (e.g. SA001)"><input id="sName" placeholder="Student name"><input id="sPhone" placeholder="Phone"><div style="display:grid;grid-template-columns:1fr 1fr;gap:8px"><select id="sClass"><option value="">Select Class</option><option value="9">9th</option><option value="10">10th</option></select><select id="sSection"><option value="">Select Section</option><option value="A">Section A</option><option value="B">Section B</option><option value="C">Section C</option></select></div><input id="sPass" type="password" placeholder="Password"><button class="primary" onclick="addStudent()">Add Student</button><div class="msg" id="adminMsg"></div></div></div>
 <div class="card"><h2>📢 Announcements</h2><div class="form"><input id="aTitle" placeholder="Announcement title"><textarea id="aMessage" placeholder="Announcement details..." style="min-height:100px;resize:vertical"></textarea><button class="primary" onclick="addAnnouncement()">📢 Add Announcement</button><div class="msg" id="announcementMsg"></div></div><div class="tableWrap"><table><thead><tr><th>Announcement</th><th>Date</th><th>Action</th></tr></thead><tbody id="adminAnnouncementRows"></tbody></table></div></div>
 <div class="card"><h2>Students</h2><input id="search" placeholder="Search student..." oninput="renderStudents()" style="width:100%;padding:11px;border:1px solid #ccd7e8;border-radius:9px"><div class="tableWrap"><table><thead><tr><th>ID</th><th>Name</th><th>Class</th><th>Section</th><th>Actions</th></tr></thead><tbody id="studentRows"></tbody></table></div></div>
-<div class="card"><h2>🔐 Student Passwords</h2><div class="tableWrap"><table><thead><tr><th>Student ID</th><th>Name</th><th>Password Status</th></tr></thead><tbody id="passwordRows"></tbody></table></div></div><div class="card"><h2>📊 Marks Overview</h2><p style="color:#667;margin-top:0">9th aur 10th class ke section-wise marks ka status.</p><div id="adminMarksOverview" class="marksOverview"></div></div></div>
+<div class="card"><h2>🔐 Student Passwords</h2><div class="tableWrap"><table><thead><tr><th>Student ID</th><th>Name</th><th>Password Status</th></tr></thead><tbody id="passwordRows"></tbody></table></div></div><div class="card"><h2>📊 Marks Overview</h2><p style="color:#667;margin-top:0">9th aur 10th class ke section-wise marks ka status.</p><div id="adminMarksOverview" class="marksOverview"></div></div>
+<div class="card">
+  <div class="dashHead">
+    <div><h2 style="margin:0">👥 Students &amp; Marks</h2><p style="color:#667;margin:6px 0 0">Class 9th aur 10th ki student list alag dekhain. Har student ke marks yahin show honge.</p></div>
+  </div>
+  <div class="studentMarksFilters">
+    <div><label>CLASS</label><select id="adminListClass" onchange="renderStudentMarksList('admin')"><option value="9">9th Class</option><option value="10">10th Class</option></select></div>
+    <div><label>SECTION</label><select id="adminListSection" onchange="renderStudentMarksList('admin')"><option value="">All Sections</option><option value="A">Section A</option><option value="B">Section B</option><option value="C">Section C</option><option value="UNASSIGNED">Section Not Assigned</option></select></div>
+    <div><label>SEARCH STUDENT</label><input id="adminListSearch" placeholder="Name / ID" oninput="renderStudentMarksList('admin')"></div>
+  </div>
+  <div class="tableWrap"><table class="studentMarksTable"><thead><tr><th>#</th><th>Student</th><th>ID</th><th>Section</th><th>Marks</th><th>Action</th></tr></thead><tbody id="adminStudentMarksRows"></tbody></table></div>
+</div></div>
 
 <div class="dash" id="studentDash"><div class="dashHead"><h1>Student Dashboard</h1><div><button class="smallBtn" onclick="openStudentPasswordChange()">🔑 Change Password</button> <button class="smallBtn" onclick="logout()">Logout</button></div></div><div class="card" id="profileCard"></div><div class="card"><h2>📢 Latest Announcements</h2><div id="studentAnnouncements"><p style="color:#69778d">Loading announcements...</p></div></div><div class="card"><h2>My Result</h2><div class="tableWrap"><table><thead><tr><th>Subject</th><th>Obtained</th><th>Total</th><th>%</th></tr></thead><tbody id="resultRows"></tbody></table></div><h3 id="overall"></h3></div></div>
 
@@ -99,6 +120,17 @@ button,input,select,textarea{font:inherit}
     <h2 style="margin-bottom:6px">📊 Marks Overview</h2>
     <p style="color:#667;margin-top:0">Teacher aur Admin dono yahan dekh sakte hain kitne students ke marks enter ho chuke hain.</p>
     <div id="teacherMarksOverview" class="marksOverview"></div>
+  </div>
+  <div class="card">
+    <div class="dashHead">
+      <div><h2 style="margin:0">👥 Students &amp; Marks</h2><p style="color:#667;margin:6px 0 0">9th aur 10th ki student list alag select karein. Har student ke saved marks yahan show honge.</p></div>
+    </div>
+    <div class="studentMarksFilters">
+      <div><label>CLASS</label><select id="teacherListClass" onchange="renderStudentMarksList('teacher')"><option value="9">9th Class</option><option value="10">10th Class</option></select></div>
+      <div><label>SECTION</label><select id="teacherListSection" onchange="renderStudentMarksList('teacher')"><option value="">All Sections</option><option value="A">Section A</option><option value="B">Section B</option><option value="C">Section C</option><option value="UNASSIGNED">Section Not Assigned</option></select></div>
+      <div><label>SEARCH STUDENT</label><input id="teacherListSearch" placeholder="Name / ID" oninput="renderStudentMarksList('teacher')"></div>
+    </div>
+    <div class="tableWrap"><table class="studentMarksTable"><thead><tr><th>#</th><th>Student</th><th>ID</th><th>Section</th><th>Marks</th><th>Action</th></tr></thead><tbody id="teacherStudentMarksRows"></tbody></table></div>
   </div>
   <div class="card" id="teacherEntryCard" style="display:none">
     <div class="dashHead"><div><h2 style="margin-bottom:4px">👥 Students</h2><p id="teacherEntryInfo" style="margin:0;color:#667"></p></div><button class="smallBtn" onclick="fillAllTeacherZeros()">Set all blank to 0</button></div>
@@ -146,7 +178,7 @@ window.doLogin=async()=>{
 
 function hidePublic(){document.querySelectorAll("header,.hero,.features,.section,.contact,.footer").forEach(x=>x.classList.add("hidden"))}
 async function showAdmin(){closeLogin();hidePublic();document.getElementById("adminDash").style.display="block";await loadStudents();renderMarksOverview("adminMarksOverview");await loadAnnouncements()}
-async function loadStudents(){const snap=await getDocs(collection(db,"students"));students=snap.docs.map(d=>({id:d.id,...d.data()}));if(document.getElementById("studentRows")){renderStudents();renderMarksOverview("adminMarksOverview")}}
+async function loadStudents(){const snap=await getDocs(collection(db,"students"));students=snap.docs.map(d=>({id:d.id,...d.data()}));if(document.getElementById("studentRows")){renderStudents();renderMarksOverview("adminMarksOverview");renderStudentMarksList("admin")}}
 window.loadStudents=loadStudents;
 
 function announcementDate(v){try{return new Date(Number(v)||v).toLocaleString("en-PK",{dateStyle:"medium",timeStyle:"short"})}catch(e){return ""}}
@@ -154,6 +186,55 @@ function announcementCard(a,admin=false){return `<div style="background:#fff;bor
 async function loadAnnouncements(){try{const snap=await getDocs(collection(db,"announcements"));announcements=snap.docs.map(d=>({id:d.id,...d.data()})).sort((a,b)=>Number(b.createdAt||0)-Number(a.createdAt||0));const html=announcements.length?announcements.map(a=>announcementCard(a)).join(""):'<p style="text-align:center;color:#69778d">No announcements yet.</p>';const pub=document.getElementById("publicAnnouncements");if(pub)pub.innerHTML=html;const stu=document.getElementById("studentAnnouncements");if(stu)stu.innerHTML=html;const admin=document.getElementById("adminAnnouncementRows");if(admin)admin.innerHTML=announcements.length?announcements.map(a=>`<tr><td><b>${esc(a.title)}</b><br>${esc(a.message)}</td><td>${announcementDate(a.createdAt)}</td><td><button class="smallBtn danger" onclick="deleteAnnouncement('${a.id}')">Delete</button></td></tr>`).join(""):'<tr><td colspan="3">No announcements yet.</td></tr>'}catch(e){}}
 window.addAnnouncement=async()=>{const title=document.getElementById("aTitle").value.trim(),message=document.getElementById("aMessage").value.trim(),msg=document.getElementById("announcementMsg");if(!title||!message){msg.textContent="Title aur details likhein.";return}try{await addDoc(collection(db,"announcements"),{title,message,createdAt:Date.now()});document.getElementById("aTitle").value="";document.getElementById("aMessage").value="";msg.style.color="#087443";msg.textContent="Announcement add ho gayi hai.";await loadAnnouncements()}catch(e){msg.textContent=e.message}};
 window.deleteAnnouncement=async id=>{if(!confirm("Delete announcement?"))return;try{await deleteDoc(doc(db,"announcements",id));await loadAnnouncements()}catch(e){alert(e.message)}};
+
+
+function renderStudentMarksList(role){
+  const isAdmin=role==='admin';
+  const classEl=document.getElementById(isAdmin?'adminListClass':'teacherListClass');
+  const sectionEl=document.getElementById(isAdmin?'adminListSection':'teacherListSection');
+  const searchEl=document.getElementById(isAdmin?'adminListSearch':'teacherListSearch');
+  const body=document.getElementById(isAdmin?'adminStudentMarksRows':'teacherStudentMarksRows');
+  if(!classEl||!sectionEl||!searchEl||!body) return;
+
+  const cls=normalizeClass(classEl.value);
+  const sec=sectionEl.value;
+  const q=searchEl.value.trim().toLowerCase();
+
+  const source=isAdmin?students:(teacherStudentsCache.length?teacherStudentsCache:students);
+  const list=source.filter(s=>{
+    const studentClass=normalizeClass(s.className);
+    const studentSection=normalizeSection(s.section);
+    const classOK=studentClass===cls;
+    const sectionOK=!sec || (sec==='UNASSIGNED'?!studentSection:studentSection===sec);
+    const searchOK=!q || (String(s.name||'')+' '+String(s.studentId||'')).toLowerCase().includes(q);
+    return classOK && sectionOK && searchOK;
+  }).sort((a,b)=>String(a.name||'').localeCompare(String(b.name||'')));
+
+  if(!list.length){
+    body.innerHTML="<tr><td colspan='6' style='text-align:center;padding:25px;color:#64748b'>Is class/section mein koi student nahi mila.</td></tr>";
+    return;
+  }
+
+  body.innerHTML=list.map((s,i)=>{
+    const marks=Array.isArray(s.marks)?s.marks:[];
+    const marksHtml=marks.length
+      ? `<div class="marksChips">${marks.map(m=>`<span class="markChip"><b>${esc(m.subject||'Subject')}</b>: ${Number(m.obtained)||0}/${Number(m.total)||0} (${Number(m.total)>0?((Number(m.obtained)||0)/Number(m.total)*100).toFixed(1):'0.0'}%)</span>`).join('')}</div>`
+      : '<span class="noMarks">No marks added yet.</span>';
+    const action=isAdmin
+      ? `<button class="smallBtn green" onclick="openMarks('${s.id}')">Manage Marks</button>`
+      : '<span style="color:#718096;font-size:12px">View only</span>';
+    const secText=normalizeSection(s.section);
+    return `<tr>
+      <td>${i+1}</td>
+      <td><b>${esc(s.name||'')}</b></td>
+      <td>${esc(s.studentId||'')}</td>
+      <td><span class="sectionBadge">${esc(secText?`Section ${secText}`:'Not Assigned')}</span></td>
+      <td>${marksHtml}</td>
+      <td>${action}</td>
+    </tr>`;
+  }).join('');
+}
+window.renderStudentMarksList=renderStudentMarksList;
 
 window.renderStudents=()=>{const q=(document.getElementById("search")?.value||"").toLowerCase();const filtered=students.filter(s=>(s.studentId+" "+s.name+" "+s.className+" "+s.section).toLowerCase().includes(q));document.getElementById("studentRows").innerHTML=filtered.map(s=>`<tr><td>${esc(s.studentId)}</td><td>${esc(s.name)}</td><td>${esc(s.className||"")}</td><td><span class="sectionBadge">${esc(s.section||"—")}</span></td><td><button class="smallBtn" onclick="editStudent('${s.id}')">Edit</button><button class="smallBtn green" onclick="openMarks('${s.id}')">Marks</button><button class="smallBtn danger" onclick="deleteStudent('${s.id}')">Delete</button></td></tr>`).join("")||"<tr><td colspan='5'>No students found.</td></tr>";const pr=document.getElementById("passwordRows");if(pr)pr.innerHTML=students.map(s=>`<tr><td>${esc(s.studentId)}</td><td>${esc(s.name)}</td><td>${s.passwordChanged?'<span style="color:#087443;font-weight:700">✅ Changed</span>':'<span style="color:#b45309;font-weight:700">🟡 Not changed</span>'}</td></tr>`).join("")||"<tr><td colspan='3'>No students yet.</td></tr>"};
 
@@ -263,6 +344,7 @@ window.showTeacher=async function showTeacher(user,data){
   await loadStudents();
   teacherStudentsCache=[...students];
   renderMarksOverview("teacherMarksOverview");
+  renderStudentMarksList("teacher");
   prepareTeacherEntry();
 };
 
@@ -372,6 +454,7 @@ window.saveTeacherMarks=async function(){
     await loadStudents();
     teacherStudentsCache=[...students];
     renderMarksOverview("teacherMarksOverview");
+    renderStudentMarksList("teacher");
     msg.style.color='#087443';
     msg.textContent=`✅ ${count} students ke marks save ho gaye. Blank marks = 0.`;
     renderTeacherEntry();
