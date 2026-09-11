@@ -66,7 +66,7 @@ import {getAuth,signInWithEmailAndPassword,createUserWithEmailAndPassword,signOu
 import {getFirestore,doc,getDoc,setDoc,updateDoc,deleteDoc,collection,getDocs} from "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
 import {getStorage,ref,uploadBytes,getDownloadURL} from "https://www.gstatic.com/firebasejs/12.1.0/firebase-storage.js";
 
-const firebaseConfig={apiKey:"AIzaSyDFFPKMLCSEsXFbnvujjTBYOn3sY0o129k",authDomain:"sajjad-academy.firebaseapp.com",projectId:"sajjad-academy",storageBucket:"sajjad-academy.firebasestorage.app",messagingSenderId:"784589371437",appId:"1:784589371437:web:02e3a54958e8d1209120a4"};
+const firebaseConfig={apiKey:"AIzaSyDFFPKMLCSEsXFbnvujjT0YOn3sYOol29k",authDomain:"sajjad-academy.firebaseapp.com",projectId:"sajjad-academy",storageBucket:"sajjad-academy.firebasestorage.app",messagingSenderId:"784589371437",appId:"1:784589371437:web:02e3a54958e8d1209120a4"};
 const app=initializeApp(firebaseConfig),auth=getAuth(app),db=getFirestore(app),storage=getStorage(app);
 const secondary=initializeApp(firebaseConfig,"studentCreator"),secondaryAuth=getAuth(secondary);
 
