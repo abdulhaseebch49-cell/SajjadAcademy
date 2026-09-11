@@ -50,9 +50,17 @@ button,input{font:inherit}.header{position:sticky;top:0;z-index:20;padding:15px 
 </div>
 <div class="msg" id="subjectMsg"></div>
 <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-top:8px">
-  <select id="subjectSelect" onchange="renderBatchStudents()" style="flex:1;min-width:240px;padding:11px;border:1px solid #ccd7e8;border-radius:9px;background:#fff">
+  <select id="subjectSelect" onchange="renderBatchStudents()" style="flex:1;min-width:220px;padding:11px;border:1px solid #ccd7e8;border-radius:9px;background:#fff">
     <option value="">Select Subject</option>
   </select>
+  <select id="batchClass" onchange="renderBatchStudents()" style="width:180px;padding:11px;border:1px solid #ccd7e8;border-radius:9px;background:#fff">
+    <option value="">All Classes</option>
+    <option value="9">Class 9</option>
+    <option value="10">Class 10</option>
+  </select>
+  <button class="smallBtn" onclick="setBatchClass('9')">9th</button>
+  <button class="smallBtn" onclick="setBatchClass('10')">10th</button>
+  <button class="smallBtn" onclick="setBatchClass('')">All</button>
   <button class="smallBtn" onclick="selectAllBatchStudents(true)">Select All</button>
   <button class="smallBtn" onclick="selectAllBatchStudents(false)">Clear All</button>
   <button class="primary" onclick="saveBatchMarks()">💾 Save All Marks</button>
@@ -183,13 +191,23 @@ window.deleteSubject=async id=>{
   try{await deleteDoc(doc(db,"subjects",id));await loadSubjects()}
   catch(e){alert(e.message.replace("Firebase: ",""))}
 };
+function setBatchClass(cls){
+  const el=document.getElementById("batchClass");
+  if(el)el.value=cls;
+  renderBatchStudents();
+}
+function getBatchStudents(){
+  const cls=(document.getElementById("batchClass")?.value||"").trim().toLowerCase();
+  return students.filter(s=>!cls||String(s.className||"").trim().toLowerCase()===cls);
+}
 function renderBatchStudents(){
   const tbody=document.getElementById("batchMarkRows");
   const sel=document.getElementById("subjectSelect");
   if(!tbody||!sel)return;
   const sub=subjects.find(s=>s.id===sel.value);
   if(!sub){tbody.innerHTML='<tr><td colspan="5">Add/select a subject first.</td></tr>';return}
-  tbody.innerHTML=students.length?students.map(s=>{
+  const list=getBatchStudents();
+  tbody.innerHTML=list.length?list.map(s=>{
     const existing=(s.marks||[]).find(m=>String(m.subject).toLowerCase()===String(sub.name).toLowerCase());
     const val=existing?Number(existing.obtained):0;
     return `<tr>
@@ -197,7 +215,7 @@ function renderBatchStudents(){
       <td>${esc(s.studentId)}</td><td>${esc(s.name)}</td><td>${esc(s.className||"")}</td>
       <td><input class="batchObtained" data-id="${s.id}" type="number" min="0" max="${sub.total}" value="${val}" style="width:120px;padding:8px;border:1px solid #ccd7e8;border-radius:7px"></td>
     </tr>`
-  }).join(""):'<tr><td colspan="5">No students added yet.</td></tr>';
+  }).join(""):'<tr><td colspan="5">Is class mein koi student nahi hai.</td></tr>';
 }
 window.selectAllBatchStudents=flag=>document.querySelectorAll(".batchCheck").forEach(x=>x.checked=flag);
 window.saveBatchMarks=async()=>{
@@ -205,13 +223,14 @@ window.saveBatchMarks=async()=>{
   const msg=document.getElementById("batchMarksMsg");
   msg.style.color="#d33";msg.textContent="";
   if(!sub){msg.textContent="Pehle subject select karein.";return}
+  const visibleStudents=getBatchStudents();
   const checks=[...document.querySelectorAll(".batchCheck")];
-  if(!checks.length){msg.textContent="Students available nahi hain.";return}
+  if(!checks.length||!visibleStudents.length){msg.textContent="Is class mein students available nahi hain.";return}
   const selected=checks.filter(x=>x.checked).map(x=>x.dataset.id);
   try{
     msg.textContent="Saving marks...";
     const batch=writeBatch(db);
-    students.forEach(s=>{
+    visibleStudents.forEach(s=>{
       const obtained=selected.includes(s.id)?Number(document.querySelector(`.batchObtained[data-id="${s.id}"]`)?.value||0):0;
       if(obtained<0||obtained>Number(sub.total))throw new Error(`${s.name}: marks 0 se ${sub.total} ke darmiyan honi chahiye.`);
       const arr=[...(s.marks||[])];
@@ -298,3 +317,6 @@ function esc(v){return String(v??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&l
 </script>
 </body>
 </html>
+
+
+
