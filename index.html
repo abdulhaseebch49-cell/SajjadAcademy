@@ -90,8 +90,9 @@ button,input{font:inherit}.header{position:sticky;top:0;z-index:20;padding:15px 
 <label><b>WhatsApp</b></label><input id="setWhatsapp" placeholder="+92 300 1234567">
 <label><b>Email</b></label><input id="setEmail" placeholder="academy@gmail.com">
 <label><b>Address</b></label><input id="setAddress" placeholder="Sajjad Academy, Lahore, Pakistan">
-<label><b>Picture 1</b></label><input id="setPhoto1" type="file" accept="image/*">
-<label><b>Picture 2</b></label><input id="setPhoto2" type="file" accept="image/*">
+<label><b>Picture 1 URL</b></label><input id="setPhoto1" type="url" placeholder="https://.../picture1.jpg">
+<label><b>Picture 2 URL</b></label><input id="setPhoto2" type="url" placeholder="https://.../picture2.jpg">
+<small style="color:#667;line-height:1.5">Free method: apni pictures GitHub repository mein upload karke unka public URL yahan paste karein.</small>
 <button class="primary" style="width:100%;margin-top:12px" onclick="saveSettings()">💾 Save Website Settings</button>
 <div class="msg" id="settingsMsg"></div>
 </div></div></div>
@@ -100,10 +101,8 @@ button,input{font:inherit}.header{position:sticky;top:0;z-index:20;padding:15px 
 import {initializeApp,getApps,getApp} from "https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
 import {getAuth,signInWithEmailAndPassword,createUserWithEmailAndPassword,signOut,EmailAuthProvider,reauthenticateWithCredential,updatePassword} from "https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
 import {getFirestore,doc,getDoc,setDoc,updateDoc,deleteDoc,collection,getDocs,addDoc,writeBatch} from "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
-import {getStorage,ref,uploadBytes,getDownloadURL} from "https://www.gstatic.com/firebasejs/12.1.0/firebase-storage.js";
-
 const firebaseConfig={apiKey:"AIzaSyDFFPKMLCSEsXFbnvujjT0YOn3sYOol29k",authDomain:"sajjad-academy.firebaseapp.com",projectId:"sajjad-academy",storageBucket:"sajjad-academy.firebasestorage.app",messagingSenderId:"784589371437",appId:"1:784589371437:web:02e3a54958e8d1209120a4"};
-const app=initializeApp(firebaseConfig),auth=getAuth(app),db=getFirestore(app),storage=getStorage(app);
+const app=initializeApp(firebaseConfig),auth=getAuth(app),db=getFirestore(app);
 const secondary=initializeApp(firebaseConfig,"studentCreator"),secondaryAuth=getAuth(secondary);
 
 let mode="student",students=[],activeStudent=null,editingMark=-1;
@@ -277,24 +276,15 @@ window.saveSettings=async()=>{
     const whatsapp=document.getElementById("setWhatsapp").value.trim();
     const email=document.getElementById("setEmail").value.trim();
     const address=document.getElementById("setAddress").value.trim();
+    const photo1=document.getElementById("setPhoto1").value.trim();
+    const photo2=document.getElementById("setPhoto2").value.trim();
     const data={name,phone,whatsapp,email,address};
-    for(const [id,key] of [["setPhoto1","photo1"],["setPhoto2","photo2"]]){
-      const file=document.getElementById(id).files[0];
-      if(file){
-        if(file.size>5*1024*1024) throw new Error("Picture 5MB se chhoti honi chahiye.");
-        const r=ref(storage,`website/${key}`);
-        await uploadBytes(r,file,{contentType:file.type});
-        data[key]=await getDownloadURL(r);
-      }
-    }
-    const old=await getDoc(doc(db,"settings","website"));
-    if(old.exists()){
-      const od=old.data(); if(!data.photo1&&od.photo1)data.photo1=od.photo1; if(!data.photo2&&od.photo2)data.photo2=od.photo2;
-    }
+    if(photo1)data.photo1=photo1;
+    if(photo2)data.photo2=photo2;
     await setDoc(doc(db,"settings","website"),data,{merge:true});
     applySettings(data);
     msg.style.color="#087443";msg.textContent="Settings save ho gayi hain.";
-    document.getElementById("setPhoto1").value="";document.getElementById("setPhoto2").value="";
+    document.getElementById("setPhoto1").value=data.photo1||"";document.getElementById("setPhoto2").value=data.photo2||"";
   }catch(e){msg.textContent=e.message}
 };
 function applySettings(d){
@@ -317,6 +307,11 @@ function esc(v){return String(v??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&l
 </script>
 </body>
 </html>
+  
+   
+
+   
+
 
 
 
