@@ -51,6 +51,27 @@ button,input,select,textarea{font:inherit}
 .overviewRow .meta{font-size:12px;color:#718096;margin-top:2px}
 .overviewBadge{white-space:nowrap;border-radius:999px;padding:5px 9px;background:#e9f8f0;color:#087443;font-weight:700;font-size:12px}
 @media(max-width:760px){.marksOverview{grid-template-columns:1fr}}
+
+.studentMarksCard{background:linear-gradient(135deg,#ffffff,#f7faff);border:1px solid #dce7f7;box-shadow:0 10px 35px #173b7612}
+.studentMarksHead{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+.studentMarksHead h2{margin:0;color:#12366b}
+.studentMarksHead p{margin:6px 0 0;color:#718096}
+.studentCount{background:linear-gradient(135deg,#eaf1ff,#f4efff);color:#3153b7;border:1px solid #d8e2ff;padding:8px 12px;border-radius:999px;font-weight:800;font-size:13px}
+.studentMarksTable{border-spacing:0 7px;border-collapse:separate}
+.studentMarksTable thead th{background:#edf4ff;color:#173b76;border:0}
+.studentMarksTable tbody tr{background:#fff;box-shadow:0 3px 14px #173b760b}
+.studentMarksTable tbody td{border-bottom:1px solid #edf1f7}
+.studentMarksTable tbody tr:hover{background:#f8fbff;transform:translateY(-1px);transition:.15s}
+.studentNameCell{display:flex;align-items:center;gap:10px;min-width:180px}
+.studentAvatar{width:36px;height:36px;border-radius:50%;display:grid;place-items:center;background:linear-gradient(135deg,#4f72ff,#743ce5);color:#fff;font-weight:800}
+.marksChips{max-width:650px}
+.markChip{box-shadow:0 2px 8px #173b760b}
+.manageMarksBtn{border:0;border-radius:9px;padding:9px 12px;cursor:pointer;background:linear-gradient(135deg,#2674e9,#7147d9);color:#fff;font-weight:800;white-space:nowrap}
+
+#marksModal .modal{border:1px solid #dbe6f5;box-shadow:0 25px 70px #001b4440}
+#marksModal .modal h2{color:#12366b}
+#marksModal .modal table th{background:#eef4ff}
+.manageMarksBtn:hover{filter:brightness(1.06);transform:translateY(-1px)}
 .studentMarksFilters{display:grid;grid-template-columns:1fr 1fr 1.4fr;gap:10px;margin:14px 0}
 .studentMarksFilters label{font-size:12px;font-weight:700;color:#64748b;display:block;margin-bottom:5px}
 .studentMarksFilters select,.studentMarksFilters input{width:100%;padding:11px;border:1px solid #ccd7e8;border-radius:10px;background:#fff}
@@ -83,16 +104,16 @@ button,input,select,textarea{font:inherit}
 <div class="card"><h2>📢 Announcements</h2><div class="form"><input id="aTitle" placeholder="Announcement title"><textarea id="aMessage" placeholder="Announcement details..." style="min-height:100px;resize:vertical"></textarea><button class="primary" onclick="addAnnouncement()">📢 Add Announcement</button><div class="msg" id="announcementMsg"></div></div><div class="tableWrap"><table><thead><tr><th>Announcement</th><th>Date</th><th>Action</th></tr></thead><tbody id="adminAnnouncementRows"></tbody></table></div></div>
 <div class="card"><h2>Students</h2><input id="search" placeholder="Search student..." oninput="renderStudents()" style="width:100%;padding:11px;border:1px solid #ccd7e8;border-radius:9px"><div class="tableWrap"><table><thead><tr><th>ID</th><th>Name</th><th>Class</th><th>Section</th><th>Actions</th></tr></thead><tbody id="studentRows"></tbody></table></div></div>
 <div class="card"><h2>🔐 Student Passwords</h2><div class="tableWrap"><table><thead><tr><th>Student ID</th><th>Name</th><th>Password Status</th></tr></thead><tbody id="passwordRows"></tbody></table></div></div><div class="card"><h2>📊 Marks Overview</h2><p style="color:#667;margin-top:0">9th aur 10th class ke section-wise marks ka status.</p><div id="adminMarksOverview" class="marksOverview"></div></div>
-<div class="card">
-  <div class="dashHead">
-    <div><h2 style="margin:0">👥 Students &amp; Marks</h2><p style="color:#667;margin:6px 0 0">Class 9th aur 10th ki student list alag dekhain. Har student ke marks yahin show honge.</p></div>
+<div class="card studentMarksCard">
+  <div class="studentMarksHead">
+    <div><h2>👥 Students &amp; Marks</h2><p style="color:#667;margin:6px 0 0">Class 9th aur 10th ki student list alag dekhain. Har student ke marks yahin show honge.</p></div>
   </div>
   <div class="studentMarksFilters">
     <div><label>CLASS</label><select id="adminListClass" onchange="renderStudentMarksList('admin')"><option value="9">9th Class</option><option value="10">10th Class</option></select></div>
     <div><label>SECTION</label><select id="adminListSection" onchange="renderStudentMarksList('admin')"><option value="">All Sections</option><option value="A">Section A</option><option value="B">Section B</option><option value="C">Section C</option><option value="UNASSIGNED">Section Not Assigned</option></select></div>
     <div><label>SEARCH STUDENT</label><input id="adminListSearch" placeholder="Name / ID" oninput="renderStudentMarksList('admin')"></div>
   </div>
-  <div class="tableWrap"><table class="studentMarksTable"><thead><tr><th>#</th><th>Student</th><th>ID</th><th>Section</th><th>Marks</th><th>Action</th></tr></thead><tbody id="adminStudentMarksRows"></tbody></table></div>
+  <div id="adminStudentCount" class="studentCount" style="display:inline-block;margin:2px 0 10px">0 Students</div><div id="teacherStudentCount" class="studentCount" style="display:inline-block;margin:2px 0 10px">0 Students</div><div class="tableWrap"><table class="studentMarksTable"><thead><tr><th>#</th><th>Student</th><th>ID</th><th>Section</th><th>Marks</th><th>Action</th></tr></thead><tbody id="adminStudentMarksRows"></tbody></table></div>
 </div></div>
 
 <div class="dash" id="studentDash"><div class="dashHead"><h1>Student Dashboard</h1><div><button class="smallBtn" onclick="openStudentPasswordChange()">🔑 Change Password</button> <button class="smallBtn" onclick="logout()">Logout</button></div></div><div class="card" id="profileCard"></div><div class="card"><h2>📢 Latest Announcements</h2><div id="studentAnnouncements"><p style="color:#69778d">Loading announcements...</p></div></div><div class="card"><h2>My Result</h2><div class="tableWrap"><table><thead><tr><th>Subject</th><th>Obtained</th><th>Total</th><th>%</th></tr></thead><tbody id="resultRows"></tbody></table></div><h3 id="overall"></h3></div></div>
@@ -121,9 +142,9 @@ button,input,select,textarea{font:inherit}
     <p style="color:#667;margin-top:0">Teacher aur Admin dono yahan dekh sakte hain kitne students ke marks enter ho chuke hain.</p>
     <div id="teacherMarksOverview" class="marksOverview"></div>
   </div>
-  <div class="card">
-    <div class="dashHead">
-      <div><h2 style="margin:0">👥 Students &amp; Marks</h2><p style="color:#667;margin:6px 0 0">9th aur 10th ki student list alag select karein. Har student ke saved marks yahan show honge.</p></div>
+  <div class="card studentMarksCard">
+    <div class="studentMarksHead">
+      <div><h2>👥 Students &amp; Marks</h2><p style="color:#667;margin:6px 0 0">9th aur 10th ki student list alag select karein. Har student ke saved marks yahan show honge.</p></div>
     </div>
     <div class="studentMarksFilters">
       <div><label>CLASS</label><select id="teacherListClass" onchange="renderStudentMarksList('teacher')"><option value="9">9th Class</option><option value="10">10th Class</option></select></div>
@@ -210,6 +231,9 @@ function renderStudentMarksList(role){
     return classOK && sectionOK && searchOK;
   }).sort((a,b)=>String(a.name||'').localeCompare(String(b.name||'')));
 
+  const countEl=document.getElementById(isAdmin?'adminStudentCount':'teacherStudentCount');
+  if(countEl) countEl.textContent=`${list.length} Student${list.length===1?'':'s'}`;
+
   if(!list.length){
     body.innerHTML="<tr><td colspan='6' style='text-align:center;padding:25px;color:#64748b'>Is class/section mein koi student nahi mila.</td></tr>";
     return;
@@ -220,13 +244,11 @@ function renderStudentMarksList(role){
     const marksHtml=marks.length
       ? `<div class="marksChips">${marks.map(m=>`<span class="markChip"><b>${esc(m.subject||'Subject')}</b>: ${Number(m.obtained)||0}/${Number(m.total)||0} (${Number(m.total)>0?((Number(m.obtained)||0)/Number(m.total)*100).toFixed(1):'0.0'}%)</span>`).join('')}</div>`
       : '<span class="noMarks">No marks added yet.</span>';
-    const action=isAdmin
-      ? `<button class="smallBtn green" onclick="openMarks('${s.id}')">Manage Marks</button>`
-      : '<span style="color:#718096;font-size:12px">View only</span>';
+    const action=`<button class="manageMarksBtn" onclick="openMarks('${s.id}')">📝 Manage Marks</button>`;
     const secText=normalizeSection(s.section);
     return `<tr>
       <td>${i+1}</td>
-      <td><b>${esc(s.name||'')}</b></td>
+      <td><div class="studentNameCell"><span class="studentAvatar">${esc(String(s.name||"?").trim().charAt(0).toUpperCase())}</span><b>${esc(s.name||"")}</b></div></td>
       <td>${esc(s.studentId||'')}</td>
       <td><span class="sectionBadge">${esc(secText?`Section ${secText}`:'Not Assigned')}</span></td>
       <td>${marksHtml}</td>
@@ -243,7 +265,7 @@ window.addStudent=async()=>{const id=document.getElementById("sId").value.trim()
 window.editStudent=async uid=>{const s=students.find(x=>x.id===uid);if(!s)return;const name=prompt("Student name:",s.name);if(name===null)return;const phone=prompt("Phone:",s.phone||"");const cls=prompt("Class (9 or 10):",s.className||"");const sec=prompt("Section (A/B/C):",s.section||"");await updateDoc(doc(db,"students",uid),{name,phone,className:cls,section:sec});await loadStudents()};
 window.deleteStudent=async uid=>{if(!confirm("Delete this student's record?"))return;await deleteDoc(doc(db,"students",uid));await loadStudents();alert("Firestore record deleted. Firebase Auth account remains active.")};
 
-window.openMarks=async uid=>{activeStudent=students.find(x=>x.id===uid);editingMark=-1;document.getElementById("marksStudentName").textContent=activeStudent.name+" ("+activeStudent.studentId+")";document.getElementById("marksModal").style.display="flex";document.getElementById("mSubject").value="";document.getElementById("mObtained").value="";document.getElementById("mTotal").value="";document.getElementById("marksMsg").textContent="";renderMarks()};
+window.openMarks=async uid=>{activeStudent=students.find(x=>x.id===uid);editingMark=-1;document.getElementById("marksModal").querySelector("h2").textContent=mode==="teacher"?"📝 Manage Student Marks":"Manage Marks";document.getElementById("marksStudentName").textContent=activeStudent.name+" ("+activeStudent.studentId+")";document.getElementById("marksModal").style.display="flex";document.getElementById("mSubject").value="";document.getElementById("mObtained").value="";document.getElementById("mTotal").value="";document.getElementById("marksMsg").textContent="";renderMarks()};
 window.closeMarks=()=>document.getElementById("marksModal").style.display="none";
 function renderMarks(){const a=activeStudent?.marks||[];document.getElementById("marksRows").innerHTML=a.map((m,i)=>`<tr><td>${esc(m.subject)}</td><td>${m.obtained}</td><td>${m.total}</td><td><button class="smallBtn" onclick="editMark(${i})">Edit</button><button class="smallBtn danger" onclick="removeMark(${i})">Delete</button></td></tr>`).join("")||"<tr><td colspan='4'>No marks yet.</td></tr>"}
 window.editMark=i=>{const m=activeStudent.marks[i];editingMark=i;document.getElementById("mSubject").value=m.subject;document.getElementById("mObtained").value=m.obtained;document.getElementById("mTotal").value=m.total};
