@@ -26,7 +26,7 @@ button,input,select,textarea{font:inherit}
 .card{background:#fff;border-radius:18px;padding:20px;margin-top:18px;box-shadow:0 4px 20px #173b7610}.tableWrap{overflow-x:auto}table{width:100%;border-collapse:collapse;margin-top:10px}th,td{padding:11px;border-bottom:1px solid #e5ebf3;text-align:left}th{background:#f1f6ff}
 .smallBtn{border:0;border-radius:7px;padding:7px 10px;margin:2px;cursor:pointer;background:#e9effb}.danger{background:#ffe7e7;color:#b42318}.green{background:#e4f8ec;color:#087443}.hidden{display:none!important}
 .teacherHero{background:linear-gradient(135deg,#082d61,#0d765d);color:#fff;border-radius:22px;padding:25px;margin-bottom:18px;box-shadow:0 12px 35px #173b7620}
-.teacherHero h1{margin:0 0 5px}.teacherHero p{margin:0;color:#dff8ee}
+.teacherHero h1{margin:0 0 5px}.teacherHero p{margin:0;color:#dff8ee}.teacherHero{border:1px solid #ffffff22}.teacherHero .smallBtn{background:#ffffff;color:#0b355f;font-weight:700}
 .filters{display:grid;grid-template-columns:1fr 1fr 1.3fr 1fr;gap:10px;margin-top:15px}
 .filters label{font-size:12px;font-weight:700;color:#64748b}.filters select,.filters input{width:100%;padding:11px;border:1px solid #ccd7e8;border-radius:10px;background:#fff}
 .markTable input{width:110px;padding:9px;border:1px solid #cbd5e1;border-radius:9px;text-align:center}
@@ -68,18 +68,17 @@ button,input,select,textarea{font:inherit}
       <div><h1>👨‍🏫 Teacher Dashboard</h1><p id="teacherWelcome">Enter marks quickly</p></div>
       <button class="smallBtn" onclick="logout()">Logout</button>
     </div>
-    <div class="statGrid"><div class="stat"><span>Students</span><b id="teacherStudentCount">0</b></div><div class="stat"><span>Selected Class</span><b id="teacherClassStat">—</b></div><div class="stat"><span>Selected Section</span><b id="teacherSectionStat">—</b></div></div>
+    
   </div>
   <div class="card">
-    <h2>📝 Enter Class Marks</h2>
-    <p style="color:#667;margin-top:-5px">Class, section, subject aur total marks <b>sirf ek dafa</b> select karein. Neeche har student ke saamne obtained marks likhein. Jis student ka mark nahi lagay ga, usay <b>0</b> save kiya jayega.</p>
+    <div class="dashHead"><div><h2 style="margin:0">📝 Enter Class Marks</h2><p style="color:#667;margin:6px 0 0">Class, section, subject aur total marks <b>sirf ek dafa</b> select karein. Neeche har student ke saamne obtained marks likhein. Blank chhorne par <b>0</b> save hoga.</p></div></div>
     <div class="filters">
-      <div><label>CLASS</label><select id="teacherClass" onchange="prepareTeacherEntry()"><option value="">Select Class</option><option value="9">9th</option><option value="10">10th</option></select></div>
-      <div><label>SECTION</label><select id="teacherSection" onchange="prepareTeacherEntry()"><option value="">Select Section</option><option value="A">Section A</option><option value="B">Section B</option><option value="C">Section C</option></select></div>
+      <div><label>CLASS</label><select id="teacherClass" onchange="prepareTeacherEntry()"><option value="">Select Class</option><option value="9">9th Class</option><option value="10">10th Class</option></select></div>
+      <div><label>SECTION</label><select id="teacherSection" onchange="prepareTeacherEntry()"><option value="">All Sections</option><option value="A">Section A</option><option value="B">Section B</option><option value="C">Section C</option><option value="UNASSIGNED">Section Not Assigned</option></select></div>
       <div><label>SUBJECT</label><input id="teacherSubject" placeholder="e.g. Mathematics" oninput="prepareTeacherEntry()"></div>
       <div><label>SEARCH STUDENT</label><input id="teacherSearch" placeholder="Name / ID" oninput="renderTeacherEntry()"></div>
     </div>
-    <div class="totalBox"><div><label>TOTAL MARKS (ONCE)</label><input id="teacherTotal" type="number" min="1" placeholder="e.g. 10" oninput="renderTeacherEntry()"></div><div style="flex:2;color:#667;font-size:14px;padding-bottom:10px">Example: Total = <b>10</b>. Then only write each student's obtained marks. Blank = <b>0</b>.</div></div>
+    <div class="totalBox"><div><label>TOTAL MARKS (ONCE)</label><input id="teacherTotal" type="number" min="1" placeholder="e.g. 100" oninput="renderTeacherEntry()"></div><div style="flex:2;color:#667;font-size:14px;padding-bottom:10px">Example: Total = <b>100</b>. Sirf obtained marks likhein. Jis student ko marks nahi milay, blank rehne dein — woh <b>0</b> save hoga.</div></div>
   </div>
   <div class="card" id="teacherEntryCard" style="display:none">
     <div class="dashHead"><div><h2 style="margin-bottom:4px">👥 Students</h2><p id="teacherEntryInfo" style="margin:0;color:#667"></p></div><button class="smallBtn" onclick="fillAllTeacherZeros()">Set all blank to 0</button></div>
@@ -105,6 +104,7 @@ const secondary=initializeApp(firebaseConfig,"studentCreator"),secondaryAuth=get
 let mode="student",students=[],activeStudent=null,editingMark=-1,announcements=[];
 
 function esc(v){return String(v??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[c]))}
+window.esc=esc;
 
 window.openLogin=m=>{mode=m;document.getElementById("loginTitle").textContent=m==="admin"?"Admin Login":m==="teacher"?"Teacher Login":"Student Login";document.getElementById("loginEmail").placeholder=m==="admin"||m==="teacher"?"Admin/Teacher email":"Student ID";document.getElementById("loginMsg").textContent="";document.getElementById("loginModal").style.display="flex"};
 window.closeLogin=()=>document.getElementById("loginModal").style.display="none";
@@ -127,6 +127,7 @@ window.doLogin=async()=>{
 function hidePublic(){document.querySelectorAll("header,.hero,.features,.section,.contact,.footer").forEach(x=>x.classList.add("hidden"))}
 async function showAdmin(){closeLogin();hidePublic();document.getElementById("adminDash").style.display="block";await loadStudents();await loadAnnouncements()}
 async function loadStudents(){const snap=await getDocs(collection(db,"students"));students=snap.docs.map(d=>({id:d.id,...d.data()}));if(document.getElementById("studentRows"))renderStudents()}
+window.loadStudents=loadStudents;
 
 function announcementDate(v){try{return new Date(Number(v)||v).toLocaleString("en-PK",{dateStyle:"medium",timeStyle:"short"})}catch(e){return ""}}
 function announcementCard(a,admin=false){return `<div style="background:#fff;border-left:5px solid #4f72ff;border-radius:12px;padding:16px 18px;margin:10px 0;box-shadow:0 4px 18px #173b7610"><div style="display:flex;justify-content:space-between;gap:10px;align-items:flex-start"><div><h3 style="margin:0 0 6px">📢 ${esc(a.title)}</h3><p style="margin:0;color:#596a82;line-height:1.6;white-space:pre-wrap">${esc(a.message)}</p><small style="color:#8996a8;display:block;margin-top:10px">${announcementDate(a.createdAt)}</small></div>${admin?`<button class="smallBtn danger" onclick="deleteAnnouncement('${a.id}')">Delete</button>`:""}</div></div>`}
@@ -165,12 +166,146 @@ function applySettings(d){if(d.name){document.getElementById("siteName").textCon
 async function loadPublicSettings(){try{const s=await getDoc(doc(db,"settings","website"));if(s.exists())applySettings(s.data())}catch(e){}}
 
 let teacherStudentsCache=[],teacherEntryStudents=[];
-async function showTeacher(user,data){closeLogin();hidePublic();document.getElementById("teacherDash").style.display="block";document.getElementById("teacherWelcome").textContent="Welcome, "+(data?.name||user.email||"Teacher")+" — marks access only";await loadStudents();teacherStudentsCache=[...students];document.getElementById("teacherStudentCount").textContent=students.length;prepareTeacherEntry()}
-function prepareTeacherEntry(){document.getElementById("teacherClassStat").textContent=document.getElementById("teacherClass").value||"—";document.getElementById("teacherSectionStat").textContent=document.getElementById("teacherSection").value||"—";renderTeacherEntry()}
-function getTeacherFilteredStudents(){const cls=document.getElementById("teacherClass").value,sec=document.getElementById("teacherSection").value,q=document.getElementById("teacherSearch").value.trim().toLowerCase();return teacherStudentsCache.filter(s=>(!cls||String(s.className)===cls)&&(!sec||String(s.section||"")===sec)&&(!q||(String(s.name||"")+" "+String(s.studentId||"")).toLowerCase().includes(q)))}
-function renderTeacherEntry(){const card=document.getElementById("teacherEntryCard"),body=document.getElementById("teacherEntryRows"),cls=document.getElementById("teacherClass").value,sec=document.getElementById("teacherSection").value,subject=document.getElementById("teacherSubject").value.trim(),total=Number(document.getElementById("teacherTotal").value);if(!cls||!sec||!subject||total<=0){card.style.display="none";return}teacherEntryStudents=getTeacherFilteredStudents();card.style.display="block";document.getElementById("teacherEntryInfo").textContent=`Class ${cls} • Section ${sec} • ${subject} • Total ${total} marks • ${teacherEntryStudents.length} students`;body.innerHTML=teacherEntryStudents.map((s,i)=>{const existing=(s.marks||[]).find(m=>String(m.subject).toLowerCase()===subject.toLowerCase());const value=existing&&Number(existing.total)===total?existing.obtained:"";return `<tr><td>${i+1}</td><td class="studentBadge">${esc(s.name)}</td><td>${esc(s.studentId)}</td><td><span class="sectionBadge">${esc(s.section||sec)}</span></td><td><input class="teacherMarkInput" data-id="${s.id}" data-student="${esc(s.studentId)}" type="number" min="0" max="${total}" value="${value}" placeholder="0"> / ${total}</td></tr>`}).join("")||"<tr><td colspan='5' style='text-align:center;padding:20px'>No students found in this class/section.</td></tr>"}
-window.fillAllTeacherZeros=()=>document.querySelectorAll(".teacherMarkInput").forEach(i=>{if(i.value==="")i.value="0"});
-window.saveTeacherMarks=async()=>{const cls=document.getElementById("teacherClass").value,sec=document.getElementById("teacherSection").value,subject=document.getElementById("teacherSubject").value.trim(),total=Number(document.getElementById("teacherTotal").value),msg=document.getElementById("teacherSaveMsg");if(!cls||!sec||!subject||total<=0){msg.textContent="Class, section, subject aur total marks select karein.";return}const inputs=[...document.querySelectorAll(".teacherMarkInput")];if(!inputs.length){msg.textContent="Students nahi mile.";return}msg.textContent="Saving marks...";try{for(const input of inputs){const s=students.find(x=>x.id===input.dataset.id)||teacherStudentsCache.find(x=>x.id===input.dataset.id);if(!s)continue;let obtained=input.value.trim()===""?0:Number(input.value);if(!Number.isFinite(obtained)||obtained<0)obtained=0;if(obtained>total){throw new Error(`${s.name}: marks total ${total} se zyada nahi ho sakte.`)}const arr=[...(s.marks||[])];const index=arr.findIndex(m=>String(m.subject).toLowerCase()===subject.toLowerCase());const item={subject,obtained,total};if(index>=0)arr[index]=item;else arr.push(item);await updateDoc(doc(db,"students",s.id),{marks:arr})}await loadStudents();teacherStudentsCache=[...students];msg.style.color="#087443";msg.textContent=`✅ ${inputs.length} students ke marks save ho gaye. Blank marks = 0.`;renderTeacherEntry()}catch(e){msg.style.color="#d33";msg.textContent=e.message.replace("Firebase: ","")}};
+
+function normalizeClass(v){
+  const x=String(v??'').trim().toLowerCase().replace(/\s+/g,'');
+  if(x==='9'||x==='9th'||x==='class9'||x==='9thclass') return '9';
+  if(x==='10'||x==='10th'||x==='class10'||x==='10thclass') return '10';
+  return x;
+}
+
+function normalizeSection(v){
+  const x=String(v??'').trim().toUpperCase();
+  if(!x) return '';
+  if(/^SECTION\s*[ABC]$/.test(x)) return x.replace('SECTION','').trim();
+  if(/^[ABC]$/.test(x)) return x;
+  return x;
+}
+
+window.showTeacher=async function showTeacher(user,data){
+  closeLogin();
+  hidePublic();
+  document.getElementById('teacherDash').style.display='block';
+  document.getElementById('teacherWelcome').textContent='Welcome, '+(data?.name||user.email||'Teacher')+' — marks access only';
+  await loadStudents();
+  teacherStudentsCache=[...students];
+  prepareTeacherEntry();
+};
+
+window.prepareTeacherEntry=function prepareTeacherEntry(){
+  renderTeacherEntry();
+};
+
+function getTeacherFilteredStudents(){
+  const cls=normalizeClass(document.getElementById('teacherClass').value);
+  const sec=document.getElementById('teacherSection').value;
+  const q=document.getElementById('teacherSearch').value.trim().toLowerCase();
+
+  return teacherStudentsCache.filter(s=>{
+    const studentClass=normalizeClass(s.className);
+    const studentSection=normalizeSection(s.section);
+    const classOK=!cls || studentClass===cls;
+    const sectionOK=!sec || (sec==='UNASSIGNED' ? !studentSection : studentSection===sec);
+    const searchOK=!q || (String(s.name||'')+' '+String(s.studentId||'')).toLowerCase().includes(q);
+    return classOK && sectionOK && searchOK;
+  });
+}
+
+window.renderTeacherEntry=function renderTeacherEntry(){
+  const card=document.getElementById('teacherEntryCard');
+  const body=document.getElementById('teacherEntryRows');
+  const cls=normalizeClass(document.getElementById('teacherClass').value);
+  const sec=document.getElementById('teacherSection').value;
+  const subject=document.getElementById('teacherSubject').value.trim();
+  const total=Number(document.getElementById('teacherTotal').value);
+
+  if(!cls || !subject || total<=0){
+    card.style.display='none';
+    return;
+  }
+
+  teacherEntryStudents=getTeacherFilteredStudents();
+  card.style.display='block';
+
+  const sectionText=sec==='UNASSIGNED'?'Unassigned Section':(sec?`Section ${sec}`:'All Sections');
+  document.getElementById('teacherEntryInfo').textContent=`Class ${cls==='9'?'9th':'10th'} • ${sectionText} • ${subject} • Total ${total} marks • ${teacherEntryStudents.length} students`;
+
+  if(!teacherEntryStudents.length){
+    body.innerHTML=`<tr><td colspan="5" style="text-align:center;padding:28px;color:#64748b"><b>No students found.</b><br><small>Class/Section selection check karein. Purane students ke liye Section = All Sections ya Section Not Assigned select karein.</small></td></tr>`;
+    return;
+  }
+
+  body.innerHTML=teacherEntryStudents.map((s,i)=>{
+    const existing=(s.marks||[]).find(m=>String(m.subject||'').trim().toLowerCase()===subject.toLowerCase());
+    const value=existing && Number(existing.total)===total ? existing.obtained : '';
+    const secText=normalizeSection(s.section);
+    return `<tr>
+      <td>${i+1}</td>
+      <td class="studentBadge">${esc(s.name||'')}</td>
+      <td>${esc(s.studentId||'')}</td>
+      <td><span class="sectionBadge">${esc(secText?`Section ${secText}`:'Not Assigned')}</span></td>
+      <td><input class="teacherMarkInput" data-id="${s.id}" type="number" min="0" max="${total}" value="${value}" placeholder="0"> / ${total}</td>
+    </tr>`;
+  }).join('');
+};
+
+window.fillAllTeacherZeros=function(){
+  document.querySelectorAll('.teacherMarkInput').forEach(i=>{if(i.value==='') i.value='0';});
+};
+
+window.saveTeacherMarks=async function(){
+  const cls=normalizeClass(document.getElementById('teacherClass').value);
+  const sec=document.getElementById('teacherSection').value;
+  const subject=document.getElementById('teacherSubject').value.trim();
+  const total=Number(document.getElementById('teacherTotal').value);
+  const msg=document.getElementById('teacherSaveMsg');
+
+  if(!cls || !subject || total<=0){
+    msg.style.color='#d33';
+    msg.textContent='Class, subject aur total marks required hain.';
+    return;
+  }
+
+  const inputs=[...document.querySelectorAll('.teacherMarkInput')];
+  if(!inputs.length){
+    msg.style.color='#d33';
+    msg.textContent='Students nahi mile.';
+    return;
+  }
+
+  msg.style.color='#667';
+  msg.textContent='Saving marks...';
+
+  try{
+    let count=0;
+    for(const input of inputs){
+      const s=teacherStudentsCache.find(x=>x.id===input.dataset.id);
+      if(!s) continue;
+
+      let obtained=input.value.trim()===''?0:Number(input.value);
+      if(!Number.isFinite(obtained)||obtained<0) obtained=0;
+      if(obtained>total) throw new Error(`${s.name}: marks ${total} se zyada nahi ho sakte.`);
+
+      const arr=[...(s.marks||[])];
+      const index=arr.findIndex(m=>String(m.subject||'').trim().toLowerCase()===subject.toLowerCase());
+      const item={subject,obtained,total};
+      if(index>=0) arr[index]=item; else arr.push(item);
+
+      await updateDoc(doc(db,'students',s.id),{marks:arr});
+      count++;
+    }
+
+    await loadStudents();
+    teacherStudentsCache=[...students];
+    msg.style.color='#087443';
+    msg.textContent=`✅ ${count} students ke marks save ho gaye. Blank marks = 0.`;
+    renderTeacherEntry();
+  }catch(e){
+    msg.style.color='#d33';
+    msg.textContent=e.message.replace('Firebase: ','');
+  }
+};
+
 window.logout=async()=>{await signOut(auth);location.reload()};
 
 loadPublicSettings();loadAnnouncements();
