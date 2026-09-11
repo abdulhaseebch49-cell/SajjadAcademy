@@ -5,261 +5,175 @@
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>Sajjad Academy | Student Portal</title>
 <style>
-*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;font-family:"Segoe UI",Arial,sans-serif;background:#f5f8ff;color:#102a56}
-button,input{font:inherit}.header{position:sticky;top:0;z-index:20;padding:15px 5%;display:flex;align-items:center;justify-content:space-between;background:linear-gradient(110deg,#062653,#173f85);color:#fff;box-shadow:0 4px 20px #0002}
-.logo{font-size:27px;font-weight:800}.nav{display:flex;gap:25px}.nav a{color:white;text-decoration:none;font-weight:600}.nav a:hover{color:#7dd3fc}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;font-family:"Segoe UI",Arial,sans-serif;background:#f5f8ff;color:#102a56}
+button,input,select,textarea{font:inherit}
+.header{position:sticky;top:0;z-index:20;padding:15px 5%;display:flex;align-items:center;justify-content:space-between;background:linear-gradient(110deg,#062653,#173f85);color:#fff;box-shadow:0 4px 20px #0002}
+.logo{font-size:27px;font-weight:800}.nav{display:flex;gap:25px}.nav a{color:white;text-decoration:none;font-weight:600}
 .topbtn,.primary{border:0;border-radius:25px;padding:11px 20px;background:linear-gradient(135deg,#4f72ff,#743ce5);color:#fff;font-weight:700;cursor:pointer}
 .hero{min-height:440px;padding:60px 5%;display:flex;justify-content:space-between;align-items:center;gap:35px;color:#fff;background:linear-gradient(110deg,#082d61,#165092);position:relative;overflow:hidden}
-.hero:after{content:"";position:absolute;width:500px;height:500px;border-radius:50%;background:#6c63ff33;right:-180px;top:-220px}.heroText{max-width:620px;z-index:1}.tag{color:#7dd3fc;font-size:18px}.hero h1{font:700 58px Georgia,serif;margin:12px 0}.hero h1 span{color:#ffc629}.hero h2{font-size:21px}.hero p{line-height:1.7;color:#e3efff}.loginCard{width:320px;background:#fff;color:#102a56;border-radius:22px;padding:28px;box-shadow:0 20px 50px #001b443d;z-index:2}.loginCard h2{text-align:center}.loginCard p{text-align:center;color:#6b7890}.loginChoice{width:100%;border:0;border-radius:12px;color:#fff;text-align:left;padding:17px;margin-top:10px;cursor:pointer}.admin{background:linear-gradient(135deg,#2674e9,#347be7)}.student{background:linear-gradient(135deg,#7147d9,#7a36cf)}
+.hero:after{content:"";position:absolute;width:500px;height:500px;border-radius:50%;background:#6c63ff33;right:-180px;top:-220px}
+.heroText{max-width:620px;z-index:1}.tag{color:#7dd3fc;font-size:18px}.hero h1{font:700 58px Georgia,serif;margin:12px 0}.hero h1 span{color:#ffc629}.hero h2{font-size:21px}.hero p{line-height:1.7;color:#e3efff}
+.loginCard{width:320px;background:#fff;color:#102a56;border-radius:22px;padding:28px;box-shadow:0 20px 50px #001b443d;z-index:2}.loginCard h2{text-align:center}.loginCard p{text-align:center;color:#6b7890}
+.loginChoice{width:100%;border:0;border-radius:12px;color:#fff;text-align:left;padding:17px;margin-top:10px;cursor:pointer}.admin{background:linear-gradient(135deg,#2674e9,#347be7)}.student{background:linear-gradient(135deg,#7147d9,#7a36cf)}.teacher{background:linear-gradient(135deg,#0f9d78,#087f5b)}
 .features{padding:45px 5%;display:grid;grid-template-columns:repeat(4,1fr);gap:18px}.feature{background:#fff;padding:27px 18px;text-align:center;border-radius:16px;box-shadow:0 5px 25px #173b7612}.feature i{font-size:35px;font-style:normal}.feature h3{margin:10px 0}.feature p{color:#69778d;line-height:1.5}
-.section{padding:20px 5% 45px}.title{text-align:center;font:700 32px Georgia,serif;margin-bottom:25px}.gallery{display:grid;grid-template-columns:1fr 1fr;gap:20px}.photo{border-radius:16px;overflow:hidden;position:relative;background:#dce9f8}.photo img{width:100%;height:auto;max-height:none;object-fit:contain;display:block}.photo .caption{position:relative;bottom:auto;left:auto;right:auto;padding:14px 16px;color:#102a56;background:#fff}.contact{background:linear-gradient(115deg,#071f48,#162b78);color:#fff;padding:45px 5% 25px;text-align:center}.contact h2{font:700 34px Georgia,serif}.contact>p{color:#d8e6ff}.contactGrid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:25px}.contactItem{padding:18px;border-right:1px solid #ffffff25}.contactItem:last-child{border:0}.contactItem .ico{font-size:28px}.contactItem p{color:#dce7fb;line-height:1.5}.footer{background:#041a3a;color:#d8e6ff;padding:15px 5%;display:flex;justify-content:space-between;font-size:14px}
-.modalBg{display:none;position:fixed;inset:0;background:#00152dcc;z-index:100;align-items:center;justify-content:center;padding:15px}.modal{width:min(450px,100%);max-height:92vh;overflow:auto;background:white;border-radius:20px;padding:28px;position:relative}.x{position:absolute;right:15px;top:10px;border:0;background:none;font-size:28px;cursor:pointer}.tabs{display:flex;gap:8px;margin-bottom:15px}.tabs button{flex:1;padding:10px;border:1px solid #d8e1ef;background:#f7f9fc;border-radius:9px;cursor:pointer}.tabs .active{background:#2563eb;color:white}.form input,.form select{width:100%;padding:11px;margin:6px 0;border:1px solid #ccd7e8;border-radius:9px}.msg{min-height:20px;color:#d33;font-size:14px}.dash{display:none;padding:35px 5%;min-height:70vh}.dashHead{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}.card{background:#fff;border-radius:15px;padding:20px;margin-top:18px;box-shadow:0 4px 20px #173b7610}.tableWrap{overflow-x:auto}table{width:100%;border-collapse:collapse;margin-top:10px}th,td{padding:11px;border-bottom:1px solid #e5ebf3;text-align:left}th{background:#f1f6ff}.smallBtn{border:0;border-radius:7px;padding:7px 10px;margin:2px;cursor:pointer;background:#e9effb}.danger{background:#ffe7e7;color:#b42318}.green{background:#e4f8ec;color:#087443}.hidden{display:none!important}
-@media(max-width:850px){.nav{display:none}.hero{flex-direction:column;text-align:center}.hero h1{font-size:45px}.loginCard{width:min(360px,100%)}.features{grid-template-columns:1fr 1fr}.contactGrid{grid-template-columns:1fr 1fr}.gallery{grid-template-columns:1fr}.footer{flex-direction:column;text-align:center;gap:8px}}
-@media(max-width:520px){.features,.contactGrid{grid-template-columns:1fr}}
+.section{padding:20px 5% 45px}.title{text-align:center;font:700 32px Georgia,serif;margin-bottom:25px}.gallery{display:grid;grid-template-columns:1fr 1fr;gap:20px}.photo{border-radius:16px;overflow:hidden;background:#dce9f8}.photo img{width:100%;height:auto;object-fit:contain;display:block}.photo .caption{padding:14px 16px;color:#102a56;background:#fff}
+.contact{background:linear-gradient(115deg,#071f48,#162b78);color:#fff;padding:45px 5% 25px;text-align:center}.contact h2{font:700 34px Georgia,serif}.contact>p{color:#d8e6ff}.contactGrid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:25px}.contactItem{padding:18px;border-right:1px solid #ffffff25}.contactItem:last-child{border:0}.contactItem .ico{font-size:28px}.contactItem p{color:#dce7fb;line-height:1.5}.footer{background:#041a3a;color:#d8e6ff;padding:15px 5%;display:flex;justify-content:space-between;font-size:14px}
+.modalBg{display:none;position:fixed;inset:0;background:#00152dcc;z-index:100;align-items:center;justify-content:center;padding:15px}.modal{width:min(560px,100%);max-height:92vh;overflow:auto;background:white;border-radius:20px;padding:28px;position:relative}.x{position:absolute;right:15px;top:10px;border:0;background:none;font-size:28px;cursor:pointer}
+.form input,.form select,.form textarea{width:100%;padding:11px;margin:6px 0;border:1px solid #ccd7e8;border-radius:9px}.msg{min-height:20px;color:#d33;font-size:14px}
+.dash{display:none;padding:35px 5%;min-height:70vh}.dashHead{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
+.card{background:#fff;border-radius:18px;padding:20px;margin-top:18px;box-shadow:0 4px 20px #173b7610}.tableWrap{overflow-x:auto}table{width:100%;border-collapse:collapse;margin-top:10px}th,td{padding:11px;border-bottom:1px solid #e5ebf3;text-align:left}th{background:#f1f6ff}
+.smallBtn{border:0;border-radius:7px;padding:7px 10px;margin:2px;cursor:pointer;background:#e9effb}.danger{background:#ffe7e7;color:#b42318}.green{background:#e4f8ec;color:#087443}.hidden{display:none!important}
+.teacherHero{background:linear-gradient(135deg,#082d61,#0d765d);color:#fff;border-radius:22px;padding:25px;margin-bottom:18px;box-shadow:0 12px 35px #173b7620}
+.teacherHero h1{margin:0 0 5px}.teacherHero p{margin:0;color:#dff8ee}
+.filters{display:grid;grid-template-columns:1fr 1fr 1.3fr 1fr;gap:10px;margin-top:15px}
+.filters label{font-size:12px;font-weight:700;color:#64748b}.filters select,.filters input{width:100%;padding:11px;border:1px solid #ccd7e8;border-radius:10px;background:#fff}
+.markTable input{width:110px;padding:9px;border:1px solid #cbd5e1;border-radius:9px;text-align:center}
+.markTable tr.saved{background:#f0fdf4}.studentBadge{font-weight:700}.sectionBadge{display:inline-block;padding:4px 8px;border-radius:20px;background:#e9efff;color:#3153b7;font-size:12px}
+.totalBox{display:flex;align-items:end;gap:12px;flex-wrap:wrap;margin-top:15px}.totalBox>div{flex:1;min-width:180px}.totalBox label{display:block;font-size:12px;font-weight:700;color:#64748b}.totalBox input{width:100%;padding:12px;border:2px solid #4f72ff;border-radius:10px;font-size:18px;font-weight:700}
+.saveBar{position:sticky;bottom:10px;z-index:5;background:#fff;padding:14px;border-radius:16px;box-shadow:0 8px 30px #173b7630;margin-top:15px;display:flex;justify-content:space-between;align-items:center;gap:10px}
+.statGrid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:15px}.stat{background:#f7f9ff;border-radius:14px;padding:15px}.stat b{font-size:22px;display:block}
+@media(max-width:850px){.nav{display:none}.hero{flex-direction:column;text-align:center}.hero h1{font-size:45px}.loginCard{width:min(360px,100%)}.features{grid-template-columns:1fr 1fr}.contactGrid{grid-template-columns:1fr 1fr}.gallery{grid-template-columns:1fr}.footer{flex-direction:column;text-align:center;gap:8px}.filters{grid-template-columns:1fr 1fr}}
+@media(max-width:520px){.features,.contactGrid,.filters,.statGrid{grid-template-columns:1fr}.hero{padding-top:40px}.teacherHero{padding:20px}.dash{padding:25px 3%}.markTable input{width:85px}}
 </style>
-
-<style>
-.loginChoice.teacher{background:linear-gradient(135deg,#0f9d78,#087f5b);color:#fff}
-#teacherDash .dashHead{display:flex;justify-content:space-between;align-items:center;gap:12px}
-#teacherDash .tableWrap{overflow:auto;margin-top:15px}
-#teacherDash table{width:100%;border-collapse:collapse}
-#teacherDash th,#teacherDash td{padding:10px;border-bottom:1px solid #e7ebf2;text-align:left}
-@media(max-width:600px){
-  #teacherDash th,#teacherDash td{padding:8px;font-size:13px}
-}
-</style>
-
 </head>
 <body>
 <header class="header"><div class="logo">🎓 <span id="siteName">Sajjad Academy</span></div><nav class="nav"><a href="#home">Home</a><a href="#about">About</a><a href="#gallery">Gallery</a><a href="#contact">Contact</a></nav><button class="topbtn" onclick="openLogin('student')">👤 Login</button></header>
 
-<section class="hero" id="home"><div class="heroText"><div class="tag">Learn | Grow | Succeed</div><h1 id="heroName">Sajjad <span>Academy</span></h1><h2>Quality Education for a Brighter Future</h2><p>Students can securely view their profile and marks, while the admin can manage students and results from one simple portal.</p><button class="topbtn" onclick="document.getElementById('about').scrollIntoView()">Our Vision →</button></div>
-<div class="loginCard"><h2>👥 Login to Continue</h2><p>Choose your login type</p><button class="loginChoice admin" onclick="openLogin('admin')">🛡️ <b>Admin Login</b><br><small>Manage students & results →</small></button><button class="loginChoice student" onclick="openLogin('student')">🎓 <b>Student Login</b><br><small>View your profile & marks →</small></button><button class="loginChoice teacher" onclick="openLogin('teacher')">👨‍🏫 <b>Teacher Login</b><br><small>Manage student marks →</small></button></div></section>
+<section class="hero" id="home"><div class="heroText"><div class="tag">Learn | Grow | Succeed</div><h1 id="heroName">Sajjad <span>Academy</span></h1><h2>Quality Education for a Brighter Future</h2><p>Students can securely view their profile and marks, while the admin and teachers can manage academic results from one simple portal.</p><button class="topbtn" onclick="document.getElementById('about').scrollIntoView()">Our Vision →</button></div>
+<div class="loginCard"><h2>👥 Login to Continue</h2><p>Choose your login type</p><button class="loginChoice admin" onclick="openLogin('admin')">🛡️ <b>Admin Login</b><br><small>Manage students & results →</small></button><button class="loginChoice student" onclick="openLogin('student')">🎓 <b>Student Login</b><br><small>View your profile & marks →</small></button><button class="loginChoice teacher" onclick="openLogin('teacher')">👨‍🏫 <b>Teacher Login</b><br><small>Enter marks quickly →</small></button></div></section>
 
-<section class="features"><div class="feature"><i>👥</i><h3>Student Management</h3><p>Add, edit and delete student records easily.</p></div><div class="feature"><i>📋</i><h3>Marks Management</h3><p>Add, edit and delete marks for subjects.</p></div><div class="feature"><i>📈</i><h3>View Results</h3><p>Students can check marks and percentage.</p></div><div class="feature"><i>🔐</i><h3>Secure & Reliable</h3><p>Data is protected with Firebase security.</p></div></section>
-
+<section class="features"><div class="feature"><i>👥</i><h3>Student Management</h3><p>Add, edit and manage student records.</p></div><div class="feature"><i>📝</i><h3>Fast Marks Entry</h3><p>Select class, section and subject once, then enter marks for the whole class.</p></div><div class="feature"><i>📈</i><h3>View Results</h3><p>Students can check marks and percentage.</p></div><div class="feature"><i>🔐</i><h3>Secure</h3><p>Data is protected with Firebase security rules.</p></div></section>
 <section class="section" id="announcements"><h2 class="title">📢 Announcements</h2><div id="publicAnnouncements"><p style="text-align:center;color:#69778d">No announcements yet.</p></div></section>
-
 <section class="section" id="about"><h2 class="title">About Sajjad Academy</h2><p style="max-width:800px;margin:auto;text-align:center;color:#65748b;line-height:1.8">Our aim is to provide quality education and a simple digital platform for students. Students can use the portal from a phone or computer to check their academic information.</p></section>
-
-<section class="section" id="gallery"><h2 class="title">Our Academy</h2><div class="gallery">
-<div class="photo"><img id="photo1" src="https://raw.githubusercontent.com/abdulhaseebch49-cell/SajjadAcademy/main/WhatsApp%20Image%202026-09-11%20at%2012.01.58%20PM.jpeg" alt="Academy"><div class="caption"><b>📷 Our Academy</b><br>Peaceful environment for better learning</div></div>
-<div class="photo"><img id="photo2" src="https://images.unsplash.com/photo-1509062522246-3755977927d7?auto=format&fit=crop&w=1200&q=80" alt="Classroom"><div class="caption"><b>🎓 Our Students</b><br>Learning today for a better tomorrow</div></div>
-</div></section>
-
+<section class="section" id="gallery"><h2 class="title">Our Academy</h2><div class="gallery"><div class="photo"><img id="photo1" src="https://raw.githubusercontent.com/abdulhaseebch49-cell/SajjadAcademy/main/WhatsApp%20Image%202026-09-11%20at%2012.01.58%20PM.jpeg" alt="Academy"><div class="caption"><b>📷 Our Academy</b><br>Peaceful environment for better learning</div></div><div class="photo"><img id="photo2" src="https://images.unsplash.com/photo-1509062522246-3755977927d7?auto=format&fit=crop&w=1200&q=80" alt="Classroom"><div class="caption"><b>🎓 Our Students</b><br>Learning today for a better tomorrow</div></div></div></section>
 <section class="contact" id="contact"><h2>Contact Us</h2><p>Feel free to contact us for any query, support or information.</p><div class="contactGrid"><div class="contactItem"><div class="ico">📞</div><b>Phone</b><p id="contactPhone">+92 300 1234567</p></div><div class="contactItem"><div class="ico">💬</div><b>WhatsApp</b><p id="contactWhatsapp">+92 300 1234567</p></div><div class="contactItem"><div class="ico">✉️</div><b>Email</b><p id="contactEmail">sajjadacademy@gmail.com</p></div><div class="contactItem"><div class="ico">📍</div><b>Address</b><p id="contactAddress">Sajjad Academy<br>Lahore, Pakistan</p></div></div></section>
 <footer class="footer"><span>© 2026 Sajjad Academy. All rights reserved.</span><span>Education is the key to success 🎓 ❤️</span></footer>
 
 <div class="modalBg" id="loginModal"><div class="modal"><button class="x" onclick="closeLogin()">×</button><h2 id="loginTitle">Student Login</h2><div class="form"><input id="loginEmail" placeholder="Student ID"><input id="loginPassword" type="password" placeholder="Password"><button class="primary" style="width:100%" onclick="doLogin()">Login</button><div class="msg" id="loginMsg"></div></div></div></div>
 
-<div class="dash" id="adminDash"><div class="dashHead"><h1>Admin Dashboard</h1><div><button class="smallBtn green" onclick="openSettings()">⚙️ Website Settings</button> <button class="smallBtn" onclick="openPasswordChange()">🔑 Change Password</button> <button class="smallBtn" onclick="logout()">Logout</button></div></div><div class="card"><h2>Add Student</h2><div class="form"><input id="sId" placeholder="Student ID (e.g. SA001)"><input id="sName" placeholder="Student name"><input id="sPhone" placeholder="Phone"><input id="sClass" placeholder="Class"><input id="sPass" type="password" placeholder="Password"><button class="primary" onclick="addStudent()">Add Student</button><div class="msg" id="adminMsg"></div></div></div><div class="card"><h2>📢 Announcements</h2><p style="color:#667">Yahan announcement add karein. Students website par aur apne dashboard mein dekh sakenge.</p><div class="form"><input id="aTitle" placeholder="Announcement title (e.g. Test on Monday)"><textarea id="aMessage" placeholder="Announcement details..." style="width:100%;min-height:100px;padding:11px;margin:6px 0;border:1px solid #ccd7e8;border-radius:9px;resize:vertical;font:inherit"></textarea><button class="primary" onclick="addAnnouncement()">📢 Add Announcement</button><div class="msg" id="announcementMsg"></div></div><div class="tableWrap"><table><thead><tr><th>Announcement</th><th>Date</th><th>Action</th></tr></thead><tbody id="adminAnnouncementRows"></tbody></table></div></div>
-<div class="card"><h2>Students</h2><input id="search" placeholder="Search student..." oninput="renderStudents()" style="width:100%;padding:11px;border:1px solid #ccd7e8;border-radius:9px"><div class="tableWrap"><table><thead><tr><th>ID</th><th>Name</th><th>Class</th><th>Actions</th></tr></thead><tbody id="studentRows"></tbody></table></div></div><div class="card"><h2>🔐 Student Passwords</h2><p style="color:#667;line-height:1.6">Student passwords security ki wajah se Admin ko show nahi hote. Yahan password change status dekhein.</p><div class="tableWrap"><table><thead><tr><th>Student ID</th><th>Name</th><th>Password Status</th></tr></thead><tbody id="passwordRows"></tbody></table></div></div></div>
+<div class="dash" id="adminDash"><div class="dashHead"><h1>Admin Dashboard</h1><div><button class="smallBtn green" onclick="openSettings()">⚙️ Website Settings</button> <button class="smallBtn" onclick="openPasswordChange()">🔑 Change Password</button> <button class="smallBtn" onclick="logout()">Logout</button></div></div>
+<div class="card"><h2>➕ Add Student</h2><div class="form"><input id="sId" placeholder="Student ID (e.g. SA001)"><input id="sName" placeholder="Student name"><input id="sPhone" placeholder="Phone"><div style="display:grid;grid-template-columns:1fr 1fr;gap:8px"><select id="sClass"><option value="">Select Class</option><option value="9">9th</option><option value="10">10th</option></select><select id="sSection"><option value="">Select Section</option><option value="A">Section A</option><option value="B">Section B</option><option value="C">Section C</option></select></div><input id="sPass" type="password" placeholder="Password"><button class="primary" onclick="addStudent()">Add Student</button><div class="msg" id="adminMsg"></div></div></div>
+<div class="card"><h2>📢 Announcements</h2><div class="form"><input id="aTitle" placeholder="Announcement title"><textarea id="aMessage" placeholder="Announcement details..." style="min-height:100px;resize:vertical"></textarea><button class="primary" onclick="addAnnouncement()">📢 Add Announcement</button><div class="msg" id="announcementMsg"></div></div><div class="tableWrap"><table><thead><tr><th>Announcement</th><th>Date</th><th>Action</th></tr></thead><tbody id="adminAnnouncementRows"></tbody></table></div></div>
+<div class="card"><h2>Students</h2><input id="search" placeholder="Search student..." oninput="renderStudents()" style="width:100%;padding:11px;border:1px solid #ccd7e8;border-radius:9px"><div class="tableWrap"><table><thead><tr><th>ID</th><th>Name</th><th>Class</th><th>Section</th><th>Actions</th></tr></thead><tbody id="studentRows"></tbody></table></div></div>
+<div class="card"><h2>🔐 Student Passwords</h2><div class="tableWrap"><table><thead><tr><th>Student ID</th><th>Name</th><th>Password Status</th></tr></thead><tbody id="passwordRows"></tbody></table></div></div></div>
 
 <div class="dash" id="studentDash"><div class="dashHead"><h1>Student Dashboard</h1><div><button class="smallBtn" onclick="openStudentPasswordChange()">🔑 Change Password</button> <button class="smallBtn" onclick="logout()">Logout</button></div></div><div class="card" id="profileCard"></div><div class="card"><h2>📢 Latest Announcements</h2><div id="studentAnnouncements"><p style="color:#69778d">Loading announcements...</p></div></div><div class="card"><h2>My Result</h2><div class="tableWrap"><table><thead><tr><th>Subject</th><th>Obtained</th><th>Total</th><th>%</th></tr></thead><tbody id="resultRows"></tbody></table></div><h3 id="overall"></h3></div></div>
 
+<!-- Teacher dashboard -->
+<div class="dash" id="teacherDash">
+  <div class="teacherHero">
+    <div class="dashHead">
+      <div><h1>👨‍🏫 Teacher Dashboard</h1><p id="teacherWelcome">Enter marks quickly</p></div>
+      <button class="smallBtn" onclick="logout()">Logout</button>
+    </div>
+    <div class="statGrid"><div class="stat"><span>Students</span><b id="teacherStudentCount">0</b></div><div class="stat"><span>Selected Class</span><b id="teacherClassStat">—</b></div><div class="stat"><span>Selected Section</span><b id="teacherSectionStat">—</b></div></div>
+  </div>
+  <div class="card">
+    <h2>📝 Enter Class Marks</h2>
+    <p style="color:#667;margin-top:-5px">Class, section, subject aur total marks <b>sirf ek dafa</b> select karein. Neeche har student ke saamne obtained marks likhein. Jis student ka mark nahi lagay ga, usay <b>0</b> save kiya jayega.</p>
+    <div class="filters">
+      <div><label>CLASS</label><select id="teacherClass" onchange="prepareTeacherEntry()"><option value="">Select Class</option><option value="9">9th</option><option value="10">10th</option></select></div>
+      <div><label>SECTION</label><select id="teacherSection" onchange="prepareTeacherEntry()"><option value="">Select Section</option><option value="A">Section A</option><option value="B">Section B</option><option value="C">Section C</option></select></div>
+      <div><label>SUBJECT</label><input id="teacherSubject" placeholder="e.g. Mathematics" oninput="prepareTeacherEntry()"></div>
+      <div><label>SEARCH STUDENT</label><input id="teacherSearch" placeholder="Name / ID" oninput="renderTeacherEntry()"></div>
+    </div>
+    <div class="totalBox"><div><label>TOTAL MARKS (ONCE)</label><input id="teacherTotal" type="number" min="1" placeholder="e.g. 10" oninput="renderTeacherEntry()"></div><div style="flex:2;color:#667;font-size:14px;padding-bottom:10px">Example: Total = <b>10</b>. Then only write each student's obtained marks. Blank = <b>0</b>.</div></div>
+  </div>
+  <div class="card" id="teacherEntryCard" style="display:none">
+    <div class="dashHead"><div><h2 style="margin-bottom:4px">👥 Students</h2><p id="teacherEntryInfo" style="margin:0;color:#667"></p></div><button class="smallBtn" onclick="fillAllTeacherZeros()">Set all blank to 0</button></div>
+    <div class="tableWrap"><table class="markTable"><thead><tr><th>#</th><th>Student</th><th>ID</th><th>Section</th><th>Obtained / Total</th></tr></thead><tbody id="teacherEntryRows"></tbody></table></div>
+    <div class="saveBar"><span id="teacherSaveMsg" style="color:#667">Ready.</span><button class="primary" onclick="saveTeacherMarks()">💾 Save All Marks</button></div>
+  </div>
+</div>
+
 <div class="modalBg" id="marksModal"><div class="modal"><button class="x" onclick="closeMarks()">×</button><h2>Manage Marks</h2><p id="marksStudentName"></p><div class="form"><input id="mSubject" placeholder="Subject"><input id="mObtained" type="number" placeholder="Obtained marks"><input id="mTotal" type="number" placeholder="Total marks"><button class="primary" onclick="saveMark()">Add / Save Mark</button><div class="msg" id="marksMsg"></div></div><div class="tableWrap"><table><thead><tr><th>Subject</th><th>Obt.</th><th>Total</th><th>Action</th></tr></thead><tbody id="marksRows"></tbody></table></div></div></div>
 
-
-<div class="modalBg" id="passwordModal"><div class="modal"><button class="x" onclick="closePasswordChange()">×</button><h2>🔑 Change Admin Password</h2><p style="color:#667;margin-bottom:15px">Apni current password verify karke nayi password set karein.</p><div class="form"><label><b>Current Password</b></label><input id="currentAdminPassword" type="password" placeholder="Current password"><label><b>New Password</b></label><input id="newAdminPassword" type="password" placeholder="New password (6+ characters)"><label><b>Confirm New Password</b></label><input id="confirmAdminPassword" type="password" placeholder="Confirm new password"><button class="primary" style="width:100%;margin-top:10px" onclick="changeAdminPassword()">🔐 Update Password</button><div class="msg" id="passwordMsg"></div></div></div></div>
-
-<div class="modalBg" id="studentPasswordModal"><div class="modal"><button class="x" onclick="closeStudentPasswordChange()">×</button><h2>🔑 Change Password</h2><p style="color:#667;margin-bottom:15px">Apna current password verify karke naya password set karein.</p><div class="form"><label><b>Current Password</b></label><input id="currentStudentPassword" type="password" placeholder="Current password"><label><b>New Password</b></label><input id="newStudentPassword" type="password" placeholder="New password (6+ characters)"><label><b>Confirm New Password</b></label><input id="confirmStudentPassword" type="password" placeholder="Confirm new password"><button class="primary" style="width:100%;margin-top:10px" onclick="changeStudentPassword()">🔐 Update Password</button><div class="msg" id="studentPasswordMsg"></div></div></div></div>
-
-<div class="modalBg" id="settingsModal"><div class="modal"><button class="x" onclick="closeSettings()">×</button>
-<h2>⚙️ Website Settings</h2>
-<p style="color:#667;margin-bottom:15px">Yahan se contact details aur website ki 2 pictures change karein. Code edit karne ki zaroorat nahi.</p>
-<div class="form">
-<label><b>Academy Name</b></label><input id="setName" placeholder="Sajjad Academy">
-<label><b>Phone</b></label><input id="setPhone" placeholder="+92 300 1234567">
-<label><b>WhatsApp</b></label><input id="setWhatsapp" placeholder="+92 300 1234567">
-<label><b>Email</b></label><input id="setEmail" placeholder="academy@gmail.com">
-<label><b>Address</b></label><input id="setAddress" placeholder="Sajjad Academy, Lahore, Pakistan">
-<label><b>Picture 1 URL</b></label><input id="setPhoto1" type="url" placeholder="https://raw.githubusercontent.com/.../picture1.jpg">
-<label><b>Picture 2 URL</b></label><input id="setPhoto2" type="url" placeholder="https://raw.githubusercontent.com/.../picture2.jpg">
-<button class="primary" style="width:100%;margin-top:12px" onclick="saveSettings()">💾 Save Website Settings</button>
-<div class="msg" id="settingsMsg"></div>
-</div></div></div>
+<div class="modalBg" id="passwordModal"><div class="modal"><button class="x" onclick="closePasswordChange()">×</button><h2>🔑 Change Admin Password</h2><div class="form"><label><b>Current Password</b></label><input id="currentAdminPassword" type="password"><label><b>New Password</b></label><input id="newAdminPassword" type="password"><label><b>Confirm New Password</b></label><input id="confirmAdminPassword" type="password"><button class="primary" style="width:100%;margin-top:10px" onclick="changeAdminPassword()">🔐 Update Password</button><div class="msg" id="passwordMsg"></div></div></div></div>
+<div class="modalBg" id="studentPasswordModal"><div class="modal"><button class="x" onclick="closeStudentPasswordChange()">×</button><h2>🔑 Change Password</h2><div class="form"><label><b>Current Password</b></label><input id="currentStudentPassword" type="password"><label><b>New Password</b></label><input id="newStudentPassword" type="password"><label><b>Confirm New Password</b></label><input id="confirmStudentPassword" type="password"><button class="primary" style="width:100%;margin-top:10px" onclick="changeStudentPassword()">🔐 Update Password</button><div class="msg" id="studentPasswordMsg"></div></div></div></div>
+<div class="modalBg" id="settingsModal"><div class="modal"><button class="x" onclick="closeSettings()">×</button><h2>⚙️ Website Settings</h2><div class="form"><label><b>Academy Name</b></label><input id="setName"><label><b>Phone</b></label><input id="setPhone"><label><b>WhatsApp</b></label><input id="setWhatsapp"><label><b>Email</b></label><input id="setEmail"><label><b>Address</b></label><input id="setAddress"><label><b>Picture 1 URL</b></label><input id="setPhoto1" type="url"><label><b>Picture 2 URL</b></label><input id="setPhoto2" type="url"><button class="primary" style="width:100%;margin-top:12px" onclick="saveSettings()">💾 Save Website Settings</button><div class="msg" id="settingsMsg"></div></div></div></div>
 
 <script type="module">
-import {initializeApp,getApps,getApp} from "https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
+import {initializeApp} from "https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
 import {getAuth,signInWithEmailAndPassword,createUserWithEmailAndPassword,signOut,EmailAuthProvider,reauthenticateWithCredential,updatePassword} from "https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
 import {getFirestore,doc,getDoc,setDoc,updateDoc,deleteDoc,collection,getDocs,addDoc} from "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
 
 const firebaseConfig={apiKey:"AIzaSyCm8xQIZRiIpAcoaVdCegerAV4XV9QUfJo",authDomain:"sajjad-academy.firebaseapp.com",projectId:"sajjad-academy",storageBucket:"sajjad-academy.firebasestorage.app",messagingSenderId:"784589371437",appId:"1:784589371437:web:02e3a54958e8d1209120a4"};
 const app=initializeApp(firebaseConfig),auth=getAuth(app),db=getFirestore(app);
 const secondary=initializeApp(firebaseConfig,"studentCreator"),secondaryAuth=getAuth(secondary);
+let mode="student",students=[],activeStudent=null,editingMark=-1,announcements=[];
 
-let mode="student",students=[],activeStudent=null,editingMark=-1;
+function esc(v){return String(v??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[c]))}
 
-window.openLogin=m=>{mode=m;document.getElementById("loginTitle").textContent=m==="admin"?"Admin Login":m==="teacher"?"Teacher Login":"Student Login";document.getElementById("loginEmail").placeholder=m==="admin"||m==="teacher"?"Teacher/Admin email":"Student ID";document.getElementById("loginMsg").textContent="";document.getElementById("loginModal").style.display="flex"};
+window.openLogin=m=>{mode=m;document.getElementById("loginTitle").textContent=m==="admin"?"Admin Login":m==="teacher"?"Teacher Login":"Student Login";document.getElementById("loginEmail").placeholder=m==="admin"||m==="teacher"?"Admin/Teacher email":"Student ID";document.getElementById("loginMsg").textContent="";document.getElementById("loginModal").style.display="flex"};
 window.closeLogin=()=>document.getElementById("loginModal").style.display="none";
-window.doLogin=async()=>{const id=document.getElementById("loginEmail").value.trim(),pw=document.getElementById("loginPassword").value;const msg=document.getElementById("loginMsg");msg.textContent="Logging in...";try{const email=mode==="student"?id.toLowerCase()+"@students.sajjadacademy.local":id;await signInWithEmailAndPassword(auth,email,pw);const u=auth.currentUser;if(mode==="admin" || mode==="teacher"){const ud=await getDoc(doc(db,"users",u.uid));const role=ud.exists()?ud.data().role:null;if(mode==="admin"){if(role!=="admin")throw new Error("This account is not an admin.");await showAdmin()}else{if(role!=="teacher")throw new Error("This account is not a teacher.");await showTeacher(u,ud.data())}}else await showStudent(u.uid)}catch(e){msg.textContent=e.message.replace("Firebase: ","")}};
-async function showAdmin(){closeLogin();document.querySelectorAll(".hero,.features,.section,.contact,.footer").forEach(x=>x.classList.add("hidden"));document.getElementById("adminDash").style.display="block";await loadStudents();await loadAnnouncements()}
-async function loadStudents(){const snap=await getDocs(collection(db,"students"));students=snap.docs.map(d=>({id:d.id,...d.data()}));renderStudents()}
 
-let announcements=[];
+window.doLogin=async()=>{
+ const id=document.getElementById("loginEmail").value.trim(),pw=document.getElementById("loginPassword").value,msg=document.getElementById("loginMsg");
+ msg.textContent="Logging in...";
+ try{
+  const email=mode==="student"?id.toLowerCase()+"@students.sajjadacademy.local":id;
+  await signInWithEmailAndPassword(auth,email,pw);
+  const u=auth.currentUser;
+  if(mode==="admin"||mode==="teacher"){
+   const ud=await getDoc(doc(db,"users",u.uid)),role=ud.exists()?ud.data().role:null;
+   if(mode==="admin"){if(role!=="admin")throw new Error("This account is not an admin.");await showAdmin()}
+   else{if(role!=="teacher")throw new Error("This account is not a teacher.");await showTeacher(u,ud.data())}
+  }else await showStudent(u.uid);
+ }catch(e){msg.textContent=e.message.replace("Firebase: ","")}
+};
+
+function hidePublic(){document.querySelectorAll("header,.hero,.features,.section,.contact,.footer").forEach(x=>x.classList.add("hidden"))}
+async function showAdmin(){closeLogin();hidePublic();document.getElementById("adminDash").style.display="block";await loadStudents();await loadAnnouncements()}
+async function loadStudents(){const snap=await getDocs(collection(db,"students"));students=snap.docs.map(d=>({id:d.id,...d.data()}));if(document.getElementById("studentRows"))renderStudents()}
+
 function announcementDate(v){try{return new Date(Number(v)||v).toLocaleString("en-PK",{dateStyle:"medium",timeStyle:"short"})}catch(e){return ""}}
 function announcementCard(a,admin=false){return `<div style="background:#fff;border-left:5px solid #4f72ff;border-radius:12px;padding:16px 18px;margin:10px 0;box-shadow:0 4px 18px #173b7610"><div style="display:flex;justify-content:space-between;gap:10px;align-items:flex-start"><div><h3 style="margin:0 0 6px">📢 ${esc(a.title)}</h3><p style="margin:0;color:#596a82;line-height:1.6;white-space:pre-wrap">${esc(a.message)}</p><small style="color:#8996a8;display:block;margin-top:10px">${announcementDate(a.createdAt)}</small></div>${admin?`<button class="smallBtn danger" onclick="deleteAnnouncement('${a.id}')">Delete</button>`:""}</div></div>`}
-async function loadAnnouncements(){
-  try{
-    const snap=await getDocs(collection(db,"announcements"));
-    announcements=snap.docs.map(d=>({id:d.id,...d.data()})).sort((a,b)=>Number(b.createdAt||0)-Number(a.createdAt||0));
-    const html=announcements.length?announcements.map(a=>announcementCard(a)).join(""):'<p style="text-align:center;color:#69778d">No announcements yet.</p>';
-    const pub=document.getElementById("publicAnnouncements"); if(pub) pub.innerHTML=html;
-    const stu=document.getElementById("studentAnnouncements"); if(stu) stu.innerHTML=html;
-    const admin=document.getElementById("adminAnnouncementRows"); if(admin) admin.innerHTML=announcements.length?announcements.map(a=>`<tr><td><b>${esc(a.title)}</b><br><span style="color:#69778d;white-space:pre-wrap">${esc(a.message)}</span></td><td>${announcementDate(a.createdAt)}</td><td><button class="smallBtn danger" onclick="deleteAnnouncement('${a.id}')">Delete</button></td></tr>`).join(""):'<tr><td colspan="3">No announcements yet.</td></tr>';
-  }catch(e){
-    const msg=e.message.replace("Firebase: ","");
-    ["publicAnnouncements","studentAnnouncements"].forEach(id=>{const el=document.getElementById(id);if(el)el.innerHTML=`<p style="color:#d33">${esc(msg)}</p>`});
-    const admin=document.getElementById("adminAnnouncementRows");if(admin)admin.innerHTML=`<tr><td colspan="3" style="color:#d33">${esc(msg)}</td></tr>`;
-  }
-}
-window.addAnnouncement=async()=>{
-  const title=document.getElementById("aTitle").value.trim(),message=document.getElementById("aMessage").value.trim(),msg=document.getElementById("announcementMsg");
-  msg.style.color="#d33";msg.textContent="";
-  if(!title||!message){msg.textContent="Title aur announcement details dono likhein.";return}
-  try{
-    msg.textContent="Saving...";
-    await addDoc(collection(db,"announcements"),{title,message,createdAt:Date.now()});
-    document.getElementById("aTitle").value="";document.getElementById("aMessage").value="";
-    msg.style.color="#087443";msg.textContent="Announcement add ho gayi hai.";
-    await loadAnnouncements();
-  }catch(e){msg.textContent=e.message.replace("Firebase: ","")}
-};
-window.deleteAnnouncement=async id=>{if(!confirm("Is announcement ko delete karna hai?"))return;try{await deleteDoc(doc(db,"announcements",id));await loadAnnouncements()}catch(e){alert(e.message.replace("Firebase: ",""))}};
-window.renderStudents=()=>{const q=(document.getElementById("search")?.value||"").toLowerCase();const filtered=students.filter(s=>(s.studentId+" "+s.name+" "+s.className).toLowerCase().includes(q));document.getElementById("studentRows").innerHTML=filtered.map(s=>`<tr><td>${esc(s.studentId)}</td><td>${esc(s.name)}</td><td>${esc(s.className||"")}</td><td><button class="smallBtn" onclick="editStudent('${s.id}')">Edit</button><button class="smallBtn green" onclick="openMarks('${s.id}')">Marks</button><button class="smallBtn danger" onclick="deleteStudent('${s.id}')">Delete</button></td></tr>`).join("");const pr=document.getElementById("passwordRows");if(pr)pr.innerHTML=students.map(s=>`<tr><td>${esc(s.studentId)}</td><td>${esc(s.name)}</td><td>${s.passwordChanged?'<span style="color:#087443;font-weight:700">✅ Changed</span>':'<span style="color:#b45309;font-weight:700">🟡 Not changed</span>'}</td></tr>`).join("")||"<tr><td colspan='3'>No students yet.</td></tr>"};
-window.addStudent=async()=>{const id=document.getElementById("sId").value.trim().toUpperCase(),name=document.getElementById("sName").value.trim(),phone=document.getElementById("sPhone").value.trim(),className=document.getElementById("sClass").value.trim(),pw=document.getElementById("sPass").value, msg=document.getElementById("adminMsg");if(!id||!name||pw.length<6){msg.textContent="Student ID, name and password (6+ characters) are required.";return}try{const email=id.toLowerCase()+"@students.sajjadacademy.local";const cred=await createUserWithEmailAndPassword(secondaryAuth,email,pw);await setDoc(doc(db,"students",cred.user.uid),{studentId:id,name,phone,className,marks:[],passwordChanged:false});msg.style.color="#087443";msg.textContent="Student added successfully.";["sId","sName","sPhone","sClass","sPass"].forEach(x=>document.getElementById(x).value="");await loadStudents();await signOut(secondaryAuth)}catch(e){msg.style.color="#d33";msg.textContent=e.message}}
-window.editStudent=async uid=>{const s=students.find(x=>x.id===uid);const name=prompt("Student name:",s.name);if(name===null)return;const phone=prompt("Phone:",s.phone||"");const cls=prompt("Class:",s.className||"");await updateDoc(doc(db,"students",uid),{name,phone,className:cls});await loadStudents()}
-window.deleteStudent=async uid=>{if(!confirm("Delete this student's record?"))return;await deleteDoc(doc(db,"students",uid));await loadStudents();alert("Firestore record deleted. Firebase Auth account is still active; full Auth deletion needs an Admin SDK/Cloud Function.")}
-window.openMarks=async uid=>{activeStudent=students.find(x=>x.id===uid);editingMark=-1;document.getElementById("marksStudentName").textContent=activeStudent.name+" ("+activeStudent.studentId+")";document.getElementById("marksModal").style.display="flex";document.getElementById("mSubject").value="";document.getElementById("mObtained").value="";document.getElementById("mTotal").value="";renderMarks()}
+async function loadAnnouncements(){try{const snap=await getDocs(collection(db,"announcements"));announcements=snap.docs.map(d=>({id:d.id,...d.data()})).sort((a,b)=>Number(b.createdAt||0)-Number(a.createdAt||0));const html=announcements.length?announcements.map(a=>announcementCard(a)).join(""):'<p style="text-align:center;color:#69778d">No announcements yet.</p>';const pub=document.getElementById("publicAnnouncements");if(pub)pub.innerHTML=html;const stu=document.getElementById("studentAnnouncements");if(stu)stu.innerHTML=html;const admin=document.getElementById("adminAnnouncementRows");if(admin)admin.innerHTML=announcements.length?announcements.map(a=>`<tr><td><b>${esc(a.title)}</b><br>${esc(a.message)}</td><td>${announcementDate(a.createdAt)}</td><td><button class="smallBtn danger" onclick="deleteAnnouncement('${a.id}')">Delete</button></td></tr>`).join(""):'<tr><td colspan="3">No announcements yet.</td></tr>'}catch(e){}}
+window.addAnnouncement=async()=>{const title=document.getElementById("aTitle").value.trim(),message=document.getElementById("aMessage").value.trim(),msg=document.getElementById("announcementMsg");if(!title||!message){msg.textContent="Title aur details likhein.";return}try{await addDoc(collection(db,"announcements"),{title,message,createdAt:Date.now()});document.getElementById("aTitle").value="";document.getElementById("aMessage").value="";msg.style.color="#087443";msg.textContent="Announcement add ho gayi hai.";await loadAnnouncements()}catch(e){msg.textContent=e.message}};
+window.deleteAnnouncement=async id=>{if(!confirm("Delete announcement?"))return;try{await deleteDoc(doc(db,"announcements",id));await loadAnnouncements()}catch(e){alert(e.message)}};
+
+window.renderStudents=()=>{const q=(document.getElementById("search")?.value||"").toLowerCase();const filtered=students.filter(s=>(s.studentId+" "+s.name+" "+s.className+" "+s.section).toLowerCase().includes(q));document.getElementById("studentRows").innerHTML=filtered.map(s=>`<tr><td>${esc(s.studentId)}</td><td>${esc(s.name)}</td><td>${esc(s.className||"")}</td><td><span class="sectionBadge">${esc(s.section||"—")}</span></td><td><button class="smallBtn" onclick="editStudent('${s.id}')">Edit</button><button class="smallBtn green" onclick="openMarks('${s.id}')">Marks</button><button class="smallBtn danger" onclick="deleteStudent('${s.id}')">Delete</button></td></tr>`).join("")||"<tr><td colspan='5'>No students found.</td></tr>";const pr=document.getElementById("passwordRows");if(pr)pr.innerHTML=students.map(s=>`<tr><td>${esc(s.studentId)}</td><td>${esc(s.name)}</td><td>${s.passwordChanged?'<span style="color:#087443;font-weight:700">✅ Changed</span>':'<span style="color:#b45309;font-weight:700">🟡 Not changed</span>'}</td></tr>`).join("")||"<tr><td colspan='3'>No students yet.</td></tr>"};
+
+window.addStudent=async()=>{const id=document.getElementById("sId").value.trim().toUpperCase(),name=document.getElementById("sName").value.trim(),phone=document.getElementById("sPhone").value.trim(),className=document.getElementById("sClass").value,section=document.getElementById("sSection").value,pw=document.getElementById("sPass").value,msg=document.getElementById("adminMsg");if(!id||!name||!className||!section||pw.length<6){msg.textContent="ID, name, class, section aur 6+ character password required hain.";return}try{const email=id.toLowerCase()+"@students.sajjadacademy.local",cred=await createUserWithEmailAndPassword(secondaryAuth,email,pw);await setDoc(doc(db,"students",cred.user.uid),{studentId:id,name,phone,className,section,marks:[],passwordChanged:false});msg.style.color="#087443";msg.textContent="Student added successfully.";["sId","sName","sPhone","sPass"].forEach(x=>document.getElementById(x).value="");document.getElementById("sClass").value="";document.getElementById("sSection").value="";await loadStudents();await signOut(secondaryAuth)}catch(e){msg.style.color="#d33";msg.textContent=e.message}};
+
+window.editStudent=async uid=>{const s=students.find(x=>x.id===uid);if(!s)return;const name=prompt("Student name:",s.name);if(name===null)return;const phone=prompt("Phone:",s.phone||"");const cls=prompt("Class (9 or 10):",s.className||"");const sec=prompt("Section (A/B/C):",s.section||"");await updateDoc(doc(db,"students",uid),{name,phone,className:cls,section:sec});await loadStudents()};
+window.deleteStudent=async uid=>{if(!confirm("Delete this student's record?"))return;await deleteDoc(doc(db,"students",uid));await loadStudents();alert("Firestore record deleted. Firebase Auth account remains active.")};
+
+window.openMarks=async uid=>{activeStudent=students.find(x=>x.id===uid);editingMark=-1;document.getElementById("marksStudentName").textContent=activeStudent.name+" ("+activeStudent.studentId+")";document.getElementById("marksModal").style.display="flex";document.getElementById("mSubject").value="";document.getElementById("mObtained").value="";document.getElementById("mTotal").value="";document.getElementById("marksMsg").textContent="";renderMarks()};
 window.closeMarks=()=>document.getElementById("marksModal").style.display="none";
-function renderMarks(){const a=activeStudent.marks||[];document.getElementById("marksRows").innerHTML=a.map((m,i)=>`<tr><td>${esc(m.subject)}</td><td>${m.obtained}</td><td>${m.total}</td><td><button class="smallBtn" onclick="editMark(${i})">Edit</button><button class="smallBtn danger" onclick="removeMark(${i})">Delete</button></td></tr>`).join("")}
-window.editMark=i=>{const m=activeStudent.marks[i];editingMark=i;document.getElementById("mSubject").value=m.subject;document.getElementById("mObtained").value=m.obtained;document.getElementById("mTotal").value=m.total}
-window.saveMark=async()=>{const subject=document.getElementById("mSubject").value.trim(),obt=Number(document.getElementById("mObtained").value),total=Number(document.getElementById("mTotal").value);if(!subject||total<=0||obt<0||obt>total){document.getElementById("marksMsg").textContent="Enter valid marks.";return}const arr=[...(activeStudent.marks||[])];const item={subject,obtained:obt,total};if(editingMark<0)arr.push(item);else arr[editingMark]=item;await updateDoc(doc(db,"students",activeStudent.id),{marks:arr});activeStudent.marks=arr;editingMark=-1;document.getElementById("mSubject").value="";document.getElementById("mObtained").value="";document.getElementById("mTotal").value="";document.getElementById("marksMsg").textContent="Saved.";renderMarks();await loadStudents();activeStudent=students.find(x=>x.id===activeStudent.id)}
-window.removeMark=async i=>{if(!confirm("Delete this mark?"))return;const arr=[...(activeStudent.marks||[])];arr.splice(i,1);await updateDoc(doc(db,"students",activeStudent.id),{marks:arr});activeStudent.marks=arr;renderMarks();await loadStudents();activeStudent=students.find(x=>x.id===activeStudent.id)}
-async function showStudent(uid){const snap=await getDoc(doc(db,"students",uid));if(!snap.exists())throw new Error("Student record not found.");activeStudent={id:snap.id,...snap.data()};closeLogin();document.querySelectorAll(".hero,.features,.section,.contact,.footer").forEach(x=>x.classList.add("hidden"));document.getElementById("studentDash").style.display="block";document.getElementById("profileCard").innerHTML=`<h2>${esc(activeStudent.name)}</h2><p><b>Student ID:</b> ${esc(activeStudent.studentId)}<br><b>Class:</b> ${esc(activeStudent.className||"")}<br><b>Phone:</b> ${esc(activeStudent.phone||"")}</p>`;const marks=activeStudent.marks||[];document.getElementById("resultRows").innerHTML=marks.map(m=>`<tr><td>${esc(m.subject)}</td><td>${m.obtained}</td><td>${m.total}</td><td>${((m.obtained/m.total)*100).toFixed(1)}%</td></tr>`).join("")||"<tr><td colspan='4'>No marks added yet.</td></tr>";const ob=marks.reduce((a,m)=>a+Number(m.obtained),0),to=marks.reduce((a,m)=>a+Number(m.total),0);document.getElementById("overall").textContent=to?`Overall: ${ob}/${to} (${((ob/to)*100).toFixed(1)}%)`:"Overall: —";await loadAnnouncements()}
+function renderMarks(){const a=activeStudent?.marks||[];document.getElementById("marksRows").innerHTML=a.map((m,i)=>`<tr><td>${esc(m.subject)}</td><td>${m.obtained}</td><td>${m.total}</td><td><button class="smallBtn" onclick="editMark(${i})">Edit</button><button class="smallBtn danger" onclick="removeMark(${i})">Delete</button></td></tr>`).join("")||"<tr><td colspan='4'>No marks yet.</td></tr>"}
+window.editMark=i=>{const m=activeStudent.marks[i];editingMark=i;document.getElementById("mSubject").value=m.subject;document.getElementById("mObtained").value=m.obtained;document.getElementById("mTotal").value=m.total};
+window.saveMark=async()=>{const subject=document.getElementById("mSubject").value.trim(),obt=Number(document.getElementById("mObtained").value),total=Number(document.getElementById("mTotal").value),msg=document.getElementById("marksMsg");if(!subject||total<=0||obt<0||obt>total){msg.textContent="Enter valid marks.";return}const arr=[...(activeStudent.marks||[])],item={subject,obtained:obt,total};if(editingMark<0)arr.push(item);else arr[editingMark]=item;await updateDoc(doc(db,"students",activeStudent.id),{marks:arr});activeStudent.marks=arr;editingMark=-1;msg.style.color="#087443";msg.textContent="Saved.";document.getElementById("mSubject").value="";document.getElementById("mObtained").value="";document.getElementById("mTotal").value="";renderMarks();await loadStudents();activeStudent=students.find(x=>x.id===activeStudent.id)};
+window.removeMark=async i=>{if(!confirm("Delete this mark?"))return;const arr=[...(activeStudent.marks||[])];arr.splice(i,1);await updateDoc(doc(db,"students",activeStudent.id),{marks:arr});activeStudent.marks=arr;renderMarks();await loadStudents();activeStudent=students.find(x=>x.id===activeStudent.id)};
 
-window.openStudentPasswordChange=()=>{document.getElementById("studentPasswordModal").style.display="flex";["currentStudentPassword","newStudentPassword","confirmStudentPassword"].forEach(id=>document.getElementById(id).value="");const msg=document.getElementById("studentPasswordMsg");msg.textContent="";msg.style.color="#d33"};
+async function showStudent(uid){const snap=await getDoc(doc(db,"students",uid));if(!snap.exists())throw new Error("Student record not found.");activeStudent={id:snap.id,...snap.data()};closeLogin();hidePublic();document.getElementById("studentDash").style.display="block";document.getElementById("profileCard").innerHTML=`<h2>${esc(activeStudent.name)}</h2><p><b>Student ID:</b> ${esc(activeStudent.studentId)}<br><b>Class:</b> ${esc(activeStudent.className||"")} <b>Section:</b> ${esc(activeStudent.section||"")}<br><b>Phone:</b> ${esc(activeStudent.phone||"")}</p>`;const marks=activeStudent.marks||[];document.getElementById("resultRows").innerHTML=marks.map(m=>`<tr><td>${esc(m.subject)}</td><td>${m.obtained}</td><td>${m.total}</td><td>${((m.obtained/m.total)*100).toFixed(1)}%</td></tr>`).join("")||"<tr><td colspan='4'>No marks added yet.</td></tr>";const ob=marks.reduce((a,m)=>a+Number(m.obtained),0),to=marks.reduce((a,m)=>a+Number(m.total),0);document.getElementById("overall").textContent=to?`Overall: ${ob}/${to} (${((ob/to)*100).toFixed(1)}%)`:"Overall: —";await loadAnnouncements()}
+
+window.openStudentPasswordChange=()=>{document.getElementById("studentPasswordModal").style.display="flex";["currentStudentPassword","newStudentPassword","confirmStudentPassword"].forEach(id=>document.getElementById(id).value="");document.getElementById("studentPasswordMsg").textContent=""};
 window.closeStudentPasswordChange=()=>document.getElementById("studentPasswordModal").style.display="none";
-window.changeStudentPassword=async()=>{const current=document.getElementById("currentStudentPassword").value,newPw=document.getElementById("newStudentPassword").value,confirm=document.getElementById("confirmStudentPassword").value,msg=document.getElementById("studentPasswordMsg");msg.style.color="#d33";msg.textContent="";if(!current||!newPw||!confirm){msg.textContent="Sab fields fill karein.";return}if(newPw.length<6){msg.textContent="New password kam az kam 6 characters ki honi chahiye.";return}if(newPw!==confirm){msg.textContent="New passwords match nahi kar rahi.";return}try{const user=auth.currentUser;if(!user||!user.email)throw new Error("Student login required hai.");msg.textContent="Updating...";const credential=EmailAuthProvider.credential(user.email,current);await reauthenticateWithCredential(user,credential);await updatePassword(user,newPw);await updateDoc(doc(db,"students",user.uid),{passwordChanged:true});if(activeStudent)activeStudent.passwordChanged=true;msg.style.color="#087443";msg.textContent="Password successfully change ho gaya hai.";["currentStudentPassword","newStudentPassword","confirmStudentPassword"].forEach(id=>document.getElementById(id).value="");}catch(e){let m=e.message.replace("Firebase: ","");if(e.code==="auth/invalid-credential"||e.code==="auth/wrong-password")m="Current password ghalat hai.";else if(e.code==="auth/weak-password")m="New password kam az kam 6 characters ki honi chahiye.";msg.textContent=m}};
-window.openPasswordChange=()=>{document.getElementById("passwordModal").style.display="flex";["currentAdminPassword","newAdminPassword","confirmAdminPassword"].forEach(id=>document.getElementById(id).value="");const msg=document.getElementById("passwordMsg");msg.textContent="";msg.style.color="#d33"};
+window.changeStudentPassword=async()=>{const current=document.getElementById("currentStudentPassword").value,newPw=document.getElementById("newStudentPassword").value,confirm=document.getElementById("confirmStudentPassword").value,msg=document.getElementById("studentPasswordMsg");if(!current||!newPw||!confirm){msg.textContent="Sab fields fill karein.";return}if(newPw.length<6){msg.textContent="New password 6+ characters ka hona chahiye.";return}if(newPw!==confirm){msg.textContent="Passwords match nahi kar rahi.";return}try{const user=auth.currentUser,credential=EmailAuthProvider.credential(user.email,current);await reauthenticateWithCredential(user,credential);await updatePassword(user,newPw);await updateDoc(doc(db,"students",user.uid),{passwordChanged:true});msg.style.color="#087443";msg.textContent="Password successfully change ho gaya hai."}catch(e){msg.textContent=e.message.replace("Firebase: ","")}};
+
+window.openPasswordChange=()=>{document.getElementById("passwordModal").style.display="flex";["currentAdminPassword","newAdminPassword","confirmAdminPassword"].forEach(id=>document.getElementById(id).value="");document.getElementById("passwordMsg").textContent=""};
 window.closePasswordChange=()=>document.getElementById("passwordModal").style.display="none";
-window.changeAdminPassword=async()=>{const current=document.getElementById("currentAdminPassword").value,newPw=document.getElementById("newAdminPassword").value,confirm=document.getElementById("confirmAdminPassword").value,msg=document.getElementById("passwordMsg");msg.style.color="#d33";msg.textContent="";if(!current||!newPw||!confirm){msg.textContent="Sab fields fill karein.";return}if(newPw.length<6){msg.textContent="New password kam az kam 6 characters ki honi chahiye.";return}if(newPw!==confirm){msg.textContent="New passwords match nahi kar rahi.";return}try{const user=auth.currentUser;if(!user||!user.email)throw new Error("Admin login required hai.");msg.textContent="Updating...";const credential=EmailAuthProvider.credential(user.email,current);await reauthenticateWithCredential(user,credential);await updatePassword(user,newPw);msg.style.color="#087443";msg.textContent="Admin password successfully change ho gayi hai.";document.getElementById("currentAdminPassword").value="";document.getElementById("newAdminPassword").value="";document.getElementById("confirmAdminPassword").value="";}catch(e){let m=e.message.replace("Firebase: ","");if(e.code==="auth/invalid-credential"||e.code==="auth/wrong-password")m="Current password ghalat hai.";else if(e.code==="auth/weak-password")m="New password kam az kam 6 characters ki honi chahiye.";msg.textContent=m}};
-window.openSettings=async()=>{
-  document.getElementById("settingsModal").style.display="flex";
-  const s=await getDoc(doc(db,"settings","website"));
-  const d=s.exists()?s.data():{};
-  document.getElementById("setName").value=d.name||"Sajjad Academy";
-  document.getElementById("setPhone").value=d.phone||"+92 300 1234567";
-  document.getElementById("setWhatsapp").value=d.whatsapp||"+92 300 1234567";
-  document.getElementById("setEmail").value=d.email||"sajjadacademy@gmail.com";
-  document.getElementById("setAddress").value=d.address||"Sajjad Academy, Lahore, Pakistan";
-  document.getElementById("settingsMsg").textContent="";
-};
+window.changeAdminPassword=async()=>{const current=document.getElementById("currentAdminPassword").value,newPw=document.getElementById("newAdminPassword").value,confirm=document.getElementById("confirmAdminPassword").value,msg=document.getElementById("passwordMsg");if(!current||!newPw||!confirm){msg.textContent="Sab fields fill karein.";return}if(newPw.length<6){msg.textContent="New password 6+ characters ka hona chahiye.";return}if(newPw!==confirm){msg.textContent="Passwords match nahi kar rahi.";return}try{const user=auth.currentUser,credential=EmailAuthProvider.credential(user.email,current);await reauthenticateWithCredential(user,credential);await updatePassword(user,newPw);msg.style.color="#087443";msg.textContent="Admin password successfully change ho gayi hai."}catch(e){msg.textContent=e.message.replace("Firebase: ","")}};
+
+window.openSettings=async()=>{document.getElementById("settingsModal").style.display="flex";const s=await getDoc(doc(db,"settings","website")),d=s.exists()?s.data():{};document.getElementById("setName").value=d.name||"Sajjad Academy";document.getElementById("setPhone").value=d.phone||"+92 300 1234567";document.getElementById("setWhatsapp").value=d.whatsapp||"+92 300 1234567";document.getElementById("setEmail").value=d.email||"sajjadacademy@gmail.com";document.getElementById("setAddress").value=d.address||"Sajjad Academy, Lahore, Pakistan";document.getElementById("setPhoto1").value=d.photo1||"";document.getElementById("setPhoto2").value=d.photo2||"";document.getElementById("settingsMsg").textContent=""};
 window.closeSettings=()=>document.getElementById("settingsModal").style.display="none";
-window.saveSettings=async()=>{
-  const msg=document.getElementById("settingsMsg"); msg.style.color="#d33"; msg.textContent="Saving...";
-  try{
-    const name=document.getElementById("setName").value.trim()||"Sajjad Academy";
-    const phone=document.getElementById("setPhone").value.trim();
-    const whatsapp=document.getElementById("setWhatsapp").value.trim();
-    const email=document.getElementById("setEmail").value.trim();
-    const address=document.getElementById("setAddress").value.trim();
-    const data={name,phone,whatsapp,email,address};
-    const photo1=document.getElementById("setPhoto1").value.trim();
-    const photo2=document.getElementById("setPhoto2").value.trim();
-    if(photo1)data.photo1=photo1;
-    if(photo2)data.photo2=photo2;
-    const old=await getDoc(doc(db,"settings","website"));
-    if(old.exists()){
-      const od=old.data(); if(!data.photo1&&od.photo1)data.photo1=od.photo1; if(!data.photo2&&od.photo2)data.photo2=od.photo2;
-    }
-    await setDoc(doc(db,"settings","website"),data,{merge:true});
-    applySettings(data);
-    msg.style.color="#087443";msg.textContent="Settings save ho gayi hain.";
-    
-  }catch(e){msg.textContent=e.message}
-};
-function applySettings(d){
-  if(d.name){document.getElementById("siteName").textContent=d.name;document.title=d.name+" | Student Portal";document.getElementById("heroName").innerHTML=esc(d.name.replace(/ (.+)$/,""))+" <span>"+esc((d.name.match(/[^ ]+$/)||[""])[0])+"</span>";document.getElementById("contactAddress").innerHTML=esc(d.address||"").replace(/, /g,"<br>")}
-  if(d.phone)document.getElementById("contactPhone").textContent=d.phone;
-  if(d.whatsapp)document.getElementById("contactWhatsapp").textContent=d.whatsapp;
-  if(d.email)document.getElementById("contactEmail").textContent=d.email;
-  if(d.address)document.getElementById("contactAddress").innerHTML=esc(d.address).replace(/, /g,"<br>");
-  if(d.photo1)document.getElementById("photo1").src=d.photo1;
-  if(d.photo2)document.getElementById("photo2").src=d.photo2;
-}
-async function loadPublicSettings(){
-  try{const s=await getDoc(doc(db,"settings","website"));if(s.exists())applySettings(s.data())}catch(e){}
-}
-loadPublicSettings();
-loadAnnouncements();
+window.saveSettings=async()=>{const msg=document.getElementById("settingsMsg");try{const data={name:document.getElementById("setName").value.trim()||"Sajjad Academy",phone:document.getElementById("setPhone").value.trim(),whatsapp:document.getElementById("setWhatsapp").value.trim(),email:document.getElementById("setEmail").value.trim(),address:document.getElementById("setAddress").value.trim(),photo1:document.getElementById("setPhoto1").value.trim(),photo2:document.getElementById("setPhoto2").value.trim()};await setDoc(doc(db,"settings","website"),data,{merge:true});applySettings(data);msg.style.color="#087443";msg.textContent="Settings save ho gayi hain."}catch(e){msg.textContent=e.message}};
+function applySettings(d){if(d.name){document.getElementById("siteName").textContent=d.name;document.title=d.name+" | Student Portal";document.getElementById("heroName").innerHTML=esc(d.name)}if(d.phone)document.getElementById("contactPhone").textContent=d.phone;if(d.whatsapp)document.getElementById("contactWhatsapp").textContent=d.whatsapp;if(d.email)document.getElementById("contactEmail").textContent=d.email;if(d.address)document.getElementById("contactAddress").innerHTML=esc(d.address).replace(/, /g,"<br>");if(d.photo1)document.getElementById("photo1").src=d.photo1;if(d.photo2)document.getElementById("photo2").src=d.photo2}
+async function loadPublicSettings(){try{const s=await getDoc(doc(db,"settings","website"));if(s.exists())applySettings(s.data())}catch(e){}}
 
+let teacherStudentsCache=[],teacherEntryStudents=[];
+async function showTeacher(user,data){closeLogin();hidePublic();document.getElementById("teacherDash").style.display="block";document.getElementById("teacherWelcome").textContent="Welcome, "+(data?.name||user.email||"Teacher")+" — marks access only";await loadStudents();teacherStudentsCache=[...students];document.getElementById("teacherStudentCount").textContent=students.length;prepareTeacherEntry()}
+function prepareTeacherEntry(){document.getElementById("teacherClassStat").textContent=document.getElementById("teacherClass").value||"—";document.getElementById("teacherSectionStat").textContent=document.getElementById("teacherSection").value||"—";renderTeacherEntry()}
+function getTeacherFilteredStudents(){const cls=document.getElementById("teacherClass").value,sec=document.getElementById("teacherSection").value,q=document.getElementById("teacherSearch").value.trim().toLowerCase();return teacherStudentsCache.filter(s=>(!cls||String(s.className)===cls)&&(!sec||String(s.section||"")===sec)&&(!q||(String(s.name||"")+" "+String(s.studentId||"")).toLowerCase().includes(q)))}
+function renderTeacherEntry(){const card=document.getElementById("teacherEntryCard"),body=document.getElementById("teacherEntryRows"),cls=document.getElementById("teacherClass").value,sec=document.getElementById("teacherSection").value,subject=document.getElementById("teacherSubject").value.trim(),total=Number(document.getElementById("teacherTotal").value);if(!cls||!sec||!subject||total<=0){card.style.display="none";return}teacherEntryStudents=getTeacherFilteredStudents();card.style.display="block";document.getElementById("teacherEntryInfo").textContent=`Class ${cls} • Section ${sec} • ${subject} • Total ${total} marks • ${teacherEntryStudents.length} students`;body.innerHTML=teacherEntryStudents.map((s,i)=>{const existing=(s.marks||[]).find(m=>String(m.subject).toLowerCase()===subject.toLowerCase());const value=existing&&Number(existing.total)===total?existing.obtained:"";return `<tr><td>${i+1}</td><td class="studentBadge">${esc(s.name)}</td><td>${esc(s.studentId)}</td><td><span class="sectionBadge">${esc(s.section||sec)}</span></td><td><input class="teacherMarkInput" data-id="${s.id}" data-student="${esc(s.studentId)}" type="number" min="0" max="${total}" value="${value}" placeholder="0"> / ${total}</td></tr>`}).join("")||"<tr><td colspan='5' style='text-align:center;padding:20px'>No students found in this class/section.</td></tr>"}
+window.fillAllTeacherZeros=()=>document.querySelectorAll(".teacherMarkInput").forEach(i=>{if(i.value==="")i.value="0"});
+window.saveTeacherMarks=async()=>{const cls=document.getElementById("teacherClass").value,sec=document.getElementById("teacherSection").value,subject=document.getElementById("teacherSubject").value.trim(),total=Number(document.getElementById("teacherTotal").value),msg=document.getElementById("teacherSaveMsg");if(!cls||!sec||!subject||total<=0){msg.textContent="Class, section, subject aur total marks select karein.";return}const inputs=[...document.querySelectorAll(".teacherMarkInput")];if(!inputs.length){msg.textContent="Students nahi mile.";return}msg.textContent="Saving marks...";try{for(const input of inputs){const s=students.find(x=>x.id===input.dataset.id)||teacherStudentsCache.find(x=>x.id===input.dataset.id);if(!s)continue;let obtained=input.value.trim()===""?0:Number(input.value);if(!Number.isFinite(obtained)||obtained<0)obtained=0;if(obtained>total){throw new Error(`${s.name}: marks total ${total} se zyada nahi ho sakte.`)}const arr=[...(s.marks||[])];const index=arr.findIndex(m=>String(m.subject).toLowerCase()===subject.toLowerCase());const item={subject,obtained,total};if(index>=0)arr[index]=item;else arr.push(item);await updateDoc(doc(db,"students",s.id),{marks:arr})}await loadStudents();teacherStudentsCache=[...students];msg.style.color="#087443";msg.textContent=`✅ ${inputs.length} students ke marks save ho gaye. Blank marks = 0.`;renderTeacherEntry()}catch(e){msg.style.color="#d33";msg.textContent=e.message.replace("Firebase: ","")}};
 window.logout=async()=>{await signOut(auth);location.reload()};
-function esc(v){return String(v??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[c]))}
-window.esc=esc;
-// Teacher dashboard functions are inside the Firebase module so Firestore is available.
-let teacherStudentsCache=[];
-window.showTeacher=async function(user,data){
-  closeLogin();
-  document.querySelectorAll("header,.hero,.features,.section,.contact,.footer").forEach(el=>el.style.display="none");
-  document.getElementById("adminDash").style.display="none";
-  document.getElementById("studentDash").style.display="none";
-  const td=document.getElementById("teacherDash");
-  if(td) td.style.display="block";
-  const w=document.getElementById("teacherWelcome");
-  if(w) w.textContent="Welcome, "+(data?.name || user.email || "Teacher")+" — marks access only";
-  try{
-    await loadStudents();
-    teacherStudentsCache=[...students];
-    window.renderTeacherStudents();
-  }catch(e){
-    const body=document.getElementById("teacherStudentsBody");
-    if(body) body.innerHTML='<tr><td colspan="5" style="text-align:center;color:#d33;padding:20px">'+esc(e.message.replace("Firebase: ",""))+'</td></tr>';
-  }
-};
-window.renderTeacherStudents=function(){
-  const body=document.getElementById("teacherStudentsBody");
-  if(!body)return;
-  const q=(document.getElementById("teacherSearch")?.value||"").trim().toLowerCase();
-  const list=teacherStudentsCache.filter(s=>
-    !q ||
-    String(s.studentId||"").toLowerCase().includes(q) ||
-    String(s.name||"").toLowerCase().includes(q) ||
-    String(s.className||"").toLowerCase().includes(q)
-  );
-  body.innerHTML=list.length?list.map(s=>`
-    <tr>
-      <td>${esc(s.studentId||"")}</td>
-      <td>${esc(s.name||"")}</td>
-      <td>${esc(s.className||"")}</td>
-      <td>${Array.isArray(s.marks)?s.marks.length:0}</td>
-      <td><button class="smallBtn green" onclick="openMarks('${s.id}')">📊 Marks</button></td>
-    </tr>`).join(""):
-    '<tr><td colspan="5" style="text-align:center;padding:20px">No students found.</td></tr>';
-};
 
+loadPublicSettings();loadAnnouncements();
 </script>
-
-<div class="dash" id="teacherDash" style="display:none">
-  <div class="dashHead">
-    <div>
-      <h1>👨‍🏫 Teacher Dashboard</h1>
-      <p id="teacherWelcome">Manage student marks only</p>
-    </div>
-    <button class="btn danger" onclick="logout()">Logout</button>
-  </div>
-  <div class="card">
-    <h2>📊 Students & Marks</h2>
-    <input id="teacherSearch" class="input" placeholder="Search student ID or name..." oninput="renderTeacherStudents()">
-    <div class="tableWrap">
-      <table>
-        <thead><tr><th>ID</th><th>Name</th><th>Class</th><th>Marks</th><th>Action</th></tr></thead>
-        <tbody id="teacherStudentsBody"></tbody>
-      </table>
-    </div>
-  </div>
-</div>
-
-
 </body>
 </html>
