@@ -36,6 +36,21 @@ button,input,select,textarea{font:inherit}
 .statGrid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:15px}.stat{background:#f7f9ff;border-radius:14px;padding:15px}.stat b{font-size:22px;display:block}
 @media(max-width:850px){.nav{display:none}.hero{flex-direction:column;text-align:center}.hero h1{font-size:45px}.loginCard{width:min(360px,100%)}.features{grid-template-columns:1fr 1fr}.contactGrid{grid-template-columns:1fr 1fr}.gallery{grid-template-columns:1fr}.footer{flex-direction:column;text-align:center;gap:8px}.filters{grid-template-columns:1fr 1fr}}
 @media(max-width:520px){.features,.contactGrid,.filters,.statGrid{grid-template-columns:1fr}.hero{padding-top:40px}.teacherHero{padding:20px}.dash{padding:25px 3%}.markTable input{width:85px}}
+
+.marksOverview{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.overviewPanel{background:linear-gradient(135deg,#f8fbff,#eef4ff);border:1px solid #d8e3f5;border-radius:16px;padding:16px}
+.overviewPanel h3{margin:0 0 12px;color:#12366b}
+.overviewStats{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:12px}
+.overviewStat{background:#fff;border-radius:12px;padding:10px 13px;box-shadow:0 3px 12px rgba(20,55,100,.08)}
+.overviewStat b{display:block;font-size:20px;color:#234fc7}
+.overviewStat span{font-size:12px;color:#667}
+.overviewRows{display:grid;gap:8px}
+.overviewRow{display:flex;justify-content:space-between;gap:10px;align-items:center;background:#fff;border-radius:10px;padding:9px 11px;border:1px solid #e3eaf5}
+.overviewRow .left{min-width:0}
+.overviewRow .subject{font-weight:700;color:#183a70}
+.overviewRow .meta{font-size:12px;color:#718096;margin-top:2px}
+.overviewBadge{white-space:nowrap;border-radius:999px;padding:5px 9px;background:#e9f8f0;color:#087443;font-weight:700;font-size:12px}
+@media(max-width:760px){.marksOverview{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
@@ -57,7 +72,7 @@ button,input,select,textarea{font:inherit}
 <div class="card"><h2>➕ Add Student</h2><div class="form"><input id="sId" placeholder="Student ID (e.g. SA001)"><input id="sName" placeholder="Student name"><input id="sPhone" placeholder="Phone"><div style="display:grid;grid-template-columns:1fr 1fr;gap:8px"><select id="sClass"><option value="">Select Class</option><option value="9">9th</option><option value="10">10th</option></select><select id="sSection"><option value="">Select Section</option><option value="A">Section A</option><option value="B">Section B</option><option value="C">Section C</option></select></div><input id="sPass" type="password" placeholder="Password"><button class="primary" onclick="addStudent()">Add Student</button><div class="msg" id="adminMsg"></div></div></div>
 <div class="card"><h2>📢 Announcements</h2><div class="form"><input id="aTitle" placeholder="Announcement title"><textarea id="aMessage" placeholder="Announcement details..." style="min-height:100px;resize:vertical"></textarea><button class="primary" onclick="addAnnouncement()">📢 Add Announcement</button><div class="msg" id="announcementMsg"></div></div><div class="tableWrap"><table><thead><tr><th>Announcement</th><th>Date</th><th>Action</th></tr></thead><tbody id="adminAnnouncementRows"></tbody></table></div></div>
 <div class="card"><h2>Students</h2><input id="search" placeholder="Search student..." oninput="renderStudents()" style="width:100%;padding:11px;border:1px solid #ccd7e8;border-radius:9px"><div class="tableWrap"><table><thead><tr><th>ID</th><th>Name</th><th>Class</th><th>Section</th><th>Actions</th></tr></thead><tbody id="studentRows"></tbody></table></div></div>
-<div class="card"><h2>🔐 Student Passwords</h2><div class="tableWrap"><table><thead><tr><th>Student ID</th><th>Name</th><th>Password Status</th></tr></thead><tbody id="passwordRows"></tbody></table></div></div></div>
+<div class="card"><h2>🔐 Student Passwords</h2><div class="tableWrap"><table><thead><tr><th>Student ID</th><th>Name</th><th>Password Status</th></tr></thead><tbody id="passwordRows"></tbody></table></div></div><div class="card"><h2>📊 Marks Overview</h2><p style="color:#667;margin-top:0">9th aur 10th class ke section-wise marks ka status.</p><div id="adminMarksOverview" class="marksOverview"></div></div></div>
 
 <div class="dash" id="studentDash"><div class="dashHead"><h1>Student Dashboard</h1><div><button class="smallBtn" onclick="openStudentPasswordChange()">🔑 Change Password</button> <button class="smallBtn" onclick="logout()">Logout</button></div></div><div class="card" id="profileCard"></div><div class="card"><h2>📢 Latest Announcements</h2><div id="studentAnnouncements"><p style="color:#69778d">Loading announcements...</p></div></div><div class="card"><h2>My Result</h2><div class="tableWrap"><table><thead><tr><th>Subject</th><th>Obtained</th><th>Total</th><th>%</th></tr></thead><tbody id="resultRows"></tbody></table></div><h3 id="overall"></h3></div></div>
 
@@ -79,6 +94,11 @@ button,input,select,textarea{font:inherit}
       <div><label>SEARCH STUDENT</label><input id="teacherSearch" placeholder="Name / ID" oninput="renderTeacherEntry()"></div>
     </div>
     <div class="totalBox"><div><label>TOTAL MARKS (ONCE)</label><input id="teacherTotal" type="number" min="1" placeholder="e.g. 100" oninput="renderTeacherEntry()"></div><div style="flex:2;color:#667;font-size:14px;padding-bottom:10px">Example: Total = <b>100</b>. Sirf obtained marks likhein. Jis student ko marks nahi milay, blank rehne dein — woh <b>0</b> save hoga.</div></div>
+  </div>
+  <div class="card">
+    <h2 style="margin-bottom:6px">📊 Marks Overview</h2>
+    <p style="color:#667;margin-top:0">Teacher aur Admin dono yahan dekh sakte hain kitne students ke marks enter ho chuke hain.</p>
+    <div id="teacherMarksOverview" class="marksOverview"></div>
   </div>
   <div class="card" id="teacherEntryCard" style="display:none">
     <div class="dashHead"><div><h2 style="margin-bottom:4px">👥 Students</h2><p id="teacherEntryInfo" style="margin:0;color:#667"></p></div><button class="smallBtn" onclick="fillAllTeacherZeros()">Set all blank to 0</button></div>
@@ -125,8 +145,8 @@ window.doLogin=async()=>{
 };
 
 function hidePublic(){document.querySelectorAll("header,.hero,.features,.section,.contact,.footer").forEach(x=>x.classList.add("hidden"))}
-async function showAdmin(){closeLogin();hidePublic();document.getElementById("adminDash").style.display="block";await loadStudents();await loadAnnouncements()}
-async function loadStudents(){const snap=await getDocs(collection(db,"students"));students=snap.docs.map(d=>({id:d.id,...d.data()}));if(document.getElementById("studentRows"))renderStudents()}
+async function showAdmin(){closeLogin();hidePublic();document.getElementById("adminDash").style.display="block";await loadStudents();renderMarksOverview("adminMarksOverview");await loadAnnouncements()}
+async function loadStudents(){const snap=await getDocs(collection(db,"students"));students=snap.docs.map(d=>({id:d.id,...d.data()}));if(document.getElementById("studentRows")){renderStudents();renderMarksOverview("adminMarksOverview")}}
 window.loadStudents=loadStudents;
 
 function announcementDate(v){try{return new Date(Number(v)||v).toLocaleString("en-PK",{dateStyle:"medium",timeStyle:"short"})}catch(e){return ""}}
@@ -182,6 +202,59 @@ function normalizeSection(v){
   return x;
 }
 
+
+function renderMarksOverview(targetId){
+  const box=document.getElementById(targetId);
+  if(!box) return;
+
+  const classes=['9','10'];
+  box.innerHTML=classes.map(cls=>{
+    const classStudents=students.filter(s=>normalizeClass(s.className)===cls);
+    const sections=['A','B','C'];
+    const sectionPanels=sections.map(sec=>{
+      const secStudents=classStudents.filter(s=>normalizeSection(s.section)===sec);
+      const subjectMap={};
+
+      secStudents.forEach(s=>{
+        (Array.isArray(s.marks)?s.marks:[]).forEach(m=>{
+          const subject=String(m.subject||'').trim();
+          if(!subject) return;
+          const key=subject.toLowerCase();
+          if(!subjectMap[key]) subjectMap[key]={subject,marked:0,totalStudents:secStudents.length};
+          subjectMap[key].marked++;
+        });
+      });
+
+      const subjects=Object.values(subjectMap).sort((a,b)=>a.subject.localeCompare(b.subject));
+      const markedStudents=secStudents.filter(s=>Array.isArray(s.marks)&&s.marks.length>0).length;
+      const entries=secStudents.reduce((n,s)=>n+(Array.isArray(s.marks)?s.marks.length:0),0);
+
+      return `<div class="overviewPanel">
+        <h3>Section ${sec}</h3>
+        <div class="overviewStats">
+          <div class="overviewStat"><b>${markedStudents}/${secStudents.length}</b><span>Students with marks</span></div>
+          <div class="overviewStat"><b>${entries}</b><span>Total mark entries</span></div>
+        </div>
+        <div class="overviewRows">
+          ${subjects.length ? subjects.map(x=>`
+            <div class="overviewRow">
+              <div class="left">
+                <div class="subject">${esc(x.subject)}</div>
+                <div class="meta">Students with this subject marks</div>
+              </div>
+              <span class="overviewBadge">${x.marked}/${x.totalStudents}</span>
+            </div>`).join('') : '<div style="color:#718096;font-size:13px">No marks added yet.</div>'}
+        </div>
+      </div>`;
+    }).join('');
+
+    return `<div class="overviewPanel">
+      <h3>📚 Class ${cls==='9'?'9th':'10th'}</h3>
+      <div class="overviewRows">${sectionPanels}</div>
+    </div>`;
+  }).join('');
+}
+
 window.showTeacher=async function showTeacher(user,data){
   closeLogin();
   hidePublic();
@@ -189,6 +262,7 @@ window.showTeacher=async function showTeacher(user,data){
   document.getElementById('teacherWelcome').textContent='Welcome, '+(data?.name||user.email||'Teacher')+' — marks access only';
   await loadStudents();
   teacherStudentsCache=[...students];
+  renderMarksOverview("teacherMarksOverview");
   prepareTeacherEntry();
 };
 
@@ -297,6 +371,7 @@ window.saveTeacherMarks=async function(){
 
     await loadStudents();
     teacherStudentsCache=[...students];
+    renderMarksOverview("teacherMarksOverview");
     msg.style.color='#087443';
     msg.textContent=`✅ ${count} students ke marks save ho gaye. Blank marks = 0.`;
     renderTeacherEntry();
