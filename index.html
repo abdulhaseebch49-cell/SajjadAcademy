@@ -50,6 +50,13 @@ button,input,select,textarea{font:inherit}
 .overviewRow .subject{font-weight:700;color:#183a70}
 .overviewRow .meta{font-size:12px;color:#718096;margin-top:2px}
 .overviewBadge{white-space:nowrap;border-radius:999px;padding:5px 9px;background:#e9f8f0;color:#087443;font-weight:700;font-size:12px}
+
+/* ===== Enhanced Student Management Filters ===== */
+.directoryToolbar{display:grid;grid-template-columns:1.1fr .8fr .8fr auto;gap:10px;margin:12px 0 18px;padding:12px;background:linear-gradient(135deg,#f5f8ff,#ffffff);border:1px solid #e2e9f5;border-radius:15px}
+.directoryField{position:relative}.directoryField label{display:block;font-size:10px;font-weight:800;letter-spacing:.7px;color:#70809a;margin:0 0 5px 3px}.directoryField select,.directoryField input{width:100%;height:44px;padding:0 13px;border:1px solid #d2ddec;border-radius:11px;background:#fff;color:#19345f;outline:none;font-weight:600}.directoryField select:focus,.directoryField input:focus{border-color:#4f72ff;box-shadow:0 0 0 3px #4f72ff18}.filterReset{height:44px;align-self:end;border:1px solid #d7e0ef;border-radius:11px;background:#fff;color:#34517e;font-weight:800;cursor:pointer;padding:0 15px}.filterReset:hover{background:#eef4ff;border-color:#b9cdf2}.directoryResults{display:flex;justify-content:space-between;align-items:center;gap:10px;margin:-4px 0 12px;color:#657793;font-size:12px}.directoryResults b{color:#173b76}.classDirectory{transition:transform .2s,box-shadow .2s}.classDirectory:hover{transform:translateY(-2px);box-shadow:0 10px 28px rgba(30,60,100,.09)}.classDirHead{padding-bottom:10px;border-bottom:1px dashed #dce5f2}.sectionMini{cursor:pointer;transition:.2s}.sectionMini:hover{transform:translateY(-1px);border-color:#b9cdf2;background:#edf4ff}.directoryStudent{transition:.18s}.directoryStudent:hover{transform:translateX(3px);box-shadow:0 5px 16px rgba(33,70,130,.08);border-color:#c7d7f2}.directoryActions{display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end}.directoryActions .smallBtn{white-space:nowrap}
+@media(max-width:900px){.directoryToolbar{grid-template-columns:1fr 1fr}.filterReset{width:100%}}
+@media(max-width:560px){.directoryToolbar{grid-template-columns:1fr}.directoryResults{align-items:flex-start;flex-direction:column}.directoryActions{width:100%;justify-content:flex-start}}
+
 @media(max-width:760px){.marksOverview{grid-template-columns:1fr}}
 
 /* ===== Student dashboard: screenshot-style layout ===== */
@@ -76,7 +83,75 @@ button,input,select,textarea{font:inherit}
 .announcementItem{padding:13px 0 13px 22px;border-bottom:1px solid #e8edf5;position:relative}.announcementItem:last-child{border-bottom:0}.announcementItem:before{content:"";position:absolute;left:2px;top:18px;width:10px;height:10px;border-radius:50%;background:#f4ad22}.announcementItem:nth-child(2):before{background:#1583a9}.announcementItem:nth-child(3):before{background:#f34b63}.announcementItem h3{margin:0 0 7px;font-size:15px}.announcementItem p{margin:0;color:#687b98;font-size:13px;line-height:1.5}.announcementItem small{position:absolute;right:0;top:13px;color:#7b8ba3;font-size:11px}.quoteCard{background:linear-gradient(110deg,#eef3ff,#f6f8ff);min-height:140px;display:flex;align-items:center;gap:13px}.quoteCard .quoteIcon{font-size:27px}.quoteCard p{font-size:15px;line-height:1.55;color:#183a70;margin:0}.quoteCard small{display:block;margin-top:8px;color:#73829a}.keepLearning{background:linear-gradient(105deg,#2459c9,#1264db);color:#fff;display:flex;align-items:center;justify-content:space-between;padding:20px 25px;border-radius:17px}.keepLearning h3{margin:0;font-size:20px}.keepLearning p{margin:5px 0 0;color:#dce9ff;font-size:13px}.keepLearning .arrow{width:38px;height:38px;border:1px solid #fff8;border-radius:50%;display:grid;place-items:center;font-size:22px}
 @media(max-width:1050px){.studentWelcome{grid-template-columns:1.5fr 1fr}.studentWelcome .greenTile{display:none}.studentGrid{grid-template-columns:1fr}}
 @media(max-width:760px){.studentTop{height:72px;padding:0 14px}.studentBrand strong{font-size:21px}.studentBrand small{font-size:11px}.studentBrand .brandIcon{font-size:30px}.studentLayout{grid-template-columns:1fr}.studentSide{display:none}.studentMain{padding:18px 12px}.studentWelcome{grid-template-columns:1fr}.infoTile{min-height:120px}.studentWelcome .infoTile{display:flex}.studentUserText{display:none}.studentGrid{grid-template-columns:1fr}.marksHead{align-items:flex-start;flex-direction:column}.overallMetric{border-left:0;padding:0 8px}.overallBar{gap:9px}}
+
+/* ===== Admin + Teacher: All Students Directory ===== */
+.studentDirectoryCard{position:relative;overflow:hidden;background:linear-gradient(145deg,#ffffff,#f7faff);border:1px solid #dce7f6;box-shadow:0 12px 35px rgba(23,59,118,.09)}
+.studentDirectoryCard:before{content:"";position:absolute;inset:0 0 auto 0;height:4px;background:linear-gradient(90deg,#1767db,#7a4de5,#0b9b77)}
+.directoryHeader{display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;margin-bottom:16px}
+.directoryTitle{display:flex;align-items:center;gap:12px}.directoryIcon{width:48px;height:48px;border-radius:14px;display:grid;place-items:center;background:linear-gradient(135deg,#e8f1ff,#dce9ff);font-size:25px;box-shadow:inset 0 0 0 1px #cfe0fa}.directoryTitle h2{margin:0;font-size:22px}.directoryTitle p{margin:4px 0 0;color:#718096;font-size:13px}
+.directoryStats{display:flex;gap:9px;flex-wrap:wrap}.directoryStat{min-width:88px;background:#f5f8ff;border:1px solid #e0e8f5;border-radius:12px;padding:8px 11px;text-align:center}.directoryStat b{display:block;font-size:19px;color:#174bb4}.directoryStat span{font-size:11px;color:#718096}
+.directorySearch{display:flex;gap:10px;margin:10px 0 17px}.directorySearch input{flex:1;padding:12px 14px;border:1px solid #cfdaea;border-radius:11px;outline:none;background:#fff}.directorySearch input:focus{border-color:#4f72ff;box-shadow:0 0 0 3px #4f72ff18}
+.classDirectoryGrid{display:grid;grid-template-columns:1fr 1fr;gap:16px}.classDirectory{border:1px solid #dce5f2;border-radius:16px;background:#fff;padding:16px;box-shadow:0 5px 18px rgba(30,60,100,.05)}
+.classDirectory.classNine{background:linear-gradient(145deg,#fbfdff,#f0f6ff)}.classDirectory.classTen{background:linear-gradient(145deg,#fbfffd,#eefbf6)}
+.classDirHead{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:12px}.classDirHead h3{margin:0;font-size:19px}.classPill{padding:5px 10px;border-radius:999px;font-size:11px;font-weight:800;background:#e7efff;color:#2452ad}.classTen .classPill{background:#e3f8ed;color:#087443}
+.sectionMiniGrid{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin-bottom:12px}.sectionMini{padding:8px;border-radius:10px;background:#f7f9fd;border:1px solid #e7edf6;text-align:center}.sectionMini b{display:block;font-size:15px}.sectionMini span{font-size:10px;color:#718096}
+.directoryStudents{display:grid;gap:8px;max-height:370px;overflow:auto;padding-right:2px}.directoryStudent{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:10px 11px;border:1px solid #e6ecf4;border-radius:11px;background:#fff}.directoryStudent:hover{box-shadow:0 5px 16px rgba(23,59,118,.08);transform:translateY(-1px)}.directoryStudentInfo{min-width:0;display:flex;align-items:center;gap:10px}.directoryAvatar{width:35px;height:35px;border-radius:10px;display:grid;place-items:center;background:linear-gradient(135deg,#eaf2ff,#dce8ff);font-weight:800;color:#2454b3;flex:0 0 auto}.directoryStudentName{font-weight:700;color:#17376c;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.directoryStudentMeta{font-size:11px;color:#7a899f;margin-top:2px}.directoryActions{display:flex;gap:5px;flex:0 0 auto}.directoryActions .smallBtn{padding:6px 8px;font-size:11px}.directoryEmpty{text-align:center;padding:22px;color:#718096;font-size:13px;background:#f9fbfe;border:1px dashed #d7e0ee;border-radius:11px}
+.teacherDashPro{background:linear-gradient(135deg,#061f49 0%,#0a3f75 52%,#08795f 100%);border-radius:24px;padding:27px 29px;color:#fff;box-shadow:0 18px 45px rgba(5,40,82,.18);position:relative;overflow:hidden}.teacherDashPro:after{content:"";position:absolute;width:260px;height:260px;border-radius:50%;right:-80px;top:-130px;background:#ffffff14}.teacherDashPro .teacherHeroTop{position:relative;z-index:1;display:flex;justify-content:space-between;align-items:center;gap:20px}.teacherDashPro h1{margin:0 0 7px;font-size:29px}.teacherDashPro p{margin:0;color:#dceef0}.teacherQuickStats{display:flex;gap:9px;flex-wrap:wrap;margin-top:20px;position:relative;z-index:1}.teacherQuickStat{background:#ffffff13;border:1px solid #ffffff22;border-radius:13px;padding:10px 14px;min-width:115px}.teacherQuickStat b{display:block;font-size:20px}.teacherQuickStat span{font-size:11px;color:#cce3e8}.teacherActionRow{display:flex;gap:9px;flex-wrap:wrap}.teacherAction{border:1px solid #ffffff35;background:#ffffff13;color:#fff;border-radius:10px;padding:9px 12px;cursor:pointer;font-weight:700}.teacherAction:hover{background:#fff;color:#0a3b67}
+.teacherDashModern .card{border:1px solid #dce6f3;box-shadow:0 10px 30px rgba(23,59,118,.07)}.teacherDashModern .card h2{color:#11366d}.teacherDashModern .filters{background:#f7faff;border:1px solid #e0e8f5;border-radius:15px;padding:14px}.teacherDashModern .filters>div{background:#fff;border-radius:10px;padding:9px;border:1px solid #e7edf6}.teacherDashModern .filters label{color:#335b93}.teacherDashModern .totalBox{background:linear-gradient(100deg,#f4f8ff,#f0fbf7);border:1px solid #dce8f3;padding:13px;border-radius:14px}.teacherDashModern .saveBar{border:1px solid #d9e4f1}.teacherDashModern .markTable tbody tr:hover{background:#f8fbff}.teacherDashModern .markTable input:focus{outline:none;border-color:#4f72ff;box-shadow:0 0 0 3px #4f72ff18}
+@media(max-width:820px){.classDirectoryGrid{grid-template-columns:1fr}.directoryHeader{align-items:flex-start}.teacherDashPro .teacherHeroTop{flex-direction:column;align-items:flex-start}.teacherQuickStats{width:100%}}
+@media(max-width:520px){.directoryStats{width:100%}.directoryStat{flex:1;min-width:70px}.directorySearch{flex-direction:column}.directoryStudent{align-items:flex-start}.directoryActions{flex-wrap:wrap}.sectionMiniGrid{grid-template-columns:repeat(3,1fr)}}
+
 </style>
+
+<style>
+/* ===== PREMIUM ADMIN PORTAL UPGRADE ===== */
+#adminDash{background:linear-gradient(180deg,#f4f8ff 0%,#f8fbff 55%,#eef4ff 100%);min-height:100vh;padding:28px 4vw 60px!important}
+#adminDash .dashHead{position:relative;overflow:hidden;background:linear-gradient(135deg,#092a68 0%,#1255c7 55%,#2575ee 100%);color:#fff!important;border:0!important;border-radius:24px!important;padding:28px 30px!important;margin-bottom:24px!important;box-shadow:0 18px 45px rgba(21,76,160,.20)!important;align-items:center}
+#adminDash .dashHead:before{content:"";position:absolute;width:230px;height:230px;border-radius:50%;background:rgba(255,255,255,.09);right:-70px;top:-110px}
+#adminDash .dashHead:after{content:"";position:absolute;width:150px;height:150px;border-radius:50%;background:rgba(255,210,60,.10);right:120px;bottom:-100px}
+#adminDash .dashHead h1{position:relative;z-index:2;margin:0;font-size:30px;letter-spacing:-.5px}
+#adminDash .dashHead h1:before{content:"🛡️ ";font-size:25px}
+#adminDash .dashHead>div{position:relative;z-index:2;display:flex;gap:9px;flex-wrap:wrap;justify-content:flex-end}
+#adminDash .dashHead .smallBtn{background:rgba(255,255,255,.13)!important;border:1px solid rgba(255,255,255,.25)!important;color:#fff!important;border-radius:12px!important;padding:10px 14px!important;backdrop-filter:blur(10px);font-weight:700;transition:.2s}
+#adminDash .dashHead .smallBtn:hover{background:#fff!important;color:#1255c7!important;transform:translateY(-2px)}
+#adminDash>.card{position:relative;background:rgba(255,255,255,.94)!important;border:1px solid #dce8fb!important;border-radius:22px!important;padding:24px!important;margin:18px 0!important;box-shadow:0 10px 35px rgba(35,76,135,.08)!important;transition:transform .2s,box-shadow .2s}
+#adminDash>.card:hover{transform:translateY(-2px);box-shadow:0 16px 40px rgba(35,76,135,.12)!important}
+#adminDash>.card h2{display:flex;align-items:center;gap:9px;margin:0 0 18px!important;color:#102d63!important;font-size:21px!important}
+#adminDash>.card h2:after{content:"";height:4px;width:34px;border-radius:99px;background:linear-gradient(90deg,#1967e8,#56a5ff);margin-left:auto}
+#adminDash .form input,#adminDash .form select,#adminDash .form textarea,#adminDash>#adminStudentDirectory input,#adminDash>#adminStudentDirectory select,#adminDash #search{border:1px solid #d6e2f4!important;background:#f8fbff!important;border-radius:12px!important;padding:12px 14px!important;outline:none!important;transition:.2s}
+#adminDash input:focus,#adminDash select:focus,#adminDash textarea:focus{border-color:#4b8df8!important;box-shadow:0 0 0 4px rgba(62,133,244,.10)!important;background:#fff!important}
+#adminDash .primary{border:0!important;border-radius:12px!important;padding:12px 18px!important;background:linear-gradient(135deg,#1261dc,#2b83f6)!important;box-shadow:0 8px 18px rgba(26,103,218,.20);font-weight:800;transition:.2s}
+#adminDash .primary:hover{transform:translateY(-2px);box-shadow:0 12px 25px rgba(26,103,218,.27)}
+#adminDash .tableWrap{border:1px solid #e0e9f7!important;border-radius:16px!important;overflow:auto;background:#fff!important}
+#adminDash table{border-collapse:separate!important;border-spacing:0!important;width:100%}
+#adminDash th{background:#f1f6ff!important;color:#31507f!important;font-size:12px!important;text-transform:uppercase;letter-spacing:.5px;padding:14px!important}
+#adminDash td{padding:14px!important;border-top:1px solid #edf2f9!important;color:#344a6b}
+#adminDash tbody tr:hover{background:#f8fbff!important}
+#adminDash .smallBtn{border:1px solid #d7e4f7;border-radius:9px;padding:8px 11px;font-weight:700;cursor:pointer;transition:.2s;background:#fff;color:#2058a7;margin:2px}
+#adminDash .smallBtn:hover{transform:translateY(-1px);box-shadow:0 5px 12px rgba(30,83,150,.12)}
+#adminDash .smallBtn.green{background:#e9fbf3!important;color:#087443!important;border-color:#c5efdd!important}
+#adminDash .smallBtn.danger{background:#fff0f2!important;color:#c5304b!important;border-color:#ffd3da!important}
+#adminDash .sectionBadge{display:inline-flex;align-items:center;justify-content:center;min-width:30px;padding:5px 9px;border-radius:999px;background:#eaf2ff;color:#1760c5;font-weight:800;font-size:12px}
+#adminDash #adminStudentDirectory{overflow:hidden;padding:0!important;border:0!important;background:transparent!important;box-shadow:none!important}
+#adminDash #adminStudentDirectory .directoryHeader{background:linear-gradient(135deg,#071f50,#104cae 62%,#267bf1);color:#fff;border-radius:24px 24px 0 0;padding:26px 28px!important;box-shadow:0 14px 35px rgba(17,71,148,.16)}
+#adminDash #adminStudentDirectory .directoryTitle h2{color:#fff!important;margin-bottom:4px!important}
+#adminDash #adminStudentDirectory .directoryTitle p{color:#d9e7ff!important}
+#adminDash #adminStudentDirectory .directoryIcon{background:rgba(255,255,255,.14)!important;border-color:rgba(255,255,255,.2)!important;box-shadow:none!important}
+#adminDash #adminStudentDirectory .directoryStats{gap:10px!important}
+#adminDash #adminStudentDirectory .directoryStat{background:rgba(255,255,255,.12)!important;border:1px solid rgba(255,255,255,.18)!important;color:#fff!important;min-width:100px;border-radius:15px!important;backdrop-filter:blur(8px)}
+#adminDash #adminStudentDirectory .directoryStat b{color:#fff!important;font-size:22px}
+#adminDash #adminStudentDirectory .directoryStat span{color:#dce9ff!important}
+#adminDash #adminStudentDirectory .directoryToolbar{background:#fff;border:1px solid #dce8f8;border-top:0;padding:18px!important;border-radius:0 0 18px 18px;box-shadow:0 10px 30px rgba(30,75,130,.07);display:grid!important;grid-template-columns:2fr 1fr 1fr auto;gap:12px;align-items:end}
+#adminDash #adminStudentDirectory .directoryField label{font-size:10px!important;font-weight:900!important;letter-spacing:1px;color:#7386a4!important;margin-bottom:6px;display:block}
+#adminDash #adminStudentDirectory .filterReset{height:44px;border:1px solid #d9e4f3;background:#f6f9fd;border-radius:12px;padding:0 16px;font-weight:800;color:#315985;cursor:pointer}
+#adminDash #adminStudentDirectory .directoryResults{margin-top:14px}
+#adminDash #adminStudentDirectoryBody{margin-top:14px}
+#adminDash #adminStudentDirectory .studentDirectoryGrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px}
+#adminDash #adminStudentDirectory .directoryStudentCard{background:#fff;border:1px solid #dce8f8;border-radius:18px;padding:17px;box-shadow:0 7px 22px rgba(30,76,133,.07);transition:.2s}
+#adminDash #adminStudentDirectory .directoryStudentCard:hover{transform:translateY(-3px);box-shadow:0 14px 28px rgba(30,76,133,.12);border-color:#bcd4f7}
+@media(max-width:850px){#adminDash .dashHead{padding:22px}.dashHead>div{justify-content:flex-start!important}.directoryToolbar{grid-template-columns:1fr!important}}
+</style>
+
 </head>
 <body>
 <header class="header"><div class="logo">🎓 <span id="siteName">Sajjad Academy</span></div><nav class="nav"><a href="#home">Home</a><a href="#about">About</a><a href="#gallery">Gallery</a><a href="#contact">Contact</a></nav><button class="topbtn" onclick="openLogin('student')">👤 Login</button></header>
@@ -97,7 +172,8 @@ button,input,select,textarea{font:inherit}
 <div class="card"><h2>➕ Add Student</h2><div class="form"><input id="sId" placeholder="Student ID (e.g. SA001)"><input id="sName" placeholder="Student name"><input id="sPhone" placeholder="Phone"><div style="display:grid;grid-template-columns:1fr 1fr;gap:8px"><select id="sClass"><option value="">Select Class</option><option value="9">9th</option><option value="10">10th</option></select><select id="sSection"><option value="">Select Section</option><option value="A">Section A</option><option value="B">Section B</option><option value="C">Section C</option></select></div><input id="sPass" type="password" placeholder="Password"><button class="primary" onclick="addStudent()">Add Student</button><div class="msg" id="adminMsg"></div></div></div>
 <div class="card"><h2>📢 Announcements</h2><div class="form"><input id="aTitle" placeholder="Announcement title"><textarea id="aMessage" placeholder="Announcement details..." style="min-height:100px;resize:vertical"></textarea><button class="primary" onclick="addAnnouncement()">📢 Add Announcement</button><div class="msg" id="announcementMsg"></div></div><div class="tableWrap"><table><thead><tr><th>Announcement</th><th>Date</th><th>Action</th></tr></thead><tbody id="adminAnnouncementRows"></tbody></table></div></div>
 <div class="card"><h2>Students</h2><input id="search" placeholder="Search student..." oninput="renderStudents()" style="width:100%;padding:11px;border:1px solid #ccd7e8;border-radius:9px"><div class="tableWrap"><table><thead><tr><th>ID</th><th>Name</th><th>Class</th><th>Section</th><th>Actions</th></tr></thead><tbody id="studentRows"></tbody></table></div></div>
-<div class="card"><h2>🔐 Student Passwords</h2><div class="tableWrap"><table><thead><tr><th>Student ID</th><th>Name</th><th>Password Status</th></tr></thead><tbody id="passwordRows"></tbody></table></div></div><div class="card"><h2>📊 Marks Overview</h2><p style="color:#667;margin-top:0">9th aur 10th class ke section-wise marks ka status.</p><div id="adminMarksOverview" class="marksOverview"></div></div></div>
+<div class="card"><h2>🔐 Student Passwords</h2><div class="tableWrap"><table><thead><tr><th>Student ID</th><th>Name</th><th>Password Status</th></tr></thead><tbody id="passwordRows"></tbody></table></div></div><div class="card"><h2>📊 Marks Overview</h2><p style="color:#667;margin-top:0">9th aur 10th class ke section-wise marks ka status.</p><div id="adminMarksOverview" class="marksOverview"></div></div>
+<div class="card studentDirectoryCard" id="adminStudentDirectory"><div class="directoryHeader"><div class="directoryTitle"><div class="directoryIcon">👥</div><div><h2>All Students</h2><p>9th aur 10th class ke tamam students ko ek jagah se manage karein.</p></div></div><div class="directoryStats"><div class="directoryStat"><b id="adminDirTotal">0</b><span>All Students</span></div><div class="directoryStat"><b id="adminDir9">0</b><span>9th Class</span></div><div class="directoryStat"><b id="adminDir10">0</b><span>10th Class</span></div></div></div><div class="directoryToolbar"><div class="directoryField"><label>SEARCH STUDENT</label><input id="adminDirectorySearch" placeholder="🔎 Name or Student ID" oninput="renderStudentDirectory('admin')"></div><div class="directoryField"><label>SELECT CLASS</label><select id="adminDirectoryClass" onchange="renderStudentDirectory('admin')"><option value="all">All Classes</option><option value="9">9th Class</option><option value="10">10th Class</option></select></div><div class="directoryField"><label>SELECT SECTION</label><select id="adminDirectorySection" onchange="renderStudentDirectory('admin')"><option value="all">All Sections</option><option value="A">Section A</option><option value="B">Section B</option><option value="C">Section C</option><option value="UNASSIGNED">Not Assigned</option></select></div><button class="filterReset" onclick="resetDirectoryFilters('admin')">↺ Reset</button></div><div id="adminDirectoryResults" class="directoryResults"></div><div id="adminStudentDirectoryBody"></div></div></div>
 
 <div class="studentPortal" id="studentDash">
   <div class="studentTop">
@@ -138,13 +214,13 @@ button,input,select,textarea{font:inherit}
 </div>
 
 <!-- Teacher dashboard -->
-<div class="dash" id="teacherDash">
-  <div class="teacherHero">
-    <div class="dashHead">
-      <div><h1>👨‍🏫 Teacher Dashboard</h1><p id="teacherWelcome">Enter marks quickly</p></div>
-      <button class="smallBtn" onclick="logout()">Logout</button>
+<div class="dash teacherDashModern" id="teacherDash">
+  <div class="teacherDashPro">
+    <div class="teacherHeroTop">
+      <div><h1>👨‍🏫 Teacher Dashboard</h1><p id="teacherWelcome">Welcome teacher — manage marks with ease</p></div>
+      <div class="teacherActionRow"><button class="teacherAction" onclick="scrollToTeacherDirectory()">👥 All Students</button><button class="teacherAction" onclick="logout()">⇥ Logout</button></div>
     </div>
-    
+    <div class="teacherQuickStats"><div class="teacherQuickStat"><b id="teacherTotalStudents">0</b><span>Total Students</span></div><div class="teacherQuickStat"><b>9th + 10th</b><span>Classes Available</span></div><div class="teacherQuickStat"><b>📝 Fast</b><span>Bulk Marks Entry</span></div></div>
   </div>
   <div class="card">
     <div class="dashHead"><div><h2 style="margin:0">📝 Enter Class Marks</h2><p style="color:#667;margin:6px 0 0">Class, section, subject aur total marks <b>sirf ek dafa</b> select karein. Neeche har student ke saamne obtained marks likhein. Blank chhorne par <b>0</b> save hoga.</p></div></div>
@@ -166,6 +242,7 @@ button,input,select,textarea{font:inherit}
     <div class="tableWrap"><table class="markTable"><thead><tr><th>#</th><th>Student</th><th>ID</th><th>Section</th><th>Obtained / Total</th></tr></thead><tbody id="teacherEntryRows"></tbody></table></div>
     <div class="saveBar"><span id="teacherSaveMsg" style="color:#667">Ready.</span><button class="primary" onclick="saveTeacherMarks()">💾 Save All Marks</button></div>
   </div>
+  <div class="card studentDirectoryCard" id="teacherStudentDirectory"><div class="directoryHeader"><div class="directoryTitle"><div class="directoryIcon">🎓</div><div><h2>All Students</h2><p>Class-wise student list — yahan se student ke marks manage karein.</p></div></div><div class="directoryStats"><div class="directoryStat"><b id="teacherDirTotal">0</b><span>All Students</span></div><div class="directoryStat"><b id="teacherDir9">0</b><span>9th Class</span></div><div class="directoryStat"><b id="teacherDir10">0</b><span>10th Class</span></div></div></div><div class="directoryToolbar"><div class="directoryField"><label>SEARCH STUDENT</label><input id="teacherDirectorySearch" placeholder="🔎 Name or Student ID" oninput="renderStudentDirectory('teacher')"></div><div class="directoryField"><label>SELECT CLASS</label><select id="teacherDirectoryClass" onchange="renderStudentDirectory('teacher')"><option value="all">All Classes</option><option value="9">9th Class</option><option value="10">10th Class</option></select></div><div class="directoryField"><label>SELECT SECTION</label><select id="teacherDirectorySection" onchange="renderStudentDirectory('teacher')"><option value="all">All Sections</option><option value="A">Section A</option><option value="B">Section B</option><option value="C">Section C</option><option value="UNASSIGNED">Not Assigned</option></select></div><button class="filterReset" onclick="resetDirectoryFilters('teacher')">↺ Reset</button></div><div id="teacherDirectoryResults" class="directoryResults"></div><div id="teacherStudentDirectoryBody"></div></div>
 </div>
 
 <div class="modalBg" id="marksModal"><div class="modal"><button class="x" onclick="closeMarks()">×</button><h2>Manage Marks</h2><p id="marksStudentName"></p><div class="form"><input id="mSubject" placeholder="Subject"><input id="mObtained" type="number" placeholder="Obtained marks"><input id="mTotal" type="number" placeholder="Total marks"><button class="primary" onclick="saveMark()">Add / Save Mark</button><div class="msg" id="marksMsg"></div></div><div class="tableWrap"><table><thead><tr><th>Subject</th><th>Obt.</th><th>Total</th><th>Action</th></tr></thead><tbody id="marksRows"></tbody></table></div></div></div>
@@ -207,7 +284,7 @@ window.doLogin=async()=>{
 
 function hidePublic(){document.querySelectorAll("header,.hero,.features,.section,.contact,.footer").forEach(x=>x.classList.add("hidden"))}
 async function showAdmin(){closeLogin();hidePublic();document.getElementById("adminDash").style.display="block";await loadStudents();renderMarksOverview("adminMarksOverview");await loadAnnouncements()}
-async function loadStudents(){const snap=await getDocs(collection(db,"students"));students=snap.docs.map(d=>({id:d.id,...d.data()}));if(document.getElementById("studentRows")){renderStudents();renderMarksOverview("adminMarksOverview")}}
+async function loadStudents(){const snap=await getDocs(collection(db,"students"));students=snap.docs.map(d=>({id:d.id,...d.data()}));if(document.getElementById("studentRows")){renderStudents();renderMarksOverview("adminMarksOverview");renderStudentDirectory('admin')}}
 window.loadStudents=loadStudents;
 
 function announcementDate(v){try{return new Date(Number(v)||v).toLocaleString("en-PK",{dateStyle:"medium",timeStyle:"short"})}catch(e){return ""}}
@@ -355,6 +432,7 @@ window.showTeacher=async function showTeacher(user,data){
   await loadStudents();
   teacherStudentsCache=[...students];
   renderMarksOverview("teacherMarksOverview");
+  renderStudentDirectory('teacher');
   prepareTeacherEntry();
 };
 
@@ -464,6 +542,7 @@ window.saveTeacherMarks=async function(){
     await loadStudents();
     teacherStudentsCache=[...students];
     renderMarksOverview("teacherMarksOverview");
+    renderStudentDirectory('teacher');
     msg.style.color='#087443';
     msg.textContent=`✅ ${count} students ke marks save ho gaye. Blank marks = 0.`;
     renderTeacherEntry();
@@ -472,6 +551,55 @@ window.saveTeacherMarks=async function(){
     msg.textContent=e.message.replace('Firebase: ','');
   }
 };
+
+
+function renderStudentDirectory(role){
+  const body=document.getElementById(role==='admin'?'adminStudentDirectoryBody':'teacherStudentDirectoryBody');
+  if(!body) return;
+  const prefix=role==='admin'?'admin':'teacher';
+  const q=(document.getElementById(prefix+'DirectorySearch')?.value||'').trim().toLowerCase();
+  const cls=document.getElementById(prefix+'DirectoryClass')?.value||'all';
+  const section=document.getElementById(prefix+'DirectorySection')?.value||'all';
+  const matchesSearch=s=>(String(s.name||'')+' '+String(s.studentId||'')+' '+String(s.section||'')).toLowerCase().includes(q);
+  const matchesClass=s=>cls==='all'||normalizeClass(s.className)===cls;
+  const matchesSection=s=>section==='all'||normalizeSection(s.section)===section;
+  const list=students.filter(s=>matchesSearch(s)&&matchesClass(s)&&matchesSection(s));
+  const c9=list.filter(s=>normalizeClass(s.className)==='9'), c10=list.filter(s=>normalizeClass(s.className)==='10');
+  const setText=(id,v)=>{const el=document.getElementById(id);if(el)el.textContent=v};
+  setText(role==='admin'?'adminDirTotal':'teacherDirTotal',students.length);
+  setText(role==='admin'?'adminDir9':'teacherDir9',students.filter(s=>normalizeClass(s.className)==='9').length);
+  setText(role==='admin'?'adminDir10':'teacherDir10',students.filter(s=>normalizeClass(s.className)==='10').length);
+  if(role==='teacher') setText('teacherTotalStudents',students.length);
+  const result=document.getElementById(prefix+'DirectoryResults');
+  if(result) result.innerHTML=`<span>Showing <b>${list.length}</b> of <b>${students.length}</b> students</span><span>${cls==='all'?'All Classes':'Class '+(cls==='9'?'9th':'10th')} • ${section==='all'?'All Sections':section==='UNASSIGNED'?'Not Assigned':'Section '+section}</span>`;
+  const makeClass=(classNo,arr,klass)=>{
+    const sections=['A','B','C','UNASSIGNED'];
+    const mini=sections.map(sec=>`<div class="sectionMini" title="Filter Section ${sec==='UNASSIGNED'?'Not Assigned':sec}" onclick="setDirectorySection('${role}','${sec}')"><b>${arr.filter(s=>normalizeSection(s.section)===sec).length}</b><span>${sec==='UNASSIGNED'?'Not Assigned':'Section '+sec}</span></div>`).join('');
+    const rows=arr.map(s=>{
+      const sec=normalizeSection(s.section); const initial=esc((s.name||s.studentId||'S').charAt(0).toUpperCase());
+      const action=role==='admin'
+        ? `<button class="smallBtn" onclick="editStudent('${s.id}')">✏️ Edit</button><button class="smallBtn green" onclick="openMarks('${s.id}')">📊 Manage Marks</button>`
+        : `<button class="smallBtn green" onclick="openMarks('${s.id}')">📊 Manage Marks</button>`;
+      return `<div class="directoryStudent"><div class="directoryStudentInfo"><div class="directoryAvatar">${initial}</div><div style="min-width:0"><div class="directoryStudentName">${esc(s.name||'Unnamed')}</div><div class="directoryStudentMeta">${esc(s.studentId||'—')} • ${esc(sec?`Section ${sec}`:'Section not assigned')}</div></div></div><div class="directoryActions">${action}</div></div>`;
+    }).join('') || `<div class="directoryEmpty">No students found in Class ${classNo==='9'?'9th':'10th'} with the selected filters.</div>`;
+    return `<div class="classDirectory ${klass}"><div class="classDirHead"><h3>📚 Class ${classNo==='9'?'9th':'10th'}</h3><span class="classPill">${arr.length} Students</span></div><div class="sectionMiniGrid">${mini}</div><div class="directoryStudents">${rows}</div></div>`;
+  };
+  body.innerHTML=`<div class="classDirectoryGrid">${makeClass('9',c9,'classNine')}${makeClass('10',c10,'classTen')}</div>`;
+}
+function setDirectorySection(role,sec){
+  const prefix=role==='admin'?'admin':'teacher';
+  const el=document.getElementById(prefix+'DirectorySection');
+  if(el){el.value=sec;renderStudentDirectory(role);}
+}
+function resetDirectoryFilters(role){
+  const prefix=role==='admin'?'admin':'teacher';
+  const q=document.getElementById(prefix+'DirectorySearch'), c=document.getElementById(prefix+'DirectoryClass'), sec=document.getElementById(prefix+'DirectorySection');
+  if(q)q.value=''; if(c)c.value='all'; if(sec)sec.value='all'; renderStudentDirectory(role);
+}
+window.setDirectorySection=setDirectorySection;
+window.resetDirectoryFilters=resetDirectoryFilters;
+window.renderStudentDirectory=renderStudentDirectory;
+window.scrollToTeacherDirectory=()=>document.getElementById('teacherStudentDirectory')?.scrollIntoView({behavior:'smooth',block:'start'});
 
 window.logout=async()=>{await signOut(auth);location.reload()};
 
