@@ -52,36 +52,30 @@ button,input,select,textarea{font:inherit}
 .overviewBadge{white-space:nowrap;border-radius:999px;padding:5px 9px;background:#e9f8f0;color:#087443;font-weight:700;font-size:12px}
 @media(max-width:760px){.marksOverview{grid-template-columns:1fr}}
 
-.studentMarksCard{background:linear-gradient(135deg,#ffffff,#f7faff);border:1px solid #dce7f7;box-shadow:0 10px 35px #173b7612}
-.studentMarksHead{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
-.studentMarksHead h2{margin:0;color:#12366b}
-.studentMarksHead p{margin:6px 0 0;color:#718096}
-.studentCount{background:linear-gradient(135deg,#eaf1ff,#f4efff);color:#3153b7;border:1px solid #d8e2ff;padding:8px 12px;border-radius:999px;font-weight:800;font-size:13px}
-.studentMarksTable{border-spacing:0 7px;border-collapse:separate}
-.studentMarksTable thead th{background:#edf4ff;color:#173b76;border:0}
-.studentMarksTable tbody tr{background:#fff;box-shadow:0 3px 14px #173b760b}
-.studentMarksTable tbody td{border-bottom:1px solid #edf1f7}
-.studentMarksTable tbody tr:hover{background:#f8fbff;transform:translateY(-1px);transition:.15s}
-.studentNameCell{display:flex;align-items:center;gap:10px;min-width:180px}
-.studentAvatar{width:36px;height:36px;border-radius:50%;display:grid;place-items:center;background:linear-gradient(135deg,#4f72ff,#743ce5);color:#fff;font-weight:800}
-.marksChips{max-width:650px}
-.markChip{box-shadow:0 2px 8px #173b760b}
-.manageMarksBtn{border:0;border-radius:9px;padding:9px 12px;cursor:pointer;background:linear-gradient(135deg,#2674e9,#7147d9);color:#fff;font-weight:800;white-space:nowrap}
-
-#marksModal .modal{border:1px solid #dbe6f5;box-shadow:0 25px 70px #001b4440}
-#marksModal .modal h2{color:#12366b}
-#marksModal .modal table th{background:#eef4ff}
-.manageMarksBtn:hover{filter:brightness(1.06);transform:translateY(-1px)}
-.studentMarksFilters{display:grid;grid-template-columns:1fr 1fr 1.4fr;gap:10px;margin:14px 0}
-.studentMarksFilters label{font-size:12px;font-weight:700;color:#64748b;display:block;margin-bottom:5px}
-.studentMarksFilters select,.studentMarksFilters input{width:100%;padding:11px;border:1px solid #ccd7e8;border-radius:10px;background:#fff}
-.studentMarksTable td,.studentMarksTable th{vertical-align:top}
-.marksChips{display:flex;flex-wrap:wrap;gap:6px}
-.markChip{background:#eef4ff;border:1px solid #d9e5ff;border-radius:9px;padding:6px 9px;font-size:12px;color:#183a70}
-.markChip b{color:#234fc7}
-.noMarks{color:#718096;font-size:13px}
-@media(max-width:760px){.studentMarksFilters{grid-template-columns:1fr}.studentMarksTable{min-width:700px}}
-
+/* ===== Student dashboard: screenshot-style layout ===== */
+.studentPortal{display:none;min-height:100vh;background:#f6f9ff;color:#102a56}
+.studentTop{height:88px;background:linear-gradient(110deg,#062653,#173f85);color:#fff;display:flex;align-items:center;justify-content:space-between;padding:0 28px 0 22px;box-shadow:0 4px 18px #001b4430}
+.studentBrand{display:flex;align-items:center;gap:13px}.studentBrand .brandIcon{font-size:38px}.studentBrand strong{font-size:28px}.studentBrand strong span{color:#ffc629}.studentBrand small{display:block;font-size:15px;color:#e8f0ff;margin-top:2px}
+.studentUser{display:flex;align-items:center;gap:12px}.studentBell{font-size:27px;position:relative}.studentBell em{position:absolute;right:-7px;top:-8px;background:#f33d5a;color:#fff;border-radius:50%;font-size:11px;font-style:normal;font-weight:800;padding:3px 6px}
+.studentAvatar{width:47px;height:47px;border-radius:50%;background:#e8f2ff;display:grid;place-items:center;font-size:25px}.studentUserText b{display:block;font-size:16px}.studentUserText span{font-size:12px;color:#dce8ff}
+.studentLayout{display:grid;grid-template-columns:245px 1fr;min-height:calc(100vh - 88px)}
+.studentSide{background:linear-gradient(180deg,#06285b,#041d47);color:#fff;padding:27px 12px;display:flex;flex-direction:column}
+.studentSide a{color:#e7efff;text-decoration:none;padding:15px 17px;border-radius:11px;font-weight:600;display:flex;gap:14px;align-items:center;margin:3px 0;cursor:pointer}
+.studentSide a.active{background:linear-gradient(100deg,#1264d7,#1e5bc7);box-shadow:0 7px 18px #0002}.studentSide a:hover{background:#ffffff15}
+.studentSideBottom{margin-top:auto;text-align:center;padding:25px 20px 10px;color:#e6efff}.studentSideBottom .books{font-size:55px;display:block;margin-bottom:15px}.studentSideBottom p{line-height:1.5;font-style:italic;margin:0}.studentSideBottom .line{height:3px;width:55px;background:#ffc629;margin:20px auto 0;border-radius:5px}
+.studentMain{padding:26px 30px 38px;max-width:1500px;width:100%}
+.studentWelcome{display:grid;grid-template-columns:minmax(0,1.65fr) 240px 240px;gap:20px;margin-bottom:28px}
+.welcomeCard{min-height:195px;border-radius:18px;padding:28px 30px;background:linear-gradient(110deg,#edf5ff,#dceaff);border:1px solid #c8dcfb;position:relative;overflow:hidden}
+.welcomeCard:after{content:"📚";position:absolute;right:45px;bottom:18px;font-size:82px;opacity:.22}.welcomeCard h1{margin:0;font-size:27px}.welcomeCard h1 span{display:block;font-size:38px;color:#173e83;margin-top:4px}.welcomeCard p{max-width:390px;line-height:1.6;color:#3c5780;margin:14px 0 0}
+.infoTile{border-radius:18px;padding:23px;background:#eaf2ff;border:1px solid #d0e0f8;display:flex;flex-direction:column;justify-content:center}.infoTile.greenTile{background:#effcf5;border-color:#c9f0dc}.infoTile .tileIcon{font-size:35px;margin-bottom:11px}.infoTile span{font-size:14px;color:#415a7e}.infoTile b{font-size:27px;color:#0b2e68;margin:4px 0 10px}.infoTile small{font-size:14px;color:#173c78}
+.studentGrid{display:grid;grid-template-columns:minmax(0,1.7fr) minmax(320px,.9fr);gap:24px}
+.studentCard{background:#fff;border:1px solid #e3ebf7;border-radius:18px;padding:18px;box-shadow:0 5px 25px #173b7610;margin-bottom:20px}.studentCard h2{margin:0;color:#0e2b5d;font-size:21px}
+.marksHead{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:13px}.classPill{background:#edf4ff;color:#1550b7;border:1px solid #c7dcff;padding:9px 15px;border-radius:22px;font-weight:700;font-size:13px}
+.studentMarksWrap{overflow-x:auto}.studentMarks{width:100%;border-collapse:separate;border-spacing:0;font-size:14px}.studentMarks th{background:#f5f8fd;color:#193b70;font-size:13px;padding:13px 10px;border-bottom:1px solid #e4ebf5}.studentMarks td{padding:12px 10px;border-bottom:1px solid #edf1f6}.studentMarks tr:last-child td{border-bottom:0}.subjectCell{font-weight:700}.gradeBadge{display:inline-block;min-width:39px;text-align:center;padding:7px 9px;border-radius:18px;background:#dcf8df;color:#17813a;font-weight:800}
+.overallBar{margin-top:12px;border-radius:15px;background:linear-gradient(100deg,#eaf2ff,#dceaff);padding:15px 18px;display:flex;align-items:center;gap:16px;flex-wrap:wrap}.overallBar .trophy{font-size:28px}.overallBar .overallLabel{font-weight:700;font-size:17px;margin-right:auto}.overallMetric{padding:0 18px;border-left:1px solid #c5d6ef}.overallMetric b{display:block;font-size:21px;color:#1751c5}.overallMetric span{font-size:12px;color:#66778f}.overallGrade{background:#16a64d;color:#fff;border-radius:22px;padding:9px 24px;font-weight:800}
+.announcementItem{padding:13px 0 13px 22px;border-bottom:1px solid #e8edf5;position:relative}.announcementItem:last-child{border-bottom:0}.announcementItem:before{content:"";position:absolute;left:2px;top:18px;width:10px;height:10px;border-radius:50%;background:#f4ad22}.announcementItem:nth-child(2):before{background:#1583a9}.announcementItem:nth-child(3):before{background:#f34b63}.announcementItem h3{margin:0 0 7px;font-size:15px}.announcementItem p{margin:0;color:#687b98;font-size:13px;line-height:1.5}.announcementItem small{position:absolute;right:0;top:13px;color:#7b8ba3;font-size:11px}.quoteCard{background:linear-gradient(110deg,#eef3ff,#f6f8ff);min-height:140px;display:flex;align-items:center;gap:13px}.quoteCard .quoteIcon{font-size:27px}.quoteCard p{font-size:15px;line-height:1.55;color:#183a70;margin:0}.quoteCard small{display:block;margin-top:8px;color:#73829a}.keepLearning{background:linear-gradient(105deg,#2459c9,#1264db);color:#fff;display:flex;align-items:center;justify-content:space-between;padding:20px 25px;border-radius:17px}.keepLearning h3{margin:0;font-size:20px}.keepLearning p{margin:5px 0 0;color:#dce9ff;font-size:13px}.keepLearning .arrow{width:38px;height:38px;border:1px solid #fff8;border-radius:50%;display:grid;place-items:center;font-size:22px}
+@media(max-width:1050px){.studentWelcome{grid-template-columns:1.5fr 1fr}.studentWelcome .greenTile{display:none}.studentGrid{grid-template-columns:1fr}}
+@media(max-width:760px){.studentTop{height:72px;padding:0 14px}.studentBrand strong{font-size:21px}.studentBrand small{font-size:11px}.studentBrand .brandIcon{font-size:30px}.studentLayout{grid-template-columns:1fr}.studentSide{display:none}.studentMain{padding:18px 12px}.studentWelcome{grid-template-columns:1fr}.infoTile{min-height:120px}.studentWelcome .infoTile{display:flex}.studentUserText{display:none}.studentGrid{grid-template-columns:1fr}.marksHead{align-items:flex-start;flex-direction:column}.overallMetric{border-left:0;padding:0 8px}.overallBar{gap:9px}}
 </style>
 </head>
 <body>
@@ -103,20 +97,45 @@ button,input,select,textarea{font:inherit}
 <div class="card"><h2>➕ Add Student</h2><div class="form"><input id="sId" placeholder="Student ID (e.g. SA001)"><input id="sName" placeholder="Student name"><input id="sPhone" placeholder="Phone"><div style="display:grid;grid-template-columns:1fr 1fr;gap:8px"><select id="sClass"><option value="">Select Class</option><option value="9">9th</option><option value="10">10th</option></select><select id="sSection"><option value="">Select Section</option><option value="A">Section A</option><option value="B">Section B</option><option value="C">Section C</option></select></div><input id="sPass" type="password" placeholder="Password"><button class="primary" onclick="addStudent()">Add Student</button><div class="msg" id="adminMsg"></div></div></div>
 <div class="card"><h2>📢 Announcements</h2><div class="form"><input id="aTitle" placeholder="Announcement title"><textarea id="aMessage" placeholder="Announcement details..." style="min-height:100px;resize:vertical"></textarea><button class="primary" onclick="addAnnouncement()">📢 Add Announcement</button><div class="msg" id="announcementMsg"></div></div><div class="tableWrap"><table><thead><tr><th>Announcement</th><th>Date</th><th>Action</th></tr></thead><tbody id="adminAnnouncementRows"></tbody></table></div></div>
 <div class="card"><h2>Students</h2><input id="search" placeholder="Search student..." oninput="renderStudents()" style="width:100%;padding:11px;border:1px solid #ccd7e8;border-radius:9px"><div class="tableWrap"><table><thead><tr><th>ID</th><th>Name</th><th>Class</th><th>Section</th><th>Actions</th></tr></thead><tbody id="studentRows"></tbody></table></div></div>
-<div class="card"><h2>🔐 Student Passwords</h2><div class="tableWrap"><table><thead><tr><th>Student ID</th><th>Name</th><th>Password Status</th></tr></thead><tbody id="passwordRows"></tbody></table></div></div><div class="card"><h2>📊 Marks Overview</h2><p style="color:#667;margin-top:0">9th aur 10th class ke section-wise marks ka status.</p><div id="adminMarksOverview" class="marksOverview"></div></div>
-<div class="card studentMarksCard">
-  <div class="studentMarksHead">
-    <div><h2>👥 Students &amp; Marks</h2><p style="color:#667;margin:6px 0 0">Class 9th aur 10th ki student list alag dekhain. Har student ke marks yahin show honge.</p></div>
-  </div>
-  <div class="studentMarksFilters">
-    <div><label>CLASS</label><select id="adminListClass" onchange="renderStudentMarksList('admin')"><option value="9">9th Class</option><option value="10">10th Class</option></select></div>
-    <div><label>SECTION</label><select id="adminListSection" onchange="renderStudentMarksList('admin')"><option value="">All Sections</option><option value="A">Section A</option><option value="B">Section B</option><option value="C">Section C</option><option value="UNASSIGNED">Section Not Assigned</option></select></div>
-    <div><label>SEARCH STUDENT</label><input id="adminListSearch" placeholder="Name / ID" oninput="renderStudentMarksList('admin')"></div>
-  </div>
-  <div id="adminStudentCount" class="studentCount" style="display:inline-block;margin:2px 0 10px">0 Students</div><div id="teacherStudentCount" class="studentCount" style="display:inline-block;margin:2px 0 10px">0 Students</div><div class="tableWrap"><table class="studentMarksTable"><thead><tr><th>#</th><th>Student</th><th>ID</th><th>Section</th><th>Marks</th><th>Action</th></tr></thead><tbody id="adminStudentMarksRows"></tbody></table></div>
-</div></div>
+<div class="card"><h2>🔐 Student Passwords</h2><div class="tableWrap"><table><thead><tr><th>Student ID</th><th>Name</th><th>Password Status</th></tr></thead><tbody id="passwordRows"></tbody></table></div></div><div class="card"><h2>📊 Marks Overview</h2><p style="color:#667;margin-top:0">9th aur 10th class ke section-wise marks ka status.</p><div id="adminMarksOverview" class="marksOverview"></div></div></div>
 
-<div class="dash" id="studentDash"><div class="dashHead"><h1>Student Dashboard</h1><div><button class="smallBtn" onclick="openStudentPasswordChange()">🔑 Change Password</button> <button class="smallBtn" onclick="logout()">Logout</button></div></div><div class="card" id="profileCard"></div><div class="card"><h2>📢 Latest Announcements</h2><div id="studentAnnouncements"><p style="color:#69778d">Loading announcements...</p></div></div><div class="card"><h2>My Result</h2><div class="tableWrap"><table><thead><tr><th>Subject</th><th>Obtained</th><th>Total</th><th>%</th></tr></thead><tbody id="resultRows"></tbody></table></div><h3 id="overall"></h3></div></div>
+<div class="studentPortal" id="studentDash">
+  <div class="studentTop">
+    <div class="studentBrand"><span class="brandIcon">🎓</span><div><strong>Sajjad <span>Academy</span></strong><small>Learn • Grow • Succeed</small></div></div>
+    <div class="studentUser"><div class="studentBell">🔔<em id="studentNoticeCount">0</em></div><div class="studentAvatar">👤</div><div class="studentUserText"><b id="studentTopName">Student</b><span>Student</span></div><button class="smallBtn" style="background:#ffffff20;color:#fff;border:1px solid #ffffff33" onclick="logout()">⌄</button></div>
+  </div>
+  <div class="studentLayout">
+    <aside class="studentSide">
+      <a class="active" href="#" onclick="return false">🏠 <span>Dashboard</span></a>
+      <a href="#studentMarksSection">▣ <span>My Marks</span></a>
+      <a href="#studentAnnouncementsSection">♧ <span>Announcements</span></a>
+      <a href="#studentProfileSection">♙ <span>Profile</span></a>
+      <a href="#" onclick="openStudentPasswordChange();return false">🔗 <span>Change Password</span></a>
+      <a href="#" onclick="logout();return false">⇥ <span>Logout</span></a>
+      <div class="studentSideBottom"><span class="books">🎓📚</span><p>“Small steps<br>every day lead to<br>big results.”</p><div class="line"></div></div>
+    </aside>
+    <main class="studentMain">
+      <section class="studentWelcome">
+        <div class="welcomeCard"><h1>Welcome Back,<span id="studentWelcomeName">Student 👋</span></h1><p>Keep going! Your hard work will always pay off.</p></div>
+        <div class="infoTile"><div class="tileIcon">🎓</div><span>Class</span><b id="studentClassTile">—</b><small id="studentSectionTile">Section —</small></div>
+        <div class="infoTile greenTile"><div class="tileIcon">🎯</div><span>Student ID</span><b id="studentIdTile">—</b><small>Phone: <span id="studentPhoneTile">—</span></small></div>
+      </section>
+      <div class="studentGrid">
+        <section class="studentCard" id="studentMarksSection">
+          <div class="marksHead"><h2>📊 My Marks Overview</h2><span class="classPill" id="studentClassPill">Class — · Section —</span></div>
+          <div class="studentMarksWrap"><table class="studentMarks"><thead><tr><th>Subject</th><th>Theory</th><th>Practical</th><th>Total</th><th>Percentage</th><th>Grade</th></tr></thead><tbody id="resultRows"></tbody></table></div>
+          <div class="overallBar"><span class="trophy">🏆</span><span class="overallLabel">Overall Result</span><div class="overallMetric"><b id="overallMarks">—</b><span>Total Marks</span></div><div class="overallMetric"><b id="overallPercent">—</b><span>Percentage</span></div><span class="overallGrade" id="overallGrade">—</span></div>
+        </section>
+        <aside>
+          <section class="studentCard" id="studentAnnouncementsSection"><div class="marksHead"><h2>📢 Latest Announcements</h2><a href="#studentAnnouncementsSection" style="color:#1453bb;font-weight:700;font-size:13px">View All</a></div><div id="studentAnnouncements"><p style="color:#69778d">Loading announcements...</p></div></section>
+          <section class="studentCard quoteCard"><span class="quoteIcon">💡</span><p>“Education is the passport to the future, for tomorrow belongs to those who prepare for it today.”<small>— Malcolm X</small></p></section>
+          <section class="keepLearning"><div><h3>🎓 Keep Learning</h3><p>You are doing great!</p></div><span class="arrow">→</span></section>
+        </aside>
+      </div>
+      <section class="studentCard" id="studentProfileSection" style="margin-top:4px"><h2>👤 Profile</h2><div id="profileCard" style="margin-top:12px;color:#536987"></div></section>
+    </main>
+  </div>
+</div>
 
 <!-- Teacher dashboard -->
 <div class="dash" id="teacherDash">
@@ -141,17 +160,6 @@ button,input,select,textarea{font:inherit}
     <h2 style="margin-bottom:6px">📊 Marks Overview</h2>
     <p style="color:#667;margin-top:0">Teacher aur Admin dono yahan dekh sakte hain kitne students ke marks enter ho chuke hain.</p>
     <div id="teacherMarksOverview" class="marksOverview"></div>
-  </div>
-  <div class="card studentMarksCard">
-    <div class="studentMarksHead">
-      <div><h2>👥 Students &amp; Marks</h2><p style="color:#667;margin:6px 0 0">9th aur 10th ki student list alag select karein. Har student ke saved marks yahan show honge.</p></div>
-    </div>
-    <div class="studentMarksFilters">
-      <div><label>CLASS</label><select id="teacherListClass" onchange="renderStudentMarksList('teacher')"><option value="9">9th Class</option><option value="10">10th Class</option></select></div>
-      <div><label>SECTION</label><select id="teacherListSection" onchange="renderStudentMarksList('teacher')"><option value="">All Sections</option><option value="A">Section A</option><option value="B">Section B</option><option value="C">Section C</option><option value="UNASSIGNED">Section Not Assigned</option></select></div>
-      <div><label>SEARCH STUDENT</label><input id="teacherListSearch" placeholder="Name / ID" oninput="renderStudentMarksList('teacher')"></div>
-    </div>
-    <div class="tableWrap"><table class="studentMarksTable"><thead><tr><th>#</th><th>Student</th><th>ID</th><th>Section</th><th>Marks</th><th>Action</th></tr></thead><tbody id="teacherStudentMarksRows"></tbody></table></div>
   </div>
   <div class="card" id="teacherEntryCard" style="display:none">
     <div class="dashHead"><div><h2 style="margin-bottom:4px">👥 Students</h2><p id="teacherEntryInfo" style="margin:0;color:#667"></p></div><button class="smallBtn" onclick="fillAllTeacherZeros()">Set all blank to 0</button></div>
@@ -199,64 +207,14 @@ window.doLogin=async()=>{
 
 function hidePublic(){document.querySelectorAll("header,.hero,.features,.section,.contact,.footer").forEach(x=>x.classList.add("hidden"))}
 async function showAdmin(){closeLogin();hidePublic();document.getElementById("adminDash").style.display="block";await loadStudents();renderMarksOverview("adminMarksOverview");await loadAnnouncements()}
-async function loadStudents(){const snap=await getDocs(collection(db,"students"));students=snap.docs.map(d=>({id:d.id,...d.data()}));if(document.getElementById("studentRows")){renderStudents();renderMarksOverview("adminMarksOverview");renderStudentMarksList("admin")}}
+async function loadStudents(){const snap=await getDocs(collection(db,"students"));students=snap.docs.map(d=>({id:d.id,...d.data()}));if(document.getElementById("studentRows")){renderStudents();renderMarksOverview("adminMarksOverview")}}
 window.loadStudents=loadStudents;
 
 function announcementDate(v){try{return new Date(Number(v)||v).toLocaleString("en-PK",{dateStyle:"medium",timeStyle:"short"})}catch(e){return ""}}
 function announcementCard(a,admin=false){return `<div style="background:#fff;border-left:5px solid #4f72ff;border-radius:12px;padding:16px 18px;margin:10px 0;box-shadow:0 4px 18px #173b7610"><div style="display:flex;justify-content:space-between;gap:10px;align-items:flex-start"><div><h3 style="margin:0 0 6px">📢 ${esc(a.title)}</h3><p style="margin:0;color:#596a82;line-height:1.6;white-space:pre-wrap">${esc(a.message)}</p><small style="color:#8996a8;display:block;margin-top:10px">${announcementDate(a.createdAt)}</small></div>${admin?`<button class="smallBtn danger" onclick="deleteAnnouncement('${a.id}')">Delete</button>`:""}</div></div>`}
-async function loadAnnouncements(){try{const snap=await getDocs(collection(db,"announcements"));announcements=snap.docs.map(d=>({id:d.id,...d.data()})).sort((a,b)=>Number(b.createdAt||0)-Number(a.createdAt||0));const html=announcements.length?announcements.map(a=>announcementCard(a)).join(""):'<p style="text-align:center;color:#69778d">No announcements yet.</p>';const pub=document.getElementById("publicAnnouncements");if(pub)pub.innerHTML=html;const stu=document.getElementById("studentAnnouncements");if(stu)stu.innerHTML=html;const admin=document.getElementById("adminAnnouncementRows");if(admin)admin.innerHTML=announcements.length?announcements.map(a=>`<tr><td><b>${esc(a.title)}</b><br>${esc(a.message)}</td><td>${announcementDate(a.createdAt)}</td><td><button class="smallBtn danger" onclick="deleteAnnouncement('${a.id}')">Delete</button></td></tr>`).join(""):'<tr><td colspan="3">No announcements yet.</td></tr>'}catch(e){}}
+async function loadAnnouncements(){try{const snap=await getDocs(collection(db,"announcements"));announcements=snap.docs.map(d=>({id:d.id,...d.data()})).sort((a,b)=>Number(b.createdAt||0)-Number(a.createdAt||0));const html=announcements.length?announcements.map((a,i)=>`<div class="announcementItem"><small>${announcementDate(a.createdAt)}</small><h3>${esc(a.title)}</h3><p>${esc(a.message)}</p></div>`).join(""):'<p style="text-align:center;color:#69778d">No announcements yet.</p>';const pub=document.getElementById("publicAnnouncements");if(pub)pub.innerHTML=html;const stu=document.getElementById("studentAnnouncements");if(stu)stu.innerHTML=html;const admin=document.getElementById("adminAnnouncementRows");if(admin)admin.innerHTML=announcements.length?announcements.map(a=>`<tr><td><b>${esc(a.title)}</b><br>${esc(a.message)}</td><td>${announcementDate(a.createdAt)}</td><td><button class="smallBtn danger" onclick="deleteAnnouncement('${a.id}')">Delete</button></td></tr>`).join(""):'<tr><td colspan="3">No announcements yet.</td></tr>'}catch(e){}}
 window.addAnnouncement=async()=>{const title=document.getElementById("aTitle").value.trim(),message=document.getElementById("aMessage").value.trim(),msg=document.getElementById("announcementMsg");if(!title||!message){msg.textContent="Title aur details likhein.";return}try{await addDoc(collection(db,"announcements"),{title,message,createdAt:Date.now()});document.getElementById("aTitle").value="";document.getElementById("aMessage").value="";msg.style.color="#087443";msg.textContent="Announcement add ho gayi hai.";await loadAnnouncements()}catch(e){msg.textContent=e.message}};
 window.deleteAnnouncement=async id=>{if(!confirm("Delete announcement?"))return;try{await deleteDoc(doc(db,"announcements",id));await loadAnnouncements()}catch(e){alert(e.message)}};
-
-
-function renderStudentMarksList(role){
-  const isAdmin=role==='admin';
-  const classEl=document.getElementById(isAdmin?'adminListClass':'teacherListClass');
-  const sectionEl=document.getElementById(isAdmin?'adminListSection':'teacherListSection');
-  const searchEl=document.getElementById(isAdmin?'adminListSearch':'teacherListSearch');
-  const body=document.getElementById(isAdmin?'adminStudentMarksRows':'teacherStudentMarksRows');
-  if(!classEl||!sectionEl||!searchEl||!body) return;
-
-  const cls=normalizeClass(classEl.value);
-  const sec=sectionEl.value;
-  const q=searchEl.value.trim().toLowerCase();
-
-  const source=isAdmin?students:(teacherStudentsCache.length?teacherStudentsCache:students);
-  const list=source.filter(s=>{
-    const studentClass=normalizeClass(s.className);
-    const studentSection=normalizeSection(s.section);
-    const classOK=studentClass===cls;
-    const sectionOK=!sec || (sec==='UNASSIGNED'?!studentSection:studentSection===sec);
-    const searchOK=!q || (String(s.name||'')+' '+String(s.studentId||'')).toLowerCase().includes(q);
-    return classOK && sectionOK && searchOK;
-  }).sort((a,b)=>String(a.name||'').localeCompare(String(b.name||'')));
-
-  const countEl=document.getElementById(isAdmin?'adminStudentCount':'teacherStudentCount');
-  if(countEl) countEl.textContent=`${list.length} Student${list.length===1?'':'s'}`;
-
-  if(!list.length){
-    body.innerHTML="<tr><td colspan='6' style='text-align:center;padding:25px;color:#64748b'>Is class/section mein koi student nahi mila.</td></tr>";
-    return;
-  }
-
-  body.innerHTML=list.map((s,i)=>{
-    const marks=Array.isArray(s.marks)?s.marks:[];
-    const marksHtml=marks.length
-      ? `<div class="marksChips">${marks.map(m=>`<span class="markChip"><b>${esc(m.subject||'Subject')}</b>: ${Number(m.obtained)||0}/${Number(m.total)||0} (${Number(m.total)>0?((Number(m.obtained)||0)/Number(m.total)*100).toFixed(1):'0.0'}%)</span>`).join('')}</div>`
-      : '<span class="noMarks">No marks added yet.</span>';
-    const action=`<button class="manageMarksBtn" onclick="openMarks('${s.id}')">📝 Manage Marks</button>`;
-    const secText=normalizeSection(s.section);
-    return `<tr>
-      <td>${i+1}</td>
-      <td><div class="studentNameCell"><span class="studentAvatar">${esc(String(s.name||"?").trim().charAt(0).toUpperCase())}</span><b>${esc(s.name||"")}</b></div></td>
-      <td>${esc(s.studentId||'')}</td>
-      <td><span class="sectionBadge">${esc(secText?`Section ${secText}`:'Not Assigned')}</span></td>
-      <td>${marksHtml}</td>
-      <td>${action}</td>
-    </tr>`;
-  }).join('');
-}
-window.renderStudentMarksList=renderStudentMarksList;
 
 window.renderStudents=()=>{const q=(document.getElementById("search")?.value||"").toLowerCase();const filtered=students.filter(s=>(s.studentId+" "+s.name+" "+s.className+" "+s.section).toLowerCase().includes(q));document.getElementById("studentRows").innerHTML=filtered.map(s=>`<tr><td>${esc(s.studentId)}</td><td>${esc(s.name)}</td><td>${esc(s.className||"")}</td><td><span class="sectionBadge">${esc(s.section||"—")}</span></td><td><button class="smallBtn" onclick="editStudent('${s.id}')">Edit</button><button class="smallBtn green" onclick="openMarks('${s.id}')">Marks</button><button class="smallBtn danger" onclick="deleteStudent('${s.id}')">Delete</button></td></tr>`).join("")||"<tr><td colspan='5'>No students found.</td></tr>";const pr=document.getElementById("passwordRows");if(pr)pr.innerHTML=students.map(s=>`<tr><td>${esc(s.studentId)}</td><td>${esc(s.name)}</td><td>${s.passwordChanged?'<span style="color:#087443;font-weight:700">✅ Changed</span>':'<span style="color:#b45309;font-weight:700">🟡 Not changed</span>'}</td></tr>`).join("")||"<tr><td colspan='3'>No students yet.</td></tr>"};
 
@@ -265,16 +223,47 @@ window.addStudent=async()=>{const id=document.getElementById("sId").value.trim()
 window.editStudent=async uid=>{const s=students.find(x=>x.id===uid);if(!s)return;const name=prompt("Student name:",s.name);if(name===null)return;const phone=prompt("Phone:",s.phone||"");const cls=prompt("Class (9 or 10):",s.className||"");const sec=prompt("Section (A/B/C):",s.section||"");await updateDoc(doc(db,"students",uid),{name,phone,className:cls,section:sec});await loadStudents()};
 window.deleteStudent=async uid=>{if(!confirm("Delete this student's record?"))return;await deleteDoc(doc(db,"students",uid));await loadStudents();alert("Firestore record deleted. Firebase Auth account remains active.")};
 
-window.openMarks=async uid=>{activeStudent=students.find(x=>x.id===uid);editingMark=-1;document.getElementById("marksModal").querySelector("h2").textContent=mode==="teacher"?"📝 Manage Student Marks":"Manage Marks";document.getElementById("marksStudentName").textContent=activeStudent.name+" ("+activeStudent.studentId+")";document.getElementById("marksModal").style.display="flex";document.getElementById("mSubject").value="";document.getElementById("mObtained").value="";document.getElementById("mTotal").value="";document.getElementById("marksMsg").textContent="";renderMarks()};
+window.openMarks=async uid=>{activeStudent=students.find(x=>x.id===uid);editingMark=-1;document.getElementById("marksStudentName").textContent=activeStudent.name+" ("+activeStudent.studentId+")";document.getElementById("marksModal").style.display="flex";document.getElementById("mSubject").value="";document.getElementById("mObtained").value="";document.getElementById("mTotal").value="";document.getElementById("marksMsg").textContent="";renderMarks()};
 window.closeMarks=()=>document.getElementById("marksModal").style.display="none";
 function renderMarks(){const a=activeStudent?.marks||[];document.getElementById("marksRows").innerHTML=a.map((m,i)=>`<tr><td>${esc(m.subject)}</td><td>${m.obtained}</td><td>${m.total}</td><td><button class="smallBtn" onclick="editMark(${i})">Edit</button><button class="smallBtn danger" onclick="removeMark(${i})">Delete</button></td></tr>`).join("")||"<tr><td colspan='4'>No marks yet.</td></tr>"}
 window.editMark=i=>{const m=activeStudent.marks[i];editingMark=i;document.getElementById("mSubject").value=m.subject;document.getElementById("mObtained").value=m.obtained;document.getElementById("mTotal").value=m.total};
 window.saveMark=async()=>{const subject=document.getElementById("mSubject").value.trim(),obt=Number(document.getElementById("mObtained").value),total=Number(document.getElementById("mTotal").value),msg=document.getElementById("marksMsg");if(!subject||total<=0||obt<0||obt>total){msg.textContent="Enter valid marks.";return}const arr=[...(activeStudent.marks||[])],item={subject,obtained:obt,total};if(editingMark<0)arr.push(item);else arr[editingMark]=item;await updateDoc(doc(db,"students",activeStudent.id),{marks:arr});activeStudent.marks=arr;editingMark=-1;msg.style.color="#087443";msg.textContent="Saved.";document.getElementById("mSubject").value="";document.getElementById("mObtained").value="";document.getElementById("mTotal").value="";renderMarks();await loadStudents();activeStudent=students.find(x=>x.id===activeStudent.id)};
 window.removeMark=async i=>{if(!confirm("Delete this mark?"))return;const arr=[...(activeStudent.marks||[])];arr.splice(i,1);await updateDoc(doc(db,"students",activeStudent.id),{marks:arr});activeStudent.marks=arr;renderMarks();await loadStudents();activeStudent=students.find(x=>x.id===activeStudent.id)};
 
-async function showStudent(uid){const snap=await getDoc(doc(db,"students",uid));if(!snap.exists())throw new Error("Student record not found.");activeStudent={id:snap.id,...snap.data()};closeLogin();hidePublic();document.getElementById("studentDash").style.display="block";document.getElementById("profileCard").innerHTML=`<h2>${esc(activeStudent.name)}</h2><p><b>Student ID:</b> ${esc(activeStudent.studentId)}<br><b>Class:</b> ${esc(activeStudent.className||"")} <b>Section:</b> ${esc(activeStudent.section||"")}<br><b>Phone:</b> ${esc(activeStudent.phone||"")}</p>`;const marks=activeStudent.marks||[];document.getElementById("resultRows").innerHTML=marks.map(m=>`<tr><td>${esc(m.subject)}</td><td>${m.obtained}</td><td>${m.total}</td><td>${((m.obtained/m.total)*100).toFixed(1)}%</td></tr>`).join("")||"<tr><td colspan='4'>No marks added yet.</td></tr>";const ob=marks.reduce((a,m)=>a+Number(m.obtained),0),to=marks.reduce((a,m)=>a+Number(m.total),0);document.getElementById("overall").textContent=to?`Overall: ${ob}/${to} (${((ob/to)*100).toFixed(1)}%)`:"Overall: —";await loadAnnouncements()}
-
-window.openStudentPasswordChange=()=>{document.getElementById("studentPasswordModal").style.display="flex";["currentStudentPassword","newStudentPassword","confirmStudentPassword"].forEach(id=>document.getElementById(id).value="");document.getElementById("studentPasswordMsg").textContent=""};
+async function showStudent(uid){
+ const snap=await getDoc(doc(db,"students",uid));
+ if(!snap.exists())throw new Error("Student record not found.");
+ activeStudent={id:snap.id,...snap.data()};
+ closeLogin();hidePublic();
+ const dash=document.getElementById("studentDash");
+ dash.style.display="block";
+ const name=activeStudent.name||"Student";
+ const cls=activeStudent.className||"—";
+ const sec=activeStudent.section||"—";
+ const sid=activeStudent.studentId||"—";
+ const phone=activeStudent.phone||"—";
+ document.getElementById("studentWelcomeName").textContent=name+" 👋";
+ document.getElementById("studentTopName").textContent=name;
+ document.getElementById("studentClassTile").textContent=cls?(normalizeClass(cls)==="9"?"9th":normalizeClass(cls)==="10"?"10th":cls):"—";
+ document.getElementById("studentSectionTile").textContent="Section "+sec;
+ document.getElementById("studentIdTile").textContent=sid;
+ document.getElementById("studentPhoneTile").textContent=phone;
+ document.getElementById("studentClassPill").textContent=`Class ${normalizeClass(cls)==="9"?"9th":normalizeClass(cls)==="10"?"10th":cls} · Section ${sec}`;
+ document.getElementById("profileCard").innerHTML=`<p style="margin:0;line-height:1.9"><b>Name:</b> ${esc(name)} &nbsp; <b>Student ID:</b> ${esc(sid)}<br><b>Class:</b> ${esc(cls)} &nbsp; <b>Section:</b> ${esc(sec)} &nbsp; <b>Phone:</b> ${esc(phone)}</p>`;
+ const marks=Array.isArray(activeStudent.marks)?activeStudent.marks:[];
+ document.getElementById("resultRows").innerHTML=marks.map(m=>{
+   const pct=m.total?((Number(m.obtained)/Number(m.total))*100):0;
+   const grade=pct>=90?"A+":pct>=80?"A":pct>=70?"B+":pct>=60?"B":pct>=50?"C":"F";
+   return `<tr><td class="subjectCell">${esc(m.subject)}</td><td>${Number(m.obtained)||0}</td><td>—</td><td>${Number(m.obtained)||0}/${Number(m.total)||0}</td><td>${pct.toFixed(0)}%</td><td><span class="gradeBadge">${grade}</span></td></tr>`;
+ }).join("")||"<tr><td colspan='6' style='text-align:center;padding:28px;color:#69778d'>No marks added yet.</td></tr>";
+ const ob=marks.reduce((a,m)=>a+Number(m.obtained||0),0),to=marks.reduce((a,m)=>a+Number(m.total||0),0),pct=to?(ob/to)*100:0;
+ document.getElementById("overallMarks").textContent=to?`${ob} / ${to}`:"—";
+ document.getElementById("overallPercent").textContent=to?`${pct.toFixed(1)}%`:"—";
+ document.getElementById("overallGrade").textContent=to?(pct>=90?"A+":pct>=80?"A":pct>=70?"B+":pct>=60?"B":pct>=50?"C":"F"):"—";
+ await loadAnnouncements();
+ const count=announcements.length;
+ document.getElementById("studentNoticeCount").textContent=count;
+}window.openStudentPasswordChange=()=>{document.getElementById("studentPasswordModal").style.display="flex";["currentStudentPassword","newStudentPassword","confirmStudentPassword"].forEach(id=>document.getElementById(id).value="");document.getElementById("studentPasswordMsg").textContent=""};
 window.closeStudentPasswordChange=()=>document.getElementById("studentPasswordModal").style.display="none";
 window.changeStudentPassword=async()=>{const current=document.getElementById("currentStudentPassword").value,newPw=document.getElementById("newStudentPassword").value,confirm=document.getElementById("confirmStudentPassword").value,msg=document.getElementById("studentPasswordMsg");if(!current||!newPw||!confirm){msg.textContent="Sab fields fill karein.";return}if(newPw.length<6){msg.textContent="New password 6+ characters ka hona chahiye.";return}if(newPw!==confirm){msg.textContent="Passwords match nahi kar rahi.";return}try{const user=auth.currentUser,credential=EmailAuthProvider.credential(user.email,current);await reauthenticateWithCredential(user,credential);await updatePassword(user,newPw);await updateDoc(doc(db,"students",user.uid),{passwordChanged:true});msg.style.color="#087443";msg.textContent="Password successfully change ho gaya hai."}catch(e){msg.textContent=e.message.replace("Firebase: ","")}};
 
@@ -366,7 +355,6 @@ window.showTeacher=async function showTeacher(user,data){
   await loadStudents();
   teacherStudentsCache=[...students];
   renderMarksOverview("teacherMarksOverview");
-  renderStudentMarksList("teacher");
   prepareTeacherEntry();
 };
 
@@ -476,7 +464,6 @@ window.saveTeacherMarks=async function(){
     await loadStudents();
     teacherStudentsCache=[...students];
     renderMarksOverview("teacherMarksOverview");
-    renderStudentMarksList("teacher");
     msg.style.color='#087443';
     msg.textContent=`✅ ${count} students ke marks save ho gaye. Blank marks = 0.`;
     renderTeacherEntry();
