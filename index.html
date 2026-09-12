@@ -192,6 +192,66 @@ button,input,select,textarea{font:inherit}
 @media(max-width:850px){#adminDash .dashHead{padding:22px}.dashHead>div{justify-content:flex-start!important}.directoryToolbar{grid-template-columns:1fr!important}}
 </style>
 
+
+
+<style>
+/* ===== Student Portal: premium screenshot-style redesign only ===== */
+.studentPortal{background:#f5f9ff!important;color:#102a56!important;min-height:100vh;font-family:"Segoe UI",Arial,sans-serif}
+.studentPortal .studentTop{height:92px;padding:0 38px;background:linear-gradient(112deg,#082b67 0%,#1554c2 62%,#1f65d7 100%);box-shadow:0 8px 28px rgba(19,71,150,.20);position:sticky;top:0;z-index:30}
+.studentPortal .studentBrand{gap:13px}.studentPortal .studentBrand .brandIcon{font-size:42px;filter:drop-shadow(0 5px 8px rgba(0,0,0,.18))}
+.studentPortal .studentBrand strong{font-size:29px;letter-spacing:-.5px}.studentPortal .studentBrand strong span{color:#22b6ff}.studentPortal .studentBrand small{font-size:15px;color:#e3efff;letter-spacing:.4px}
+.studentPortal .studentUser{gap:14px}.studentPortal .studentBell{font-size:29px;width:36px;text-align:center;color:#fff}.studentPortal .studentBell em{right:-2px;top:-8px;background:#f33e59;box-shadow:0 2px 8px #0003;font-size:11px}
+.studentPortal .studentAvatar{width:50px;height:50px;background:#f2f7ff;border:2px solid #fff;box-shadow:0 4px 12px #001b4430}
+.studentPortal .studentUserText b{font-size:15px}.studentPortal .studentUserText span{color:#dce8ff}
+.studentPortal .studentPortalBtn{border:0;border-radius:25px;padding:12px 18px;background:rgba(255,255,255,.13);border:1px solid rgba(255,255,255,.15);color:#fff;font-weight:700;cursor:pointer;backdrop-filter:blur(8px)}
+.studentPortal .studentPortalBtn span{font-size:18px;margin-left:7px}
+
+.studentPortal .studentLayout{display:block;min-height:calc(100vh - 92px)}
+.studentPortal .studentSide{display:none}
+.studentPortal .studentMain{max-width:1080px;margin:0 auto;padding:26px 28px 100px}
+.studentPortal .studentWelcome{display:block;margin-bottom:22px}
+.studentPortal .welcomeCard{min-height:315px;border:0;border-radius:22px;padding:29px 30px;background:linear-gradient(110deg,#0759c9 0%,#1766e0 48%,#553be7 100%);color:#fff;box-shadow:0 14px 35px rgba(35,85,190,.22);position:relative;overflow:hidden}
+.studentPortal .welcomeCard:before{content:"";position:absolute;width:420px;height:420px;border-radius:50%;right:-140px;top:-260px;background:rgba(255,255,255,.10)}
+.studentPortal .welcomeCard:after{content:"";position:absolute;width:290px;height:290px;border-radius:50%;left:-130px;bottom:-220px;background:rgba(69,219,255,.12)}
+.studentPortal .welcomeProfile{position:relative;z-index:2;display:flex;align-items:center;gap:22px}
+.studentPortal .welcomeAvatar{width:112px;height:112px;border-radius:50%;display:grid;place-items:center;font-size:58px;background:linear-gradient(145deg,#bcecff,#fff);border:5px solid #48d7ff;box-shadow:0 0 0 7px rgba(92,220,255,.18),0 10px 24px rgba(0,30,90,.22)}
+.studentPortal .welcomeCard h1{margin:0;font-size:25px;font-weight:500;letter-spacing:.2px}.studentPortal .welcomeCard h1 span{display:block;font-size:40px;font-weight:800;margin-top:2px;color:#fff}
+.studentPortal .welcomeCard p{margin:10px 0 0;max-width:390px;color:#eef7ff;font-size:16px;line-height:1.5}
+.studentPortal .welcomeBooks{position:absolute;right:135px;top:47px;z-index:1;transform:rotate(-3deg)}.studentPortal .bookStack{font-size:93px;filter:drop-shadow(0 8px 7px #001b4430)}.studentPortal .miniCap{position:absolute;left:42px;top:-32px;font-size:58px}.studentPortal .pencilCup{position:absolute;right:-27px;bottom:0;font-size:43px}
+.studentPortal .betterDay{position:absolute;right:28px;top:34px;font-family:cursive;font-size:21px;line-height:1.1;transform:rotate(-7deg);z-index:2;color:#fff}
+.studentPortal .betterDay:after{content:"";display:block;width:75px;height:2px;background:#fff;margin:7px 0 0 auto;transform:rotate(-4deg)}
+.studentPortal .studentInfoStrip{position:absolute;left:25px;right:25px;bottom:20px;z-index:3;display:grid;grid-template-columns:1fr 1fr auto;align-items:center;gap:0;padding:0;border-radius:18px;background:rgba(88,119,235,.55);border:1px solid rgba(255,255,255,.17);box-shadow:inset 0 1px 0 rgba(255,255,255,.12);backdrop-filter:blur(8px)}
+.studentPortal .studentInfoStrip .infoTile{border:0!important;background:transparent!important;border-radius:0;padding:15px 22px;min-height:80px;display:flex;flex-direction:row;align-items:center;justify-content:flex-start;gap:12px;color:#fff}
+.studentPortal .studentInfoStrip .infoTile+ .infoTile{border-left:1px solid rgba(255,255,255,.18)!important}
+.studentPortal .studentInfoStrip .tileIcon{width:45px;height:45px;border-radius:50%;display:grid;place-items:center;background:rgba(255,255,255,.13);font-size:23px;margin:0}
+.studentPortal .studentInfoStrip .infoTile span{font-size:13px;color:#e2edff;display:block}.studentPortal .studentInfoStrip .infoTile b{display:block;color:#fff;font-size:23px;margin:1px 0}.studentPortal .studentInfoStrip .infoTile small{color:#e4eeff;font-size:12px}
+.studentPortal .activePill{margin:0 20px 0 12px;background:rgba(75,205,255,.55);padding:9px 16px;border-radius:22px;font-weight:800;font-size:13px;white-space:nowrap}.studentPortal .activePill i{display:inline-block;width:8px;height:8px;border-radius:50%;background:#fff;margin-right:7px}
+
+.studentPortal .studentGrid{display:grid;grid-template-columns:1fr;gap:18px}
+.studentPortal .studentCard{background:#fff;border:1px solid #e1e9f6;border-radius:20px;padding:20px;box-shadow:0 8px 28px rgba(28,65,125,.07);margin-bottom:0}
+.studentPortal .sectionTitleRow{display:flex;align-items:center;gap:12px;margin-bottom:16px}.studentPortal .sectionTitleRow h2{margin:0;color:#103a78;font-size:22px}.studentPortal .sectionTitleRow>a{margin-left:auto;background:#eef4ff;color:#1453bb;text-decoration:none;border-radius:22px;padding:10px 15px;font-size:13px;font-weight:800}
+.studentPortal .sectionTitleIcon{width:48px;height:48px;border-radius:14px;display:grid;place-items:center;font-size:25px;box-shadow:0 6px 15px rgba(30,82,180,.12)}
+.studentPortal .announcementIcon{background:linear-gradient(135deg,#eaf1ff,#dfe8ff)}.studentPortal .marksIcon{background:linear-gradient(135deg,#eaf3ff,#dce8ff);color:#2368dc}.studentPortal .profileIcon{background:#edf3ff}
+.studentPortal .studentAnnouncementList{background:#f5f9ff;border-radius:14px;padding:2px 14px}.studentPortal .announcementItem{padding:15px 10px 15px 25px;border-bottom:1px solid #e5ebf4}.studentPortal .announcementItem:before{left:2px;top:21px;width:9px;height:9px;background:#2d66e5}.studentPortal .announcementItem h3{color:#153d77;font-size:15px}.studentPortal .announcementItem p{font-size:13px}.studentPortal .announcementItem small{font-size:10px}
+.studentPortal .marksTitleRow{margin-bottom:12px}.studentPortal .marksTitleRow .classPill{margin-left:auto}
+.studentPortal .classPill{background:#edf4ff;color:#1550b7;border:1px solid #c7dcff;padding:9px 14px;border-radius:22px;font-weight:800;font-size:12px}
+.studentPortal .studentMarksWrap{overflow-x:auto;border:1px solid #e1e9f4;border-radius:14px}.studentPortal .studentMarks{min-width:650px;font-size:14px}.studentPortal .studentMarks th{background:#edf4ff;color:#193e78;padding:13px 11px;border-bottom:1px solid #dce7f5}.studentPortal .studentMarks td{padding:12px 11px;border-bottom:1px solid #edf1f7;color:#16396f}.studentPortal .studentMarks tr:last-child td{border-bottom:0}
+.studentPortal .gradeBadge{min-width:48px;padding:7px 11px;background:#dff7e9;color:#138044;border-radius:20px;font-weight:800}.studentPortal .overallBar{margin-top:14px;background:linear-gradient(100deg,#1264d7,#2b4be1 60%,#5b3ee4);color:#fff;border-radius:17px;padding:17px 20px;display:flex;align-items:center;gap:14px;box-shadow:0 10px 24px rgba(30,74,195,.18)}.studentPortal .overallBar .trophy{font-size:42px}.studentPortal .overallLabel{font-size:18px;font-weight:800;margin-right:auto}.studentPortal .overallLabel small{display:block;font-size:11px;color:#dbe9ff;font-weight:500;margin-top:4px}.studentPortal .overallMetric{border-left:1px solid rgba(255,255,255,.25);padding:0 17px}.studentPortal .overallMetric b{display:block;font-size:22px;color:#fff}.studentPortal .overallMetric span{font-size:11px;color:#d9e8ff}
+.studentPortal .overallGradeWrap{min-width:70px;text-align:center;position:relative}.studentPortal .gradeRing{display:block;font-size:47px;line-height:38px;color:#49d9ff;transform:rotate(-45deg)}.studentPortal .overallGrade{display:block;background:transparent;color:#fff;border-radius:0;padding:0;font-size:25px;font-weight:900;margin-top:-30px}.studentPortal .overallGradeWrap small{display:block;color:#dce8ff;font-size:10px;margin-top:8px}
+.studentPortal .studentRightColumn{display:grid;grid-template-columns:1fr 1fr;gap:18px}.studentPortal .quoteCard{position:relative;min-height:140px;overflow:hidden;background:linear-gradient(110deg,#eef4ff,#f8faff);display:flex;align-items:center;gap:13px}.studentPortal .quoteCard .quoteIcon{font-size:38px;color:#2669d8}.studentPortal .quoteCard p{font-size:14px;line-height:1.5;color:#173e77;margin:0;z-index:1}.studentPortal .quoteCard small{display:block;color:#73829a;margin-top:7px}.studentPortal .quoteBooks{font-size:52px;margin-left:auto;opacity:.8;align-self:flex-end}
+.studentPortal .keepLearning{min-height:140px;background:linear-gradient(105deg,#2459c9,#1264db);color:#fff;display:flex;align-items:center;justify-content:space-between;padding:22px 25px;border-radius:20px;box-shadow:0 8px 25px rgba(24,82,190,.17)}.studentPortal .keepLearning h3{margin:0;font-size:20px}.studentPortal .keepLearning p{margin:6px 0 0;color:#dce9ff;font-size:13px}.studentPortal .keepLearning .arrow{width:40px;height:40px;border:1px solid #fff8;border-radius:50%;display:grid;place-items:center;font-size:22px}
+.studentPortal #studentProfileSection{margin-top:18px}.studentPortal .studentMobileBottom{display:flex;position:fixed;left:50%;bottom:12px;transform:translateX(-50%);z-index:35;width:min(650px,calc(100% - 24px));background:rgba(255,255,255,.96);border:1px solid #e0e8f4;border-radius:24px;padding:9px 10px;box-shadow:0 12px 35px rgba(20,55,110,.18);backdrop-filter:blur(12px);justify-content:space-around}.studentPortal .studentMobileBottom a{color:#58708f;text-decoration:none;min-width:80px;text-align:center;padding:7px 10px;border-radius:14px;font-size:22px;line-height:1}.studentPortal .studentMobileBottom a span{display:block;font-size:11px;margin-top:5px}.studentPortal .studentMobileBottom a.active{color:#1262dc;background:#edf4ff}
+@media(max-width:760px){
+  .studentPortal .studentTop{height:76px;padding:0 13px}.studentPortal .studentBrand .brandIcon{font-size:31px}.studentPortal .studentBrand strong{font-size:20px}.studentPortal .studentBrand small{font-size:10px}.studentPortal .studentUser{gap:8px}.studentPortal .studentBell{font-size:23px;width:28px}.studentPortal .studentAvatar{width:43px;height:43px;font-size:21px}.studentPortal .studentUserText{display:none}.studentPortal .studentPortalBtn{padding:10px 12px;font-size:12px}
+  .studentPortal .studentMain{padding:12px 12px 90px}.studentPortal .welcomeCard{min-height:315px;padding:23px 20px;border-radius:20px}.studentPortal .welcomeProfile{gap:13px;align-items:center}.studentPortal .welcomeAvatar{width:73px;height:73px;font-size:38px;border-width:3px;box-shadow:0 0 0 5px rgba(92,220,255,.16)}.studentPortal .welcomeCard h1{font-size:18px}.studentPortal .welcomeCard h1 span{font-size:29px}.studentPortal .welcomeCard p{font-size:12px;margin-top:7px}.studentPortal .welcomeBooks{right:20px;top:100px;opacity:.9}.studentPortal .bookStack{font-size:67px}.studentPortal .miniCap{font-size:40px;left:30px;top:-24px}.studentPortal .pencilCup{font-size:32px;right:-18px}.studentPortal .betterDay{right:16px;top:23px;font-size:14px}.studentPortal .studentInfoStrip{left:14px;right:14px;bottom:13px;grid-template-columns:1fr 1fr;border-radius:15px;padding:0}.studentPortal .studentInfoStrip .infoTile{padding:10px 9px;min-height:67px;gap:7px}.studentPortal .studentInfoStrip .infoTile+ .infoTile{border-left:1px solid rgba(255,255,255,.18)!important}.studentPortal .studentInfoStrip .tileIcon{width:34px;height:34px;font-size:17px}.studentPortal .studentInfoStrip .infoTile span{font-size:10px}.studentPortal .studentInfoStrip .infoTile b{font-size:16px}.studentPortal .studentInfoStrip .infoTile small{font-size:9px}.studentPortal .activePill{position:absolute;right:8px;bottom:-13px;font-size:9px;padding:5px 9px;z-index:5}
+  .studentPortal .studentCard{padding:14px;border-radius:18px}.studentPortal .sectionTitleIcon{width:40px;height:40px;font-size:20px}.studentPortal .sectionTitleRow{gap:9px;margin-bottom:12px}.studentPortal .sectionTitleRow h2{font-size:17px}.studentPortal .sectionTitleRow>a{padding:8px 11px;font-size:11px}.studentPortal .marksTitleRow .classPill{font-size:10px;padding:7px 9px}
+  .studentPortal .studentMarks{font-size:11px;min-width:590px}.studentPortal .studentMarks th,.studentPortal .studentMarks td{padding:10px 7px}.studentPortal .gradeBadge{min-width:37px;padding:5px 7px}.studentPortal .overallBar{padding:13px 11px;gap:7px;justify-content:flex-start}.studentPortal .overallBar .trophy{font-size:29px}.studentPortal .overallLabel{font-size:13px}.studentPortal .overallLabel small{font-size:9px}.studentPortal .overallMetric{padding:0 8px}.studentPortal .overallMetric b{font-size:16px}.studentPortal .overallMetric span{font-size:8px}.studentPortal .gradeRing{font-size:36px}.studentPortal .overallGrade{font-size:19px;margin-top:-23px}.studentPortal .overallGradeWrap small{font-size:8px;margin-top:6px}
+  .studentPortal .studentRightColumn{grid-template-columns:1fr}.studentPortal .quoteCard{min-height:125px}.studentPortal .keepLearning{min-height:105px}.studentPortal #studentProfileSection{margin-top:14px}.studentPortal .mobileBreak{display:none}
+}
+@media(min-width:761px){.studentPortal .studentMobileBottom{display:none}}
+@media(max-width:390px){.studentPortal .studentPortalBtn{padding:9px 9px;font-size:11px}.studentPortal .studentBrand strong{font-size:18px}.studentPortal .welcomeCard h1 span{font-size:26px}.studentPortal .studentInfoStrip .infoTile b{font-size:14px}.studentPortal .studentInfoStrip .infoTile{padding-left:6px;padding-right:5px}.studentPortal .overallLabel{display:none}}
+</style>
+
 </head>
 <body>
 <header class="header"><div class="logo">🎓 <span id="siteName">Sajjad Academy</span></div><nav class="nav"><a href="#home">Home</a><a href="#about">About</a><a href="#contact">Contact</a></nav><button class="topbtn" onclick="openLogin('student')">👤 Login</button></header>
@@ -225,38 +285,108 @@ button,input,select,textarea{font:inherit}
 
 <div class="studentPortal" id="studentDash">
   <div class="studentTop">
-    <div class="studentBrand"><span class="brandIcon">🎓</span><div><strong>Sajjad <span>Academy</span></strong><small>Learn • Grow • Succeed</small></div></div>
-    <div class="studentUser"><div class="studentBell">🔔<em id="studentNoticeCount">0</em></div><div class="studentAvatar">👤</div><div class="studentUserText"><b id="studentTopName">Student</b><span>Student</span></div><button class="smallBtn" style="background:#ffffff20;color:#fff;border:1px solid #ffffff33" onclick="logout()">⌄</button></div>
+    <div class="studentBrand">
+      <span class="brandIcon">🎓</span>
+      <div><strong>Sajjad <span>Academy</span></strong><small>Learn • Grow • Succeed</small></div>
+    </div>
+    <div class="studentUser">
+      <div class="studentBell">♧<em id="studentNoticeCount">0</em></div>
+      <div class="studentAvatar">👤</div>
+      <div class="studentUserText"><b id="studentTopName">Student</b><span>Student</span></div>
+      <button class="studentPortalBtn" onclick="openStudentPasswordChange()">Student Portal <span>⌄</span></button>
+    </div>
   </div>
+
   <div class="studentLayout">
     <aside class="studentSide">
-      <a class="active" href="#" onclick="return false">🏠 <span>Dashboard</span></a>
-      <a href="#studentMarksSection">▣ <span>My Marks</span></a>
-      <a href="#studentAnnouncementsSection">♧ <span>Announcements</span></a>
+      <a class="active" href="#studentHomeSection">⌂ <span>Home</span></a>
+      <a href="#studentMarksSection">▥ <span>Marks</span></a>
       <a href="#studentProfileSection">♙ <span>Profile</span></a>
-      <a href="#" onclick="openStudentPasswordChange();return false">🔗 <span>Change Password</span></a>
-      <a href="#" onclick="logout();return false">⇥ <span>Logout</span></a>
-      <div class="studentSideBottom"><span class="books">🎓📚</span><p>“Small steps<br>every day lead to<br>big results.”</p><div class="line"></div></div>
+      <a href="#" onclick="openStudentPasswordChange();return false">⚙ <span>Settings</span></a>
     </aside>
-    <main class="studentMain">
+
+    <main class="studentMain" id="studentHomeSection">
       <section class="studentWelcome">
-        <div class="welcomeCard"><h1>Welcome Back,<span id="studentWelcomeName">Student 👋</span></h1><p>Keep going! Your hard work will always pay off.</p></div>
-        <div class="infoTile"><div class="tileIcon">🎓</div><span>Class</span><b id="studentClassTile">—</b><small id="studentSectionTile">Section —</small></div>
-        <div class="infoTile greenTile"><div class="tileIcon">🎯</div><span>Student ID</span><b id="studentIdTile">—</b><small>Phone: <span id="studentPhoneTile">—</span></small></div>
+        <div class="welcomeCard">
+          <div class="welcomeProfile">
+            <div class="welcomeAvatar">👤</div>
+            <div>
+              <h1>Welcome Back,<span id="studentWelcomeName">Student 👋</span></h1>
+              <p>Keep going! Your hard work<br class="mobileBreak"> will always pay off.</p>
+            </div>
+          </div>
+          <div class="welcomeBooks" aria-hidden="true">
+            <div class="bookStack">📚</div><div class="miniCap">🎓</div><div class="pencilCup">✏️</div>
+          </div>
+          <div class="betterDay">Better<br>Every Day</div>
+          <div class="studentInfoStrip">
+            <div class="infoTile">
+              <span class="tileIcon">🎓</span><div><span>Class</span><b id="studentClassTile">—</b><small id="studentSectionTile">Section —</small></div>
+            </div>
+            <div class="infoTile">
+              <span class="tileIcon">👤</span><div><span>Student ID</span><b id="studentIdTile">—</b><small>Phone: <span id="studentPhoneTile">—</span></small></div>
+            </div>
+            <div class="activePill"><i></i> Active</div>
+          </div>
+        </div>
       </section>
+
       <div class="studentGrid">
-        <section class="studentCard" id="studentMarksSection">
-          <div class="marksHead"><h2>📊 My Marks Overview</h2><span class="classPill" id="studentClassPill">Class — · Section —</span></div>
-          <div class="studentMarksWrap"><table class="studentMarks"><thead><tr><th>Subject</th><th>Theory</th><th>Practical</th><th>Total</th><th>Percentage</th><th>Grade</th></tr></thead><tbody id="resultRows"></tbody></table></div>
-          <div class="overallBar"><span class="trophy">🏆</span><span class="overallLabel">Overall Result</span><div class="overallMetric"><b id="overallMarks">—</b><span>Total Marks</span></div><div class="overallMetric"><b id="overallPercent">—</b><span>Percentage</span></div><span class="overallGrade" id="overallGrade">—</span></div>
+        <section class="studentCard" id="studentAnnouncementsSection">
+          <div class="sectionTitleRow">
+            <div class="sectionTitleIcon announcementIcon">📢</div>
+            <h2>Latest Announcements</h2>
+            <a href="#studentAnnouncementsSection">View All&nbsp; →</a>
+          </div>
+          <div id="studentAnnouncements" class="studentAnnouncementList">
+            <p style="color:#69778d">Loading announcements...</p>
+          </div>
         </section>
-        <aside>
-          <section class="studentCard" id="studentAnnouncementsSection"><div class="marksHead"><h2>📢 Latest Announcements</h2><a href="#studentAnnouncementsSection" style="color:#1453bb;font-weight:700;font-size:13px">View All</a></div><div id="studentAnnouncements"><p style="color:#69778d">Loading announcements...</p></div></section>
-          <section class="studentCard quoteCard"><span class="quoteIcon">💡</span><p>“Education is the passport to the future, for tomorrow belongs to those who prepare for it today.”<small>— Malcolm X</small></p></section>
-          <section class="keepLearning"><div><h3>🎓 Keep Learning</h3><p>You are doing great!</p></div><span class="arrow">→</span></section>
+
+        <section class="studentCard marksCard" id="studentMarksSection">
+          <div class="sectionTitleRow marksTitleRow">
+            <div class="sectionTitleIcon marksIcon">▥</div>
+            <h2>My Marks Overview</h2>
+            <span class="classPill" id="studentClassPill">Class — · Section —</span>
+          </div>
+          <div class="studentMarksWrap">
+            <table class="studentMarks">
+              <thead><tr><th>Subject</th><th>Theory</th><th>Practical</th><th>Total</th><th>Percentage</th><th>Grade</th></tr></thead>
+              <tbody id="resultRows"></tbody>
+            </table>
+          </div>
+          <div class="overallBar">
+            <span class="trophy">🏆</span>
+            <span class="overallLabel">Overall Result<small>Keep up the good work!</small></span>
+            <div class="overallMetric"><b id="overallMarks">—</b><span>Total Marks</span></div>
+            <div class="overallMetric"><b id="overallPercent">—</b><span>Percentage</span></div>
+            <div class="overallGradeWrap"><span class="gradeRing">◌</span><span class="overallGrade" id="overallGrade">—</span><small>Grade</small></div>
+          </div>
+        </section>
+
+        <aside class="studentRightColumn">
+          <section class="studentCard quoteCard">
+            <span class="quoteIcon">❝</span>
+            <p>“Education is the passport to the future, for tomorrow belongs to those who prepare for it today.”<small>— Malcolm X</small></p>
+            <span class="quoteBooks">📚</span>
+          </section>
+          <section class="keepLearning">
+            <div><h3>🎓 Keep Learning</h3><p>You are doing great!</p></div><span class="arrow">→</span>
+          </section>
         </aside>
       </div>
-      <section class="studentCard" id="studentProfileSection" style="margin-top:4px"><h2>👤 Profile</h2><div id="profileCard" style="margin-top:12px;color:#536987"></div></section>
+
+      <section class="studentCard" id="studentProfileSection">
+        <div class="sectionTitleRow"><div class="sectionTitleIcon profileIcon">♙</div><h2>Profile</h2></div>
+        <div id="profileCard" style="margin-top:12px;color:#536987"></div>
+      </section>
+
+      <div class="studentMobileBottom">
+        <a class="active" href="#studentHomeSection">⌂<span>Home</span></a>
+        <a href="#studentMarksSection">▥<span>Marks</span></a>
+        <a href="#studentProfileSection">♙<span>Profile</span></a>
+        <a href="#" onclick="openStudentPasswordChange();return false">⚙<span>Settings</span></a>
+      </div>
     </main>
   </div>
 </div>
