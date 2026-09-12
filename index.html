@@ -297,25 +297,30 @@ body{background:#f6f9ff}
 @media(max-width:560px){.header{height:66px}.logo{font-size:20px}.nav{display:none}.hero{min-height:auto;padding:52px 5% 72px}.hero h1{font-size:46px;letter-spacing:-1.5px}.hero h2{font-size:18px}.hero p{font-size:14px}.loginCard{width:100%}.homeStats{width:92%;grid-template-columns:1fr 1fr;border-radius:18px}.homeStat{padding:14px 7px}.homeStat b{font-size:22px}.features{padding-top:52px;grid-template-columns:1fr}.homeSection{padding:55px 5%}.title{font-size:28px}.announcementShell{padding:4px 14px}.announcementShell .announcementItem{padding-right:10px}.announcementShell .announcementItem small{position:static;display:block;margin-top:7px}.whyVisual{min-height:330px}.schoolPanel{left:18px;right:18px}.floatCard.one{right:12px}.floatCard.two{left:12px}.floatCard.three{right:12px}.quoteBanner{padding:22px;align-items:flex-start}.quoteBanner p{font-size:15px}.contactGrid{grid-template-columns:1fr}.footer{flex-direction:column;text-align:center;gap:7px}}
 
 </style>
-
 <style id="portalViewIsolation">
-/* FINAL VIEW ISOLATION: keep homepage and portals separate without blocking portal controls */
-body.portal-active .header, body.portal-active .hero, body.portal-active .homeStats, body.portal-active .features, body.portal-active .section, body.portal-active .homeSection, body.portal-active .contact, body.portal-active .footer { display:none !important; }
-body.admin-active .header, body.admin-active .hero, body.admin-active .homeStats, body.admin-active .features, body.admin-active .section, body.admin-active .homeSection, body.admin-active .contact, body.admin-active .footer { display:none !important; }
-body.teacher-active .header, body.teacher-active .hero, body.teacher-active .homeStats, body.teacher-active .features, body.teacher-active .section, body.teacher-active .homeSection, body.teacher-active .contact, body.teacher-active .footer { display:none !important; }
-body.portal-active #adminDash, body.portal-active #teacherDash { display:none !important; }
-body.portal-active #studentDash { display:block !important; }
-body.admin-active #studentDash, body.admin-active #teacherDash { display:none !important; }
-body.admin-active #adminDash { display:block !important; pointer-events:auto !important; }
-body.teacher-active #adminDash, body.teacher-active #studentDash { display:none !important; }
-body.teacher-active #teacherDash { display:block !important; pointer-events:auto !important; }
-body.public-active #adminDash, body.public-active #studentDash, body.public-active #teacherDash { display:none !important; }
+/* Robust portal isolation: only the selected screen is visible. Portal controls remain clickable. */
+body [data-public-page="true"]{display:block}
+body.admin-active [data-public-page="true"],
+body.portal-active [data-public-page="true"],
+body.teacher-active [data-public-page="true"]{display:none !important}
+body.public-active #adminDash,
+body.public-active #studentDash,
+body.public-active #teacherDash{display:none !important}
+body.admin-active #studentDash,
+body.admin-active #teacherDash{display:none !important}
+body.admin-active #adminDash{display:block !important}
+body.portal-active #adminDash,
+body.portal-active #teacherDash{display:none !important}
+body.portal-active #studentDash{display:block !important}
+body.teacher-active #adminDash,
+body.teacher-active #studentDash{display:none !important}
+body.teacher-active #teacherDash{display:block !important}
 </style>
 </head>
 <body class="public-active">
-<header class="header"><div class="logo">🎓 <span id="siteName">Sajjad Academy</span></div><nav class="nav"><a href="#home">Home</a><a href="#about">About</a><a href="#announcements">Notices</a><a href="#contact">Contact</a></nav><button class="topbtn" onclick="openLogin('student')">👤 Student Login</button></header>
+<header data-public-page="true" class="header"><div class="logo">🎓 <span id="siteName">Sajjad Academy</span></div><nav class="nav"><a href="#home">Home</a><a href="#about">About</a><a href="#announcements">Notices</a><a href="#contact">Contact</a></nav><button class="topbtn" onclick="openLogin('student')">👤 Student Login</button></header>
 
-<section class="hero" id="home"><div class="heroText"><div class="tag">Learn • Grow • Succeed</div><h1 id="heroName">Sajjad <span>Academy</span></h1><h2>Building Knowledge. Shaping Futures.</h2><p>A modern academic platform where students stay connected with their results, teachers manage marks with ease, and the academy keeps everything organized in one place.</p><div class="heroActions"><button class="topbtn" onclick="document.getElementById('about').scrollIntoView({behavior:'smooth'})">Explore Academy →</button><button class="heroSecondary" onclick="document.getElementById('announcements').scrollIntoView({behavior:'smooth'})">📢 Latest Notices</button></div></div>
+<section data-public-page="true" class="hero" id="home"><div class="heroText"><div class="tag">Learn • Grow • Succeed</div><h1 id="heroName">Sajjad <span>Academy</span></h1><h2>Building Knowledge. Shaping Futures.</h2><p>A modern academic platform where students stay connected with their results, teachers manage marks with ease, and the academy keeps everything organized in one place.</p><div class="heroActions"><button class="topbtn" onclick="document.getElementById('about').scrollIntoView({behavior:'smooth'})">Explore Academy →</button><button class="heroSecondary" onclick="document.getElementById('announcements').scrollIntoView({behavior:'smooth'})">📢 Latest Notices</button></div></div>
 <div class="loginCard">
   <div class="portalHeading"><span>PORTAL ACCESS</span><h2>Choose Your Login</h2><p>Secure access for students, teachers & administration</p></div>
   <div class="loginChoices">
@@ -326,22 +331,22 @@ body.public-active #adminDash, body.public-active #studentDash, body.public-acti
   <div class="portalTrust"><span>🔒 Protected access</span><span>⚡ Quick login</span></div>
 </div></section>
 
-<div class="homeStats"><div class="homeStat"><b>🎓</b><span>Student Focused</span></div><div class="homeStat"><b>📊</b><span>Digital Results</span></div><div class="homeStat"><b>⚡</b><span>Fast Mark Entry</span></div><div class="homeStat"><b>🔐</b><span>Secure Access</span></div></div>
+<div data-public-page="true" class="homeStats"><div class="homeStat"><b>🎓</b><span>Student Focused</span></div><div class="homeStat"><b>📊</b><span>Digital Results</span></div><div class="homeStat"><b>⚡</b><span>Fast Mark Entry</span></div><div class="homeStat"><b>🔐</b><span>Secure Access</span></div></div>
 
-<section class="features"><div class="feature"><i>👥</i><h3>Student Management</h3><p>Add, edit and manage student records from one organized system.</p></div><div class="feature"><i>📝</i><h3>Fast Marks Entry</h3><p>Teachers can select a class and subject once and enter marks efficiently.</p></div><div class="feature"><i>📈</i><h3>Smart Results</h3><p>Students can instantly view marks, percentages and overall grades.</p></div><div class="feature"><i>🔐</i><h3>Protected Access</h3><p>Authentication and database rules help keep academic records protected.</p></div></section>
+<section data-public-page="true" class="features"><div class="feature"><i>👥</i><h3>Student Management</h3><p>Add, edit and manage student records from one organized system.</p></div><div class="feature"><i>📝</i><h3>Fast Marks Entry</h3><p>Teachers can select a class and subject once and enter marks efficiently.</p></div><div class="feature"><i>📈</i><h3>Smart Results</h3><p>Students can instantly view marks, percentages and overall grades.</p></div><div class="feature"><i>🔐</i><h3>Protected Access</h3><p>Authentication and database rules help keep academic records protected.</p></div></section>
 
-<section class="homeSection alt" id="announcements"><div class="sectionIntro"><span class="eyebrow">Stay Updated</span><h2 class="title">📢 Latest Announcements</h2><p>Important academy notices and updates appear here for students and staff.</p></div><div class="announcementShell"><div id="publicAnnouncements"><p style="text-align:center;color:#69778d;padding:22px">No announcements yet.</p></div></div></section>
+<section data-public-page="true" class="homeSection alt" id="announcements"><div class="sectionIntro"><span class="eyebrow">Stay Updated</span><h2 class="title">📢 Latest Announcements</h2><p>Important academy notices and updates appear here for students and staff.</p></div><div class="announcementShell"><div id="publicAnnouncements"><p style="text-align:center;color:#69778d;padding:22px">No announcements yet.</p></div></div></section>
 
-<section class="homeSection" id="about"><div class="sectionIntro"><span class="eyebrow">Why Sajjad Academy</span><h2 class="title">More Than Just Education</h2><p>We combine learning, discipline and simple technology to make academic progress easier to follow.</p></div><div class="whyGrid"><div class="whyVisual"><div class="schoolPanel"><div class="miniLogo">🎓</div><h3>Learn • Grow • Succeed</h3><p>A focused learning environment supported by a simple digital student portal.</p></div><div class="floatCard one">📊 Results Ready</div><div class="floatCard two">⭐ Keep Learning</div><div class="floatCard three">🔐 Secure Portal</div></div><div class="whyPoints"><div class="whyPoint"><div class="wpIcon">🎯</div><div><h3>Clear Academic Progress</h3><p>Students can easily follow their marks and overall performance.</p></div></div><div class="whyPoint"><div class="wpIcon">📱</div><div><h3>Phone Friendly</h3><p>The portal is designed to work comfortably on mobile and desktop screens.</p></div></div><div class="whyPoint"><div class="wpIcon">⚡</div><div><h3>Simple & Efficient</h3><p>Less paperwork and easier access to the information that matters.</p></div></div><div class="whyPoint"><div class="wpIcon">🌱</div><div><h3>Growth Mindset</h3><p>Every result is a step toward learning better and achieving more.</p></div></div></div></div></section>
+<section data-public-page="true" class="homeSection" id="about"><div class="sectionIntro"><span class="eyebrow">Why Sajjad Academy</span><h2 class="title">More Than Just Education</h2><p>We combine learning, discipline and simple technology to make academic progress easier to follow.</p></div><div class="whyGrid"><div class="whyVisual"><div class="schoolPanel"><div class="miniLogo">🎓</div><h3>Learn • Grow • Succeed</h3><p>A focused learning environment supported by a simple digital student portal.</p></div><div class="floatCard one">📊 Results Ready</div><div class="floatCard two">⭐ Keep Learning</div><div class="floatCard three">🔐 Secure Portal</div></div><div class="whyPoints"><div class="whyPoint"><div class="wpIcon">🎯</div><div><h3>Clear Academic Progress</h3><p>Students can easily follow their marks and overall performance.</p></div></div><div class="whyPoint"><div class="wpIcon">📱</div><div><h3>Phone Friendly</h3><p>The portal is designed to work comfortably on mobile and desktop screens.</p></div></div><div class="whyPoint"><div class="wpIcon">⚡</div><div><h3>Simple & Efficient</h3><p>Less paperwork and easier access to the information that matters.</p></div></div><div class="whyPoint"><div class="wpIcon">🌱</div><div><h3>Growth Mindset</h3><p>Every result is a step toward learning better and achieving more.</p></div></div></div></div></section>
 
-<section class="homeSection alt"><div class="sectionIntro"><span class="eyebrow">How It Works</span><h2 class="title">Your Academic Journey</h2><p>Simple steps, clear information and a better way to stay connected.</p></div><div class="journey"><div class="journeyStep"><div class="num">01</div><h3>Learn</h3><p>Attend classes, build concepts and keep improving your skills every day.</p></div><div class="journeyStep"><div class="num">02</div><h3>Track</h3><p>Teachers enter results while students can check their academic progress.</p></div><div class="journeyStep"><div class="num">03</div><h3>Achieve</h3><p>Use your progress as motivation to set bigger goals and succeed.</p></div></div></section>
+<section data-public-page="true" class="homeSection alt"><div class="sectionIntro"><span class="eyebrow">How It Works</span><h2 class="title">Your Academic Journey</h2><p>Simple steps, clear information and a better way to stay connected.</p></div><div class="journey"><div class="journeyStep"><div class="num">01</div><h3>Learn</h3><p>Attend classes, build concepts and keep improving your skills every day.</p></div><div class="journeyStep"><div class="num">02</div><h3>Track</h3><p>Teachers enter results while students can check their academic progress.</p></div><div class="journeyStep"><div class="num">03</div><h3>Achieve</h3><p>Use your progress as motivation to set bigger goals and succeed.</p></div></div></section>
 
-<section class="homeSection"><div class="quoteBanner"><div class="quoteMark">“</div><div><p>Education is the passport to the future, for tomorrow belongs to those who prepare for it today.</p><small>— Malcolm X</small></div></div></section>
+<section data-public-page="true" class="homeSection"><div class="quoteBanner"><div class="quoteMark">“</div><div><p>Education is the passport to the future, for tomorrow belongs to those who prepare for it today.</p><small>— Malcolm X</small></div></div></section>
 
-<section class="homeSection" id="academyInfo"><div class="sectionIntro"><span class="eyebrow">Our Vision</span><h2 class="title">About Sajjad Academy</h2><p>Quality education supported by a clean, accessible and student-friendly digital experience.</p></div><div class="aboutBox"><div class="aboutCard"><h3>📚 Our Mission</h3><p>Our aim is to provide quality education and a simple digital platform that helps students and teachers stay connected with academic information.</p><div class="checkList"><span>Student-centered learning</span><span>Easy access to academic results</span><span>Simple tools for teachers and administration</span></div></div><div class="aboutCard"><h3>🚀 Our Goal</h3><p>We want every student to understand their progress, stay motivated and move confidently toward a brighter future.</p><div class="checkList"><span>Learn with confidence</span><span>Grow through continuous improvement</span><span>Succeed through consistency and hard work</span></div></div></div></section>
+<section data-public-page="true" class="homeSection" id="academyInfo"><div class="sectionIntro"><span class="eyebrow">Our Vision</span><h2 class="title">About Sajjad Academy</h2><p>Quality education supported by a clean, accessible and student-friendly digital experience.</p></div><div class="aboutBox"><div class="aboutCard"><h3>📚 Our Mission</h3><p>Our aim is to provide quality education and a simple digital platform that helps students and teachers stay connected with academic information.</p><div class="checkList"><span>Student-centered learning</span><span>Easy access to academic results</span><span>Simple tools for teachers and administration</span></div></div><div class="aboutCard"><h3>🚀 Our Goal</h3><p>We want every student to understand their progress, stay motivated and move confidently toward a brighter future.</p><div class="checkList"><span>Learn with confidence</span><span>Grow through continuous improvement</span><span>Succeed through consistency and hard work</span></div></div></div></section>
 
-<section class="contact" id="contact"><div class="contactInner"><span class="eyebrow" style="color:#8ed4ff">Get In Touch</span><h2>Contact Sajjad Academy</h2><p>Have a question, need support or want more information? We are here to help.</p><div class="contactGrid"><div class="contactItem"><div class="ico">📞</div><b>Phone</b><p id="contactPhone">+92 300 1234567</p></div><div class="contactItem"><div class="ico">💬</div><b>WhatsApp</b><p id="contactWhatsapp">+92 300 1234567</p></div><div class="contactItem"><div class="ico">✉️</div><b>Email</b><p id="contactEmail">sajjadacademy@gmail.com</p></div><div class="contactItem"><div class="ico">📍</div><b>Address</b><p id="contactAddress">Sajjad Academy<br>Lahore, Pakistan</p></div></div></div></section>
-<footer class="footer"><span>© 2026 Sajjad Academy. All rights reserved.</span><span>Education is the key to success 🎓 ❤️</span></footer>
+<section data-public-page="true" class="contact" id="contact"><div class="contactInner"><span class="eyebrow" style="color:#8ed4ff">Get In Touch</span><h2>Contact Sajjad Academy</h2><p>Have a question, need support or want more information? We are here to help.</p><div class="contactGrid"><div class="contactItem"><div class="ico">📞</div><b>Phone</b><p id="contactPhone">+92 300 1234567</p></div><div class="contactItem"><div class="ico">💬</div><b>WhatsApp</b><p id="contactWhatsapp">+92 300 1234567</p></div><div class="contactItem"><div class="ico">✉️</div><b>Email</b><p id="contactEmail">sajjadacademy@gmail.com</p></div><div class="contactItem"><div class="ico">📍</div><b>Address</b><p id="contactAddress">Sajjad Academy<br>Lahore, Pakistan</p></div></div></div></section>
+<footer data-public-page="true" class="footer"><span>© 2026 Sajjad Academy. All rights reserved.</span><span>Education is the key to success 🎓 ❤️</span></footer>
 
 <div class="modalBg" id="loginModal"><div class="modal"><button class="x" onclick="closeLogin()">×</button><h2 id="loginTitle">Student Login</h2><div class="form"><input id="loginEmail" placeholder="Student ID"><input id="loginPassword" type="password" placeholder="Password"><button class="primary" style="width:100%" onclick="doLogin()">Login</button><div class="msg" id="loginMsg"></div></div></div></div>
 
@@ -546,21 +551,28 @@ window.doLogin=async()=>{
 };
 
 function setView(view){
-  document.body.classList.remove("public-active","admin-active","portal-active","teacher-active");
-  document.body.classList.add(view==="admin"?"admin-active":view==="student"?"portal-active":view==="teacher"?"teacher-active":"public-active");
+  const body=document.body;
+  body.classList.remove("public-active","admin-active","portal-active","teacher-active");
+  body.classList.add(view==="admin"?"admin-active":view==="student"?"portal-active":view==="teacher"?"teacher-active":"public-active");
+
+  const admin=document.getElementById("adminDash");
+  const student=document.getElementById("studentDash");
+  const teacher=document.getElementById("teacherDash");
+
+  if(admin) admin.style.display=view==="admin"?"block":"none";
+  if(student) student.style.display=view==="student"?"block":"none";
+  if(teacher) teacher.style.display=view==="teacher"?"block":"none";
+
+  document.querySelectorAll('[data-public-page="true"]').forEach(el=>{
+    el.classList.toggle("hidden",view!=="public");
+  });
 }
 function hidePublic(){
-  document.querySelectorAll("header,.hero,.homeStats,.features,.section,.homeSection,.contact,.footer").forEach(x=>x.classList.add("hidden"));
-  document.getElementById("adminDash").style.removeProperty("display");
-  document.getElementById("studentDash").style.removeProperty("display");
-  document.getElementById("teacherDash").style.removeProperty("display");
+  setView(document.body.classList.contains("admin-active")?"admin":document.body.classList.contains("portal-active")?"student":document.body.classList.contains("teacher-active")?"teacher":"public");
 }
 async function showAdmin(){
   closeLogin();
   setView("admin");
-  hidePublic();
-  setView("admin");
-  document.getElementById("adminDash").style.display="block";
   window.scrollTo(0,0);
   await loadStudents();
   renderMarksOverview("adminMarksOverview");
@@ -719,12 +731,7 @@ function renderMarksOverview(targetId){
 window.showTeacher=async function showTeacher(user,data){
   closeLogin();
   setView("teacher");
-  hidePublic();
-  setView("teacher");
   window.scrollTo(0,0);
-  document.getElementById('adminDash').style.display='none';
-  document.getElementById('studentDash').style.display='none';
-  document.getElementById('teacherDash').style.display='block';
   document.getElementById('teacherWelcome').textContent='Welcome, '+(data?.name||user.email||'Teacher')+' — marks access only';
   await loadStudents();
   teacherStudentsCache=[...students];
@@ -923,10 +930,6 @@ window.studentLogout=async()=>{
   try{
     await signOut(auth);
     activeStudent=null;
-    document.getElementById('adminDash').style.display='none';
-    document.getElementById('teacherDash').style.display='none';
-    document.getElementById('studentDash').style.display='none';
-    document.querySelectorAll('header,.hero,.homeStats,.features,.section,.homeSection,.contact,.footer').forEach(x=>x.classList.remove('hidden'));
     setView('public');
     window.scrollTo({top:0,behavior:'smooth'});
   }catch(e){
