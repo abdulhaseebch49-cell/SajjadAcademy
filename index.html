@@ -1352,7 +1352,27 @@ body.public-active{
 }
 </style>
 
-</head>
+<style>
+.createdBy{
+  font-family:"Segoe UI",Arial,sans-serif;
+  font-size:13px;
+  font-weight:500;
+  letter-spacing:.35px;
+  color:#d8e6ff;
+  opacity:.95;
+}
+.createdBy strong{
+  font-family:Georgia,"Times New Roman",serif;
+  font-size:14px;
+  font-weight:700;
+  color:#ffffff;
+  letter-spacing:.2px;
+}
+@media(max-width:600px){
+  .createdBy{font-size:12px}
+  .createdBy strong{font-size:13px}
+}
+</style></head>
 <body class="public-active">
 
 <header data-public-page="true" class="header refHeader">
@@ -1429,7 +1449,7 @@ body.public-active{
   <div class="contactInfo"><h3>Contact Us</h3><p>☎ <span id="contactPhone">+92 300 1234567</span></p><p>✉ <span id="contactEmail">sajjadacademy@gmail.com</span></p><p>● <span id="contactAddress">Sajjad Academy<br>Lahore, Pakistan</span></p></div>
   <div class="contactMotto">Together for a <span>Brighter Future</span><i></i></div>
 </div></section>
-<footer data-public-page="true" class="footer refFooter"><span>© 2026 Sajjad Academy. All rights reserved.</span><span>Education is the key to success 🎓</span><span id="contactWhatsapp" class="waHidden">+92 300 1234567</span></footer>
+<footer data-public-page="true" class="footer refFooter"><span>© 2026 Sajjad Academy. All rights reserved.</span><span>Education is the key to success 🎓</span><span id="contactWhatsapp" class="waHidden">+92 300 1234567</span><span class="createdBy">Created by <strong>Abdul Haseeb Sajjad</strong></span></footer>
 <div class="modalBg" id="loginModal"><div class="modal"><button class="x" onclick="closeLogin()">×</button><h2 id="loginTitle">Student Login</h2><div class="form"><input id="loginEmail" placeholder="Student ID"><input id="loginPassword" type="password" placeholder="Password"><button class="primary" style="width:100%" onclick="doLogin()">Login</button><div class="msg" id="loginMsg"></div></div></div></div>
 
 <div class="dash" id="adminDash">
