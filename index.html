@@ -531,8 +531,20 @@ window.doLogin=async()=>{
  }catch(e){msg.textContent=e.message.replace("Firebase: ","")} finally {if(btn){btn.disabled=false;btn.textContent="Login";}}
 };
 
-function hidePublic(){document.querySelectorAll("header,.hero,.features,.section,.contact,.footer").forEach(x=>x.classList.add("hidden"))}
-async function showAdmin(){closeLogin();hidePublic();document.getElementById("adminDash").style.display="block";await loadStudents();renderMarksOverview("adminMarksOverview");await loadAnnouncements()}
+function hidePublic(){
+  document.querySelectorAll("header,.hero,.homeStats,.features,.section,.homeSection,.contact,.footer").forEach(x=>x.classList.add("hidden"));
+  document.getElementById("adminDash").style.display="none";
+  document.getElementById("studentDash").style.display="none";
+  document.getElementById("teacherDash").style.display="none";
+}
+async function showAdmin(){
+  closeLogin();
+  hidePublic();
+  document.getElementById("adminDash").style.display="block";
+  await loadStudents();
+  renderMarksOverview("adminMarksOverview");
+  await loadAnnouncements();
+}
 async function loadStudents(){const snap=await getDocs(collection(db,"students"));students=snap.docs.map(d=>({id:d.id,...d.data()}));if(document.getElementById("studentRows")){renderStudents();renderMarksOverview("adminMarksOverview");renderStudentDirectory('admin');updateAdminStats()}}
 window.loadStudents=loadStudents;
 
@@ -560,7 +572,11 @@ async function showStudent(uid){
  const snap=await getDoc(doc(db,"students",uid));
  if(!snap.exists())throw new Error("Student record not found.");
  activeStudent={id:snap.id,...snap.data()};
- closeLogin();hidePublic();
+ closeLogin();
+ hidePublic();
+ document.getElementById("adminDash").style.display="none";
+ document.getElementById("teacherDash").style.display="none";
+ document.getElementById("studentDash").style.display="none";
  const dash=document.getElementById("studentDash");
  dash.style.display="block";
  const name=activeStudent.name||"Student";
@@ -678,6 +694,8 @@ function renderMarksOverview(targetId){
 window.showTeacher=async function showTeacher(user,data){
   closeLogin();
   hidePublic();
+  document.getElementById('adminDash').style.display='none';
+  document.getElementById('studentDash').style.display='none';
   document.getElementById('teacherDash').style.display='block';
   document.getElementById('teacherWelcome').textContent='Welcome, '+(data?.name||user.email||'Teacher')+' — marks access only';
   await loadStudents();
@@ -877,8 +895,10 @@ window.studentLogout=async()=>{
   try{
     await signOut(auth);
     activeStudent=null;
+    document.getElementById('adminDash').style.display='none';
+    document.getElementById('teacherDash').style.display='none';
     document.getElementById('studentDash').style.display='none';
-    document.querySelectorAll('header,.hero,.features,.section,.contact,.footer').forEach(x=>x.classList.remove('hidden'));
+    document.querySelectorAll('header,.hero,.homeStats,.features,.section,.homeSection,.contact,.footer').forEach(x=>x.classList.remove('hidden'));
     window.scrollTo({top:0,behavior:'smooth'});
   }catch(e){
     alert('Logout failed. Please try again.');
@@ -897,25 +917,6 @@ document.addEventListener('keydown',e=>{
 document.querySelectorAll('.modalBg').forEach(bg=>bg.addEventListener('click',e=>{if(e.target===bg)bg.style.display='none';}));
 </script>
 
-<style id="portal-visibility-fix">
-.loginChoice:after{content:none!important}
-</style>
-<script>
-(function(){
-  function setOnly(view){
-    var pub=document.querySelectorAll("header,.hero,.features,.section,.homeSection,.contact,.footer");
-    pub.forEach(function(x){x.classList.toggle("hidden",view!=="home");});
-    ["adminDash","teacherDash","studentDash"].forEach(function(id){
-      var el=document.getElementById(id); if(el) el.style.display=(id===view+"Dash")?"block":"none";
-    });
-  }
-  window.addEventListener("load",function(){
-    var a=window.showAdmin,b=window.showTeacher,c=window.showStudent;
-    if(a) window.showAdmin=async function(){setOnly("admin"); return a.apply(this,arguments)};
-    if(b) window.showTeacher=async function(){setOnly("teacher"); return b.apply(this,arguments)};
-    if(c) window.showStudent=async function(){setOnly("student"); return c.apply(this,arguments)};
-  });
-})();
-</script>
+
 </body>
 </html>
