@@ -299,30 +299,17 @@ body{background:#f6f9ff}
 </style>
 
 <style id="portalViewIsolation">
-/* FINAL VIEW ISOLATION: only one screen can be visible at a time */
-body.portal-active > header, body.portal-active > .hero, body.portal-active > .homeStats, body.portal-active > .features, body.portal-active > .section, body.portal-active > .homeSection, body.portal-active > .contact, body.portal-active > .footer { display:none !important; }
+/* FINAL VIEW ISOLATION: keep homepage and portals separate without blocking portal controls */
+body.portal-active .header, body.portal-active .hero, body.portal-active .homeStats, body.portal-active .features, body.portal-active .section, body.portal-active .homeSection, body.portal-active .contact, body.portal-active .footer { display:none !important; }
+body.admin-active .header, body.admin-active .hero, body.admin-active .homeStats, body.admin-active .features, body.admin-active .section, body.admin-active .homeSection, body.admin-active .contact, body.admin-active .footer { display:none !important; }
+body.teacher-active .header, body.teacher-active .hero, body.teacher-active .homeStats, body.teacher-active .features, body.teacher-active .section, body.teacher-active .homeSection, body.teacher-active .contact, body.teacher-active .footer { display:none !important; }
 body.portal-active #adminDash, body.portal-active #teacherDash { display:none !important; }
 body.portal-active #studentDash { display:block !important; }
-body.admin-active > header, body.admin-active > .hero, body.admin-active > .homeStats, body.admin-active > .features, body.admin-active > .section, body.admin-active > .homeSection, body.admin-active > .contact, body.admin-active > .footer { display:none !important; }
 body.admin-active #studentDash, body.admin-active #teacherDash { display:none !important; }
-body.admin-active #adminDash { display:block !important; }
-body.teacher-active > header, body.teacher-active > .hero, body.teacher-active > .homeStats, body.teacher-active > .features, body.teacher-active > .section, body.teacher-active > .homeSection, body.teacher-active > .contact, body.teacher-active > .footer { display:none !important; }
+body.admin-active #adminDash { display:block !important; pointer-events:auto !important; }
 body.teacher-active #adminDash, body.teacher-active #studentDash { display:none !important; }
-body.teacher-active #teacherDash { display:block !important; }
+body.teacher-active #teacherDash { display:block !important; pointer-events:auto !important; }
 body.public-active #adminDash, body.public-active #studentDash, body.public-active #teacherDash { display:none !important; }
-</style>
-
-<style id="finalPortalIsolationFix">
-body.portal-active > *:not(#studentDash):not(.modalBg){display:none !important;}
-body.admin-active > *:not(#adminDash):not(.modalBg){display:none !important;}
-body.teacher-active > *:not(#teacherDash):not(.modalBg){display:none !important;}
-body.portal-active #studentDash{display:block !important;}
-body.portal-active #adminDash,body.portal-active #teacherDash{display:none !important;}
-body.admin-active #adminDash{display:block !important;}
-body.admin-active #studentDash,body.admin-active #teacherDash{display:none !important;}
-body.teacher-active #teacherDash{display:block !important;}
-body.teacher-active #adminDash,body.teacher-active #studentDash{display:none !important;}
-body.public-active #adminDash,body.public-active #studentDash,body.public-active #teacherDash{display:none !important;}
 </style>
 </head>
 <body class="public-active">
@@ -563,10 +550,169 @@ function setView(view){
   document.body.classList.add(view==="admin"?"admin-active":view==="student"?"portal-active":view==="teacher"?"teacher-active":"public-active");
 }
 function hidePublic(){
-  document.querySelectorAll("body > *:not(#adminDash):not(#studentDash):not(#teacherDash):not(.modalBg)").forEach(x=>x.style.setProperty("display","none","important"));
-  document.getElementById("adminDash").style.setProperty("display","none","important");
-  document.getElementById("studentDash").style.setProperty("display","none","important");
-  document.getElementById("teacherDash").style.setProperty("display","none","important");
+  document.querySelectorAll("header,.hero,.homeStats,.features,.section,.homeSection,.contact,.footer").forEach(x=>x.classList.add("hidden"));
+  document.getElementById("adminDash").style.removeProperty("display");
+  document.getElementById("studentDash").style.removeProperty("display");
+  document.getElementById("teacherDash").style.removeProperty("display");
+}
+async function showAdmin(){
+  closeLogin();
+  setView("admin");
+  hidePublic();
+  setView("admin");
+  document.getElementById("adminDash").style.display="block";
+  window.scrollTo(0,0);
+  await loadStudents();
+  renderMarksOverview("adminMarksOverview");
+  await loadAnnouncements();
+}
+async function loadStudents(){const snap=await getDocs(collection(db,"students"));students=snap.docs.map(d=>({id:d.id,...d.data()}));if(document.getElementById("studentRows")){renderStudents();renderMarksOverview("adminMarksOverview");renderStudentDirectory('admin');updateAdminStats()}}
+window.loadStudents=loadStudents;
+
+function announcementDate(v){try{return new Date(Number(v)||v).toLocaleString("en-PK",{dateStyle:"medium",timeStyle:"short"})}catch(e){return ""}}
+function announcementCard(a,admin=false){return `<div style="background:#fff;border-left:5px solid #4f72ff;border-radius:12px;padding:16px 18px;margin:10px 0;box-shadow:0 4px 18px #173b7610"><div style="display:flex;justify-content:space-between;gap:10px;align-items:flex-start"><div><h3 style="margin:0 0 6px">📢 ${esc(a.title)}</h3><p style="margin:0;color:#596a82;line-height:1.6;white-space:pre-wrap">${esc(a.message)}</p><small style="color:#8996a8;display:block;margin-top:10px">${announcementDate(a.createdAt)}</small></div>${admin?`<button class="smallBtn danger" onclick="deleteAnnouncement('${a.id}')">Delete</button>`:""}</div></div>`}
+async function loadAnnouncements(){try{const snap=await getDocs(collection(db,"announcements"));announcements=snap.docs.map(d=>({id:d.id,...d.data()})).sort((a,b)=>Number(b.createdAt||0)-Number(a.createdAt||0));const html=announcements.length?announcements.map((a,i)=>`<div class="announcementItem"><small>${announcementDate(a.createdAt)}</small><h3>${esc(a.title)}</h3><p>${esc(a.message)}</p></div>`).join(""):'<p style="text-align:center;color:#69778d">No announcements yet.</p>';const pub=document.getElementById("publicAnnouncements");if(pub)pub.innerHTML=html;const stu=document.getElementById("studentAnnouncements");if(stu)stu.innerHTML=html;const admin=document.getElementById("adminAnnouncementRows");if(admin)admin.innerHTML=announcements.length?announcements.map(a=>`<tr><td><b>${esc(a.title)}</b><br>${esc(a.message)}</td><td>${announcementDate(a.createdAt)}</td><td><button class="smallBtn danger" onclick="deleteAnnouncement('${a.id}')">Delete</button></td></tr>`).join(""):'<tr><td colspan="3">No announcements yet.</td></tr>'}catch(e){} finally { updateAdminStats(); }}
+window.addAnnouncement=async()=>{const title=document.getElementById("aTitle").value.trim(),message=document.getElementById("aMessage").value.trim(),msg=document.getElementById("announcementMsg");if(!title||!message){msg.textContent="Title aur details likhein.";return}try{await addDoc(collection(db,"announcements"),{title,message,createdAt:Date.now()});document.getElementById("aTitle").value="";document.getElementById("aMessage").value="";msg.style.color="#087443";msg.textContent="Announcement add ho gayi hai.";await loadAnnouncements()}catch(e){msg.textContent=e.message}};
+window.deleteAnnouncement=async id=>{if(!confirm("Delete announcement?"))return;try{await deleteDoc(doc(db,"announcements",id));await loadAnnouncements()}catch(e){alert(e.message)}};
+
+window.renderStudents=()=>{updateAdminStats();const q=(document.getElementById("search")?.value||"").toLowerCase();const filtered=students.filter(s=>(s.studentId+" "+s.name+" "+s.className+" "+s.section).toLowerCase().includes(q));document.getElementById("studentRows").innerHTML=filtered.map(s=>`<tr><td>${esc(s.studentId)}</td><td>${esc(s.name)}</td><td>${esc(s.className||"")}</td><td><span class="sectionBadge">${esc(s.section||"—")}</span></td><td><button class="smallBtn" onclick="editStudent('${s.id}')">Edit</button><button class="smallBtn green" onclick="openMarks('${s.id}')">Marks</button><button class="smallBtn" onclick="openResetGuide('${s.id}')">🔑 Reset Guide</button><button class="smallBtn danger" onclick="deleteStudent('${s.id}')">Delete</button></td></tr>`).join("")||"<tr><td colspan='5'>No students found.</td></tr>";const pr=document.getElementById("passwordRows");if(pr)pr.innerHTML=students.map(s=>`<tr><td>${esc(s.studentId)}</td><td>${esc(s.name)}</td><td>${s.passwordChanged?'<span style="color:#087443;font-weight:700">✅ Changed</span>':'<span style="color:#b45309;font-weight:700">🟡 Not changed</span>'}</td></tr>`).join("")||"<tr><td colspan='3'>No students yet.</td></tr>"};
+
+window.addStudent=async()=>{const id=document.getElementById("sId").value.trim().toUpperCase(),name=document.getElementById("sName").value.trim(),phone=document.getElementById("sPhone").value.trim(),className=document.getElementById("sClass").value,section=document.getElementById("sSection").value,pw=document.getElementById("sPass").value,msg=document.getElementById("adminMsg");if(!id||!name||!className||!section||pw.length<6){msg.textContent="ID, name, class, section aur 6+ character password required hain.";return}try{const email=id.toLowerCase()+"@students.sajjadacademy.local",cred=await createUserWithEmailAndPassword(secondaryAuth,email,pw);await setDoc(doc(db,"students",cred.user.uid),{studentId:id,name,phone,className,section,marks:[],passwordChanged:false});msg.style.color="#087443";msg.textContent="Student added successfully.";["sId","sName","sPhone","sPass"].forEach(x=>document.getElementById(x).value="");document.getElementById("sClass").value="";document.getElementById("sSection").value="";await loadStudents();await signOut(secondaryAuth)}catch(e){msg.style.color="#d33";msg.textContent=e.message}};
+
+window.editStudent=async uid=>{const s=students.find(x=>x.id===uid);if(!s)return;const name=prompt("Student name:",s.name);if(name===null)return;const phone=prompt("Phone:",s.phone||"");const cls=prompt("Class (9 or 10):",s.className||"");const sec=prompt("Section (A/B/C):",s.section||"");await updateDoc(doc(db,"students",uid),{name,phone,className:cls,section:sec});await loadStudents()};
+window.deleteStudent=async uid=>{if(!confirm("Delete this student's record?"))return;await deleteDoc(doc(db,"students",uid));await loadStudents();alert("Firestore record deleted. Firebase Auth account remains active.")};
+
+window.openMarks=async uid=>{activeStudent=students.find(x=>x.id===uid);editingMark=-1;document.getElementById("marksStudentName").textContent=activeStudent.name+" ("+activeStudent.studentId+")";document.getElementById("marksModal").style.display="flex";document.getElementById("mSubject").value="";document.getElementById("mObtained").value="";document.getElementById("mTotal").value="";document.getElementById("marksMsg").textContent="";renderMarks()};
+window.closeMarks=()=>document.getElementById("marksModal").style.display="none";
+function renderMarks(){const a=activeStudent?.marks||[];document.getElementById("marksRows").innerHTML=a.map((m,i)=>`<tr><td>${esc(m.subject)}</td><td>${m.obtained}</td><td>${m.total}</td><td><button class="smallBtn" onclick="editMark(${i})">Edit</button><button class="smallBtn danger" onclick="removeMark(${i})">Delete</button></td></tr>`).join("")||"<tr><td colspan='4'>No marks yet.</td></tr>"}
+window.editMark=i=>{const m=activeStudent.marks[i];editingMark=i;document.getElementById("mSubject").value=m.subject;document.getElementById("mObtained").value=m.obtained;document.getElementById("mTotal").value=m.total};
+window.saveMark=async()=>{const subject=document.getElementById("mSubject").value.trim(),obt=Number(document.getElementById("mObtained").value),total=Number(document.getElementById("mTotal").value),msg=document.getElementById("marksMsg");if(!subject||!Number.isFinite(obt)||!Number.isFinite(total)||total<=0||obt<0||obt>total){msg.textContent="Enter valid marks (obtained must be between 0 and total).";return}const arr=[...(activeStudent.marks||[])],item={subject,obtained:obt,total};if(editingMark<0)arr.push(item);else arr[editingMark]=item;await updateDoc(doc(db,"students",activeStudent.id),{marks:arr});activeStudent.marks=arr;editingMark=-1;msg.style.color="#087443";msg.textContent="Saved.";document.getElementById("mSubject").value="";document.getElementById("mObtained").value="";document.getElementById("mTotal").value="";renderMarks();await loadStudents();activeStudent=students.find(x=>x.id===activeStudent.id)};
+window.removeMark=async i=>{if(!confirm("Delete this mark?"))return;const arr=[...(activeStudent.marks||[])];arr.splice(i,1);await updateDoc(doc(db,"students",activeStudent.id),{marks:arr});activeStudent.marks=arr;renderMarks();await loadStudents();activeStudent=students.find(x=>x.id===activeStudent.id)};
+
+async function showStudent(uid){
+ setView("student");
+ const snap=await getDoc(doc(db,"students",uid));
+ if(!snap.exists())throw new Error("Student record not found.");
+ activeStudent={id:snap.id,...snap.data()};
+ closeLogin();
+ hidePublic();
+ setView("student");
+ document.getElementById("adminDash").style.display="none";
+ document.getElementById("teacherDash").style.display="none";
+ document.getElementById("studentDash").style.display="none";
+ const dash=document.getElementById("studentDash");
+ dash.style.display="block";
+ setView("student");
+ window.scrollTo(0,0);
+ const name=activeStudent.name||"Student";
+ const cls=activeStudent.className||"—";
+ const sec=activeStudent.section||"—";
+ const sid=activeStudent.studentId||"—";
+ const phone=activeStudent.phone||"—";
+ document.getElementById("studentWelcomeName").textContent=name+" 👋";
+ document.getElementById("studentTopName").textContent=name;
+ document.getElementById("studentClassTile").textContent=cls?(normalizeClass(cls)==="9"?"9th":normalizeClass(cls)==="10"?"10th":cls):"—";
+ document.getElementById("studentSectionTile").textContent="Section "+sec;
+ document.getElementById("studentIdTile").textContent=sid;
+ document.getElementById("studentPhoneTile").textContent=phone;
+ document.getElementById("studentClassPill").textContent=`Class ${normalizeClass(cls)==="9"?"9th":normalizeClass(cls)==="10"?"10th":cls} · Section ${sec}`;
+ document.getElementById("profileCard").innerHTML=`<p style="margin:0;line-height:1.9"><b>Name:</b> ${esc(name)} &nbsp; <b>Student ID:</b> ${esc(sid)}<br><b>Class:</b> ${esc(cls)} &nbsp; <b>Section:</b> ${esc(sec)} &nbsp; <b>Phone:</b> ${esc(phone)}</p>`;
+ const marks=Array.isArray(activeStudent.marks)?activeStudent.marks:[];
+ document.getElementById("resultRows").innerHTML=marks.map(m=>{
+   const pct=m.total?((Number(m.obtained)/Number(m.total))*100):0;
+   const grade=pct>=90?"A+":pct>=80?"A":pct>=70?"B+":pct>=60?"B":pct>=50?"C":"F";
+   return `<tr><td class="subjectCell">${esc(m.subject)}</td><td>${Number(m.obtained)||0}</td><td>—</td><td>${Number(m.obtained)||0}/${Number(m.total)||0}</td><td>${pct.toFixed(0)}%</td><td><span class="gradeBadge">${grade}</span></td></tr>`;
+ }).join("")||"<tr><td colspan='6' style='text-align:center;padding:28px;color:#69778d'>No marks added yet.</td></tr>";
+ const ob=marks.reduce((a,m)=>a+Number(m.obtained||0),0),to=marks.reduce((a,m)=>a+Number(m.total||0),0),pct=to?(ob/to)*100:0;
+ document.getElementById("overallMarks").textContent=to?`${ob} / ${to}`:"—";
+ document.getElementById("overallPercent").textContent=to?`${pct.toFixed(1)}%`:"—";
+ document.getElementById("overallGrade").textContent=to?(pct>=90?"A+":pct>=80?"A":pct>=70?"B+":pct>=60?"B":pct>=50?"C":"F"):"—";
+ await loadAnnouncements();
+ const count=announcements.length;
+ document.getElementById("studentNoticeCount").textContent=count;
+}window.openStudentPasswordChange=()=>{document.getElementById("studentPasswordModal").style.display="flex";["currentStudentPassword","newStudentPassword","confirmStudentPassword"].forEach(id=>document.getElementById(id).value="");document.getElementById("studentPasswordMsg").textContent=""};
+window.closeStudentPasswordChange=()=>document.getElementById("studentPasswordModal").style.display="none";
+window.changeStudentPassword=async()=>{const current=document.getElementById("currentStudentPassword").value,newPw=document.getElementById("newStudentPassword").value,confirm=document.getElementById("confirmStudentPassword").value,msg=document.getElementById("studentPasswordMsg");if(!current||!newPw||!confirm){msg.textContent="Sab fields fill karein.";return}if(newPw.length<6){msg.textContent="New password 6+ characters ka hona chahiye.";return}if(newPw!==confirm){msg.textContent="Passwords match nahi kar rahi.";return}try{const user=auth.currentUser,credential=EmailAuthProvider.credential(user.email,current);await reauthenticateWithCredential(user,credential);await updatePassword(user,newPw);await updateDoc(doc(db,"students",user.uid),{passwordChanged:true});msg.style.color="#087443";msg.textContent="Password successfully change ho gaya hai."}catch(e){msg.textContent=e.message.replace("Firebase: ","")}};
+
+window.openPasswordChange=()=>{document.getElementById("passwordModal").style.display="flex";["currentAdminPassword","newAdminPassword","confirmAdminPassword"].forEach(id=>document.getElementById(id).value="");document.getElementById("passwordMsg").textContent=""};
+window.closePasswordChange=()=>document.getElementById("passwordModal").style.display="none";
+window.changeAdminPassword=async()=>{const current=document.getElementById("currentAdminPassword").value,newPw=document.getElementById("newAdminPassword").value,confirm=document.getElementById("confirmAdminPassword").value,msg=document.getElementById("passwordMsg");if(!current||!newPw||!confirm){msg.textContent="Sab fields fill karein.";return}if(newPw.length<6){msg.textContent="New password 6+ characters ka hona chahiye.";return}if(newPw!==confirm){msg.textContent="Passwords match nahi kar rahi.";return}try{const user=auth.currentUser,credential=EmailAuthProvider.credential(user.email,current);await reauthenticateWithCredential(user,credential);await updatePassword(user,newPw);msg.style.color="#087443";msg.textContent="Admin password successfully change ho gayi hai."}catch(e){msg.textContent=e.message.replace("Firebase: ","")}};
+
+window.openResetGuide=uid=>{const s=students.find(x=>x.id===uid);if(!s)return;document.getElementById('resetGuideText').innerHTML=`<div style="padding:12px 14px;background:#f5f8ff;border:1px solid #dce7f6;border-radius:12px"><b>👤 Student:</b> ${esc(s.name||'')}<br><b>🆔 Student ID:</b> <span style="color:#1453bb;font-weight:800">${esc(s.studentId||'')}</span></div>`;document.getElementById('resetGuideModal').style.display='flex'};window.closeResetGuide=()=>document.getElementById('resetGuideModal').style.display='none';
+
+window.openSettings=async()=>{document.getElementById("settingsModal").style.display="flex";const s=await getDoc(doc(db,"settings","website")),d=s.exists()?s.data():{};document.getElementById("setName").value=d.name||"Sajjad Academy";document.getElementById("setPhone").value=d.phone||"+92 300 1234567";document.getElementById("setWhatsapp").value=d.whatsapp||"+92 300 1234567";document.getElementById("setEmail").value=d.email||"sajjadacademy@gmail.com";document.getElementById("setAddress").value=d.address||"Sajjad Academy, Lahore, Pakistan";document.getElementById("settingsMsg").textContent=""};
+window.closeSettings=()=>document.getElementById("settingsModal").style.display="none";
+window.saveSettings=async()=>{const msg=document.getElementById("settingsMsg");try{const data={name:document.getElementById("setName").value.trim()||"Sajjad Academy",phone:document.getElementById("setPhone").value.trim(),whatsapp:document.getElementById("setWhatsapp").value.trim(),email:document.getElementById("setEmail").value.trim(),address:document.getElementById("setAddress").value.trim()};await setDoc(doc(db,"settings","website"),data,{merge:true});applySettings(data);msg.style.color="#087443";msg.textContent="Settings save ho gayi hain."}catch(e){msg.textContent=e.message}};
+function applySettings(d){if(d.name){document.getElementById("siteName").textContent=d.name;document.title=d.name+" | Student Portal";const hn=document.getElementById("heroName");const parts=String(d.name).trim().split(/\s+/);hn.innerHTML=parts.length>1?esc(parts.slice(0,-1).join(" "))+" <span>"+esc(parts.at(-1))+"</span>":esc(d.name)}if(d.phone)document.getElementById("contactPhone").textContent=d.phone;if(d.whatsapp)document.getElementById("contactWhatsapp").textContent=d.whatsapp;if(d.email)document.getElementById("contactEmail").textContent=d.email;if(d.address)document.getElementById("contactAddress").innerHTML=esc(d.address).replace(/, /g,"<br>")}
+async function loadPublicSettings(){try{const s=await getDoc(doc(db,"settings","website"));if(s.exists())applySettings(s.data())}catch(e){}}
+
+let teacherStudentsCache=[],teacherEntryStudents=[];
+
+function normalizeClass(v){
+  const x=String(v??'').trim().toLowerCase().replace(/\s+/g,'');
+  if(x==='9'||x==='9th'||x==='class9'||x==='9thclass') return '9';
+  if(x==='10'||x==='10th'||x==='class10'||x==='10thclass') return '10';
+  return x;
+}
+
+function normalizeSection(v){
+  const x=String(v??'').trim().toUpperCase();
+  if(!x) return '';
+  if(/^SECTION\s*[ABC]$/.test(x)) return x.replace('SECTION','').trim();
+  if(/^[ABC]$/.test(x)) return x;
+  return x;
+}
+
+
+function renderMarksOverview(targetId){
+  const box=document.getElementById(targetId);
+  if(!box) return;
+
+  const classes=['9','10'];
+  box.innerHTML=classes.map(cls=>{
+    const classStudents=students.filter(s=>normalizeClass(s.className)===cls);
+    const sections=['A','B','C'];
+    const sectionPanels=sections.map(sec=>{
+      const secStudents=classStudents.filter(s=>normalizeSection(s.section)===sec);
+      const subjectMap={};
+
+      secStudents.forEach(s=>{
+        (Array.isArray(s.marks)?s.marks:[]).forEach(m=>{
+          const subject=String(m.subject||'').trim();
+          if(!subject) return;
+          const key=subject.toLowerCase();
+          if(!subjectMap[key]) subjectMap[key]={subject,marked:0,totalStudents:secStudents.length};
+          subjectMap[key].marked++;
+        });
+      });
+
+      const subjects=Object.values(subjectMap).sort((a,b)=>a.subject.localeCompare(b.subject));
+      const markedStudents=secStudents.filter(s=>Array.isArray(s.marks)&&s.marks.length>0).length;
+      const entries=secStudents.reduce((n,s)=>n+(Array.isArray(s.marks)?s.marks.length:0),0);
+
+      return `<div class="overviewPanel">
+        <h3>Section ${sec}</h3>
+        <div class="overviewStats">
+          <div class="overviewStat"><b>${markedStudents}/${secStudents.length}</b><span>Students with marks</span></div>
+          <div class="overviewStat"><b>${entries}</b><span>Total mark entries</span></div>
+        </div>
+        <div class="overviewRows">
+          ${subjects.length ? subjects.map(x=>`
+            <div class="overviewRow">
+              <div class="left">
+                <div class="subject">${esc(x.subject)}</div>
+                <div class="meta">Students with this subject marks</div>
+              </div>
+              <span class="overviewBadge">${x.marked}/${x.totalStudents}</span>
+            </div>`).join('') : '<div style="color:#718096;font-size:13px">No marks added yet.</div>'}
+        </div>
+      </div>`;
+    }).join('');
+
+    return `<div class="overviewPanel">
+      <h3>📚 Class ${cls==='9'?'9th':'10th'}</h3>
+      <div class="overviewRows">${sectionPanels}</div>
+    </div>`;
   }).join('');
 }
 
