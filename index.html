@@ -297,8 +297,22 @@ body{background:#f6f9ff}
 @media(max-width:560px){.header{height:66px}.logo{font-size:20px}.nav{display:none}.hero{min-height:auto;padding:52px 5% 72px}.hero h1{font-size:46px;letter-spacing:-1.5px}.hero h2{font-size:18px}.hero p{font-size:14px}.loginCard{width:100%}.homeStats{width:92%;grid-template-columns:1fr 1fr;border-radius:18px}.homeStat{padding:14px 7px}.homeStat b{font-size:22px}.features{padding-top:52px;grid-template-columns:1fr}.homeSection{padding:55px 5%}.title{font-size:28px}.announcementShell{padding:4px 14px}.announcementShell .announcementItem{padding-right:10px}.announcementShell .announcementItem small{position:static;display:block;margin-top:7px}.whyVisual{min-height:330px}.schoolPanel{left:18px;right:18px}.floatCard.one{right:12px}.floatCard.two{left:12px}.floatCard.three{right:12px}.quoteBanner{padding:22px;align-items:flex-start}.quoteBanner p{font-size:15px}.contactGrid{grid-template-columns:1fr}.footer{flex-direction:column;text-align:center;gap:7px}}
 
 </style>
+
+<style id="portalViewIsolation">
+/* FINAL VIEW ISOLATION: only one screen can be visible at a time */
+body.portal-active > header, body.portal-active > .hero, body.portal-active > .homeStats, body.portal-active > .features, body.portal-active > .section, body.portal-active > .homeSection, body.portal-active > .contact, body.portal-active > .footer { display:none !important; }
+body.portal-active #adminDash, body.portal-active #teacherDash { display:none !important; }
+body.portal-active #studentDash { display:block !important; }
+body.admin-active > header, body.admin-active > .hero, body.admin-active > .homeStats, body.admin-active > .features, body.admin-active > .section, body.admin-active > .homeSection, body.admin-active > .contact, body.admin-active > .footer { display:none !important; }
+body.admin-active #studentDash, body.admin-active #teacherDash { display:none !important; }
+body.admin-active #adminDash { display:block !important; }
+body.teacher-active > header, body.teacher-active > .hero, body.teacher-active > .homeStats, body.teacher-active > .features, body.teacher-active > .section, body.teacher-active > .homeSection, body.teacher-active > .contact, body.teacher-active > .footer { display:none !important; }
+body.teacher-active #adminDash, body.teacher-active #studentDash { display:none !important; }
+body.teacher-active #teacherDash { display:block !important; }
+body.public-active #adminDash, body.public-active #studentDash, body.public-active #teacherDash { display:none !important; }
+</style>
 </head>
-<body>
+<body class="public-active">
 <header class="header"><div class="logo">🎓 <span id="siteName">Sajjad Academy</span></div><nav class="nav"><a href="#home">Home</a><a href="#about">About</a><a href="#announcements">Notices</a><a href="#contact">Contact</a></nav><button class="topbtn" onclick="openLogin('student')">👤 Student Login</button></header>
 
 <section class="hero" id="home"><div class="heroText"><div class="tag">Learn • Grow • Succeed</div><h1 id="heroName">Sajjad <span>Academy</span></h1><h2>Building Knowledge. Shaping Futures.</h2><p>A modern academic platform where students stay connected with their results, teachers manage marks with ease, and the academy keeps everything organized in one place.</p><div class="heroActions"><button class="topbtn" onclick="document.getElementById('about').scrollIntoView({behavior:'smooth'})">Explore Academy →</button><button class="heroSecondary" onclick="document.getElementById('announcements').scrollIntoView({behavior:'smooth'})">📢 Latest Notices</button></div></div>
@@ -531,6 +545,10 @@ window.doLogin=async()=>{
  }catch(e){msg.textContent=e.message.replace("Firebase: ","")} finally {if(btn){btn.disabled=false;btn.textContent="Login";}}
 };
 
+function setView(view){
+  document.body.classList.remove("public-active","admin-active","portal-active","teacher-active");
+  document.body.classList.add(view==="admin"?"admin-active":view==="student"?"portal-active":view==="teacher"?"teacher-active":"public-active");
+}
 function hidePublic(){
   document.querySelectorAll("header,.hero,.homeStats,.features,.section,.homeSection,.contact,.footer").forEach(x=>x.classList.add("hidden"));
   document.getElementById("adminDash").style.display="none";
@@ -539,8 +557,11 @@ function hidePublic(){
 }
 async function showAdmin(){
   closeLogin();
+  setView("admin");
   hidePublic();
+  setView("admin");
   document.getElementById("adminDash").style.display="block";
+  window.scrollTo(0,0);
   await loadStudents();
   renderMarksOverview("adminMarksOverview");
   await loadAnnouncements();
@@ -569,16 +590,20 @@ window.saveMark=async()=>{const subject=document.getElementById("mSubject").valu
 window.removeMark=async i=>{if(!confirm("Delete this mark?"))return;const arr=[...(activeStudent.marks||[])];arr.splice(i,1);await updateDoc(doc(db,"students",activeStudent.id),{marks:arr});activeStudent.marks=arr;renderMarks();await loadStudents();activeStudent=students.find(x=>x.id===activeStudent.id)};
 
 async function showStudent(uid){
+ setView("student");
  const snap=await getDoc(doc(db,"students",uid));
  if(!snap.exists())throw new Error("Student record not found.");
  activeStudent={id:snap.id,...snap.data()};
  closeLogin();
  hidePublic();
+ setView("student");
  document.getElementById("adminDash").style.display="none";
  document.getElementById("teacherDash").style.display="none";
  document.getElementById("studentDash").style.display="none";
  const dash=document.getElementById("studentDash");
  dash.style.display="block";
+ setView("student");
+ window.scrollTo(0,0);
  const name=activeStudent.name||"Student";
  const cls=activeStudent.className||"—";
  const sec=activeStudent.section||"—";
@@ -693,7 +718,10 @@ function renderMarksOverview(targetId){
 
 window.showTeacher=async function showTeacher(user,data){
   closeLogin();
+  setView("teacher");
   hidePublic();
+  setView("teacher");
+  window.scrollTo(0,0);
   document.getElementById('adminDash').style.display='none';
   document.getElementById('studentDash').style.display='none';
   document.getElementById('teacherDash').style.display='block';
@@ -899,6 +927,7 @@ window.studentLogout=async()=>{
     document.getElementById('teacherDash').style.display='none';
     document.getElementById('studentDash').style.display='none';
     document.querySelectorAll('header,.hero,.homeStats,.features,.section,.homeSection,.contact,.footer').forEach(x=>x.classList.remove('hidden'));
+    setView('public');
     window.scrollTo({top:0,behavior:'smooth'});
   }catch(e){
     alert('Logout failed. Please try again.');
