@@ -1372,7 +1372,113 @@ body.public-active{
   .createdBy{font-size:12px}
   .createdBy strong{font-size:13px}
 }
-</style></head>
+</style>
+<style id="faculty-section-style">
+/* ===== Faculty Showcase ===== */
+.facultySection{padding:70px 5%;background:linear-gradient(180deg,#f7faff,#eef5ff)}
+.facultyGrid{max-width:1180px;margin:0 auto;display:grid;grid-template-columns:1fr;gap:22px}
+.principalCard{position:relative;overflow:hidden;border-radius:28px;padding:34px;background:linear-gradient(135deg,#071f50,#0d4ca3 58%,#117c91);color:#fff;box-shadow:0 20px 55px rgba(14,62,130,.22);border:1px solid rgba(255,255,255,.16)}
+.principalCard:before{content:"";position:absolute;width:330px;height:330px;border-radius:50%;right:-100px;top:-150px;background:rgba(255,255,255,.09)}
+.principalCard:after{content:"✦";position:absolute;right:38px;bottom:22px;font-size:110px;color:rgba(255,255,255,.07)}
+.principalTop{position:relative;z-index:1;display:flex;gap:24px;align-items:flex-start}
+.principalAvatar{width:92px;height:92px;flex:0 0 92px;border-radius:24px;display:grid;place-items:center;background:linear-gradient(145deg,#ffd35a,#f3a91b);font-size:44px;box-shadow:0 12px 30px rgba(0,0,0,.2)}
+.principalBadge{display:inline-block;padding:7px 13px;border-radius:999px;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.18);font-size:11px;font-weight:900;letter-spacing:1px}
+.principalCard h3{margin:9px 0 4px;font-size:32px}.principalDegree{margin:0;color:#aee8ff;font-size:18px;font-weight:800}
+.principalQualifications{position:relative;z-index:1;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin-top:24px}
+.principalQual{padding:15px 17px;border-radius:16px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.13);line-height:1.55}
+.principalQual strong{display:block;color:#ffd45b;font-size:12px;text-transform:uppercase;letter-spacing:.8px;margin-bottom:4px}
+.principalExpertise{position:relative;z-index:1;margin-top:18px;padding:18px;border-radius:18px;background:rgba(0,0,0,.13);border-left:4px solid #ffd15a}
+.principalExpertise b{display:block;margin-bottom:8px;color:#ffd45b}.principalExpertise ul{margin:0;padding-left:19px;line-height:1.7}
+.facultyNote{text-align:center;color:#63748f;margin-top:14px;font-size:13px}
+@media(max-width:650px){.principalCard{padding:24px 19px}.principalTop{gap:15px}.principalAvatar{width:70px;height:70px;flex-basis:70px;border-radius:19px;font-size:34px}.principalCard h3{font-size:24px}.principalQualifications{grid-template-columns:1fr}}
+</style>
+
+
+<style id="principal-compact-fix">
+/* Compact Principal card */
+.facultyGrid{max-width:920px}
+.principalCard{max-width:760px;margin:0 auto;padding:24px}
+.principalTop{gap:17px}
+.principalAvatar{width:72px;height:72px;flex-basis:72px;border-radius:20px;font-size:34px}
+.principalCard h3{font-size:25px;margin:6px 0 3px}
+.principalDegree{font-size:15px}
+.principalQualifications{gap:8px;margin-top:16px}
+.principalQual{padding:10px 12px;font-size:13px}
+.principalExpertise{margin-top:12px;padding:13px;font-size:13px}
+.principalExpertise ul{line-height:1.5}
+</style>
+
+
+<style id="teacher-2-style">
+/* Faculty Teacher Profile Cards */
+.facultyTeachers{max-width:920px;margin:18px auto 0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+.teacherProfile{background:#fff;border:1px solid #dfe8f5;border-radius:22px;padding:22px;box-shadow:0 10px 28px rgba(25,60,115,.08);position:relative;overflow:hidden}
+.teacherProfile:before{content:"";position:absolute;top:0;left:0;right:0;height:5px;background:linear-gradient(90deg,#6b4ee6,#9a63ed)}
+.teacherProfileHeader{display:flex;align-items:center;gap:13px}
+.teacherAvatar{width:58px;height:58px;border-radius:18px;display:grid;place-items:center;font-size:28px;background:linear-gradient(145deg,#f0eaff,#e2d7ff)}
+.teacherRole{font-size:11px;font-weight:900;letter-spacing:1px;color:#7450c8;text-transform:uppercase}
+.teacherProfile h3{margin:4px 0;font-size:21px;color:#17396e}
+.teacherDegree{margin:0;font-weight:800;color:#53657e;font-size:14px}
+.teacherQuote{margin:18px 0 0;padding:14px 15px;border-radius:14px;background:#f8f6ff;border-left:4px solid #7b56df;color:#465672;line-height:1.65;font-style:italic;font-size:14px}
+.teacherQuote:before{content:"“";font-size:28px;font-style:normal;font-weight:800;color:#7b56df;line-height:0;vertical-align:-8px;margin-right:4px}
+@media(max-width:650px){.facultyTeachers{grid-template-columns:1fr}.teacherProfile{padding:18px}}
+</style>
+
+
+<style id="faculty-3-6-style">
+/* Additional Faculty Profiles */
+.facultyTeachers{grid-template-columns:repeat(2,minmax(0,1fr))}
+.teacherProfile{min-height:285px}
+.teacherProfile.chemistry:before{background:linear-gradient(90deg,#f08b2f,#f5b73d)}
+.teacherProfile.chemistry .teacherAvatar{background:linear-gradient(145deg,#fff0d8,#ffe1aa)}
+.teacherProfile.chemistry .teacherRole{color:#b96514}
+.teacherProfile.chemistry .teacherQuote{background:#fffaf1;border-left-color:#e68a25}
+.teacherProfile.zoology:before{background:linear-gradient(90deg,#159b73,#3dbd88)}
+.teacherProfile.zoology .teacherAvatar{background:linear-gradient(145deg,#dff8ed,#bfeeda)}
+.teacherProfile.zoology .teacherRole{color:#087a58}
+.teacherProfile.zoology .teacherQuote{background:#f2fcf7;border-left-color:#159b73}
+.teacherProfile.it:before{background:linear-gradient(90deg,#1775db,#19a7c8)}
+.teacherProfile.it .teacherAvatar{background:linear-gradient(145deg,#dff3ff,#c9e8ff)}
+.teacherProfile.it .teacherRole{color:#1765b5}
+.teacherProfile.it .teacherQuote{background:#f3faff;border-left-color:#1775db}
+.teacherProfile.englishIslamic:before{background:linear-gradient(90deg,#9a4d9d,#d16a82)}
+.teacherProfile.englishIslamic .teacherAvatar{background:linear-gradient(145deg,#f8e8f8,#f3d9e2)}
+.teacherProfile.englishIslamic .teacherRole{color:#94427f}
+.teacherProfile.englishIslamic .teacherQuote{background:#fff7fb;border-left-color:#b55a8b}
+.teacherList{margin:15px 0 0;padding:0;list-style:none;color:#50627d;font-size:13px}
+.teacherList li{padding:7px 0;border-bottom:1px dashed #e1e8f1}
+.teacherList li:last-child{border-bottom:0}
+.teacherList li:before{content:"✓";font-weight:900;margin-right:8px;color:#2470cf}
+.teacherBio{margin:15px 0 0;color:#4b5f7c;line-height:1.65;font-size:14px}
+@media(max-width:650px){.facultyTeachers{grid-template-columns:1fr}.teacherProfile{min-height:auto}}
+</style>
+
+
+<style id="faculty-missing-teachers-style">
+.teacherProfile.chemistry:before{background:linear-gradient(90deg,#f08b2f,#f5b73d)}
+.teacherProfile.chemistry .teacherAvatar{background:linear-gradient(145deg,#fff0d8,#ffe1aa)}
+.teacherProfile.chemistry .teacherRole{color:#b96514}
+.teacherProfile.chemistry .teacherQuote{background:#fffaf1;border-left-color:#e68a25}
+.teacherProfile.zoology:before{background:linear-gradient(90deg,#159b73,#3dbd88)}
+.teacherProfile.zoology .teacherAvatar{background:linear-gradient(145deg,#dff8ed,#bfeeda)}
+.teacherProfile.zoology .teacherRole{color:#087a58}
+.teacherProfile.zoology .teacherQuote{background:#f2fcf7;border-left-color:#159b73}
+.teacherProfile.it:before{background:linear-gradient(90deg,#1775db,#19a7c8)}
+.teacherProfile.it .teacherAvatar{background:linear-gradient(145deg,#dff3ff,#c9e8ff)}
+.teacherProfile.it .teacherRole{color:#1765b5}
+.teacherProfile.it .teacherQuote{background:#f3faff;border-left-color:#1775db}
+.teacherProfile.englishIslamic:before{background:linear-gradient(90deg,#9a4d9d,#d16a82)}
+.teacherProfile.englishIslamic .teacherAvatar{background:linear-gradient(145deg,#f8e8f8,#f3d9e2)}
+.teacherProfile.englishIslamic .teacherRole{color:#94427f}
+.teacherProfile.englishIslamic .teacherQuote{background:#fff7fb;border-left-color:#b55a8b}
+.teacherList{margin:15px 0 0;padding:0;list-style:none;color:#50627d;font-size:13px}
+.teacherList li{padding:7px 0;border-bottom:1px dashed #e1e8f1}
+.teacherList li:last-child{border-bottom:0}
+.teacherList li:before{content:"✓";font-weight:900;margin-right:8px;color:#2470cf}
+.teacherBio{margin:15px 0 0;color:#4b5f7c;line-height:1.65;font-size:14px}
+</style>
+
+</head>
 <body class="public-active">
 
 <header data-public-page="true" class="header refHeader">
@@ -1440,6 +1546,135 @@ body.public-active{
 <section data-public-page="true" class="homeSection refLower" id="academics"><div class="sectionIntro"><span class="eyebrow">HOW IT WORKS</span><h2 class="title">Your Academic Journey</h2><p>Simple steps, clear information and a better way to stay connected.</p></div><div class="journey"><div class="journeyStep"><div class="num">01</div><h3>Learn</h3><p>Attend classes, build concepts and keep improving your skills every day.</p></div><div class="journeyStep"><div class="num">02</div><h3>Track</h3><p>Teachers enter results while students can check their academic progress.</p></div><div class="journeyStep"><div class="num">03</div><h3>Achieve</h3><p>Use your progress as motivation to set bigger goals and succeed.</p></div></div></section>
 
 <section data-public-page="true" class="homeSection refQuoteLower"><div class="quoteBanner"><div class="quoteMark">“</div><div><p>Education is the passport to the future, for tomorrow belongs to those who prepare for it today.</p><small>— Malcolm X</small></div></div></section>
+
+
+<section data-public-page="true" class="facultySection" id="faculty">
+  <div class="sectionIntro">
+    <span class="eyebrow">MEET OUR LEADERSHIP</span>
+    <h2 class="title">Our <span>Faculty</span></h2>
+    <p>Dedicated educators and academic professionals committed to excellence.</p>
+  </div>
+  <div class="facultyGrid">
+    <article class="principalCard">
+      <div class="principalTop">
+        <div class="principalAvatar">🎓</div>
+        <div>
+          <span class="principalBadge">PRINCIPAL • SAJJAD ACADEMY</span>
+          <h3>Dr Muhammad Sajjad</h3>
+          <p class="principalDegree">PhD Physics</p>
+        </div>
+      </div>
+      <div class="principalQualifications">
+        <div class="principalQual">
+          <strong>Academic Qualification</strong>
+          MPhil Physics
+        </div>
+        <div class="principalQual">
+          <strong>Professional Qualification</strong>
+          MPhil Education Leadership and Management
+        </div>
+        <div class="principalQual">
+          <strong>Research Profile</strong>
+          10+ International Publications
+        </div>
+        <div class="principalQual">
+          <strong>Leadership</strong>
+          Principal & Academic Leader
+        </div>
+      </div>
+      <div class="principalExpertise">
+        <b>Research & Professional Expertise</b>
+        <ul>
+          <li>Thin Film, Photocatalytic Applications, Hydrogen Production, DFT, CASTEP & VASP</li>
+          <li>Optical Properties, Electronic Properties, Thermal Properties & Elastic Properties</li>
+        </ul>
+      </div>
+    </article>
+  </div>
+  
+<div class="facultyTeachers" id="facultyTeachers">
+  <article class="teacherProfile" id="teacher-raja-zahid-yousf">
+    <div class="teacherProfileHeader">
+      <div class="teacherAvatar">📚</div>
+      <div>
+        <div class="teacherRole">Teacher • English</div>
+        <h3>Raja Zahid Yousf</h3>
+        <p class="teacherDegree">MPhil English</p>
+      </div>
+    </div>
+    <div class="teacherQuote">I often try to become a perfectionist in my life and always want to make my students perfectionists for their marvellous successes in their future.</div>
+  </article>
+
+  <article class="teacherProfile chemistry" id="teacher-muhammad-ehtisham-iqbal">
+    <div class="teacherProfileHeader">
+      <div class="teacherAvatar">⚗️</div>
+      <div>
+        <div class="teacherRole">Teacher • Chemistry</div>
+        <h3>Muhammad Ehtisham Iqbal</h3>
+        <p class="teacherDegree">PhD Scholar (Chemistry)</p>
+      </div>
+    </div>
+    <ul class="teacherList">
+      <li>B.Ed in Science Education</li>
+      <li>10 Years of Teaching Experience</li>
+    </ul>
+    <p class="teacherBio">Dedicated Chemistry Educator with 10 years of experience delivering impactful instruction across classroom, home tuition, and online learning environments. Skilled at breaking down complex chemical formulas and theories into clear, logical concepts that connect directly to real-world applications.</p>
+  </article>
+
+  <article class="teacherProfile zoology" id="teacher-sadam-hussain">
+    <div class="teacherProfileHeader">
+      <div class="teacherAvatar">🧬</div>
+      <div>
+        <div class="teacherRole">Teacher • Zoology</div>
+        <h3>Sadam Hussain</h3>
+        <p class="teacherDegree">M.Phil Zoology</p>
+      </div>
+    </div>
+    <ul class="teacherList">
+      <li>B.Ed Science</li>
+      <li>M.Ed</li>
+    </ul>
+    <div class="teacherQuote">Every cell in your body reads from an ancient script, a four-letter alphabet of DNA shared with the first primordial spark of life. We are not separate from nature; we are its continuation.</div>
+  </article>
+
+  <article class="teacherProfile it" id="teacher-eman-shehzadi">
+    <div class="teacherProfileHeader">
+      <div class="teacherAvatar">💻</div>
+      <div>
+        <div class="teacherRole">Educator • IT Professional</div>
+        <h3>Eman Shehzadi</h3>
+        <p class="teacherDegree">BS Information Technology</p>
+      </div>
+    </div>
+    <ul class="teacherList">
+      <li>Teacher • IT Professional • Digital Skills Trainer</li>
+      <li>B.Ed.</li>
+    </ul>
+    <p class="teacherBio">Passionate about helping students build strong computer and digital skills for modern education. Focused on making technology simple, practical, and useful for students' academic and professional growth.</p>
+  </article>
+
+  <article class="teacherProfile englishIslamic" id="teacher-shamim-sajjad">
+    <div class="teacherProfileHeader">
+      <div class="teacherAvatar">📖</div>
+      <div>
+        <div class="teacherRole">Teacher • English &amp; Islamic Studies</div>
+        <h3>Shamim Sajjad</h3>
+        <p class="teacherDegree">M.A English</p>
+      </div>
+    </div>
+    <ul class="teacherList">
+      <li>M.A Islamic Studies</li>
+      <li>B.Ed.</li>
+      <li>15 Years Teaching Experience</li>
+    </ul>
+    <p class="teacherBio">An experienced and dedicated educator committed to nurturing students' academic development, strong character, and confidence. Focused on creating a supportive learning environment where students can build strong foundations in language, Islamic studies, and lifelong learning.</p>
+  </article>
+
+</div>
+
+  <p class="facultyNote">Meet our dedicated team of educators and academic professionals.</p>
+</section>
+
 
 <section data-public-page="true" class="homeSection" id="academyInfo"><div class="sectionIntro"><span class="eyebrow">OUR VISION</span><h2 class="title">About Sajjad Academy</h2><p>Quality education supported by a clean, accessible and student-friendly digital experience.</p></div><div class="aboutBox"><div class="aboutCard"><h3>📚 Our Mission</h3><p>Our aim is to provide quality education and a simple digital platform that helps students and teachers stay connected with academic information.</p><div class="checkList"><span>Student-centered learning</span><span>Easy access to academic results</span><span>Simple tools for teachers and administration</span></div></div><div class="aboutCard"><h3>🚀 Our Goal</h3><p>We want every student to understand their progress, stay motivated and move confidently toward a brighter future.</p><div class="checkList"><span>Learn with confidence</span><span>Grow through continuous improvement</span><span>Succeed through consistency and hard work</span></div></div></div></section>
 
