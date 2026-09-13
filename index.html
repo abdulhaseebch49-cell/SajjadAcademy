@@ -4,7 +4,59 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>Sajjad Academy | Student Portal</title>
-<style>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<style id="consolidatedStyles">
+/* Consolidated CSS: all original style blocks merged in original order. */
 *{box-sizing:border-box}
 html{scroll-behavior:smooth}
 body{margin:0;font-family:"Segoe UI",Arial,sans-serif;background:#f5f8ff;color:#102a56}
@@ -127,9 +179,6 @@ button,input,select,textarea{font:inherit}
 #adminDash .directoryActions .smallBtn{font-size:11px}
 #adminDash .tableWrap table{min-width:650px}
 @media(max-width:700px){#adminDash .adminTopbar{padding:22px}.adminTopActions{gap:6px}.adminAction{padding:9px 10px}.adminSectionCard{padding:18px!important}}
-</style>
-
-<style>
 
 /* ===== Admin Control Center polish ===== */
 #adminDash{background:linear-gradient(180deg,#f4f7fc 0%,#eef3fb 100%);padding:28px 4.5% 60px}
@@ -190,11 +239,7 @@ button,input,select,textarea{font:inherit}
 #adminDash #adminStudentDirectory .directoryStudentCard{background:#fff;border:1px solid #dce8f8;border-radius:18px;padding:17px;box-shadow:0 7px 22px rgba(30,76,133,.07);transition:.2s}
 #adminDash #adminStudentDirectory .directoryStudentCard:hover{transform:translateY(-3px);box-shadow:0 14px 28px rgba(30,76,133,.12);border-color:#bcd4f7}
 @media(max-width:850px){#adminDash .dashHead{padding:22px}.dashHead>div{justify-content:flex-start!important}.directoryToolbar{grid-template-columns:1fr!important}}
-</style>
 
-
-
-<style>
 /* ===== Student Portal: premium screenshot-style redesign only ===== */
 .studentPortal{background:#f5f9ff!important;color:#102a56!important;min-height:100vh;font-family:"Segoe UI",Arial,sans-serif}
 .studentPortal .studentTop{height:92px;padding:0 38px;background:linear-gradient(112deg,#082b67 0%,#1554c2 62%,#1f65d7 100%);box-shadow:0 8px 28px rgba(19,71,150,.20);position:sticky;top:0;z-index:30}
@@ -250,9 +295,7 @@ button,input,select,textarea{font:inherit}
 }
 @media(min-width:761px){.studentPortal .studentMobileBottom{display:none}}
 @media(max-width:390px){.studentPortal .studentPortalBtn{padding:9px 9px;font-size:11px}.studentPortal .studentBrand strong{font-size:18px}.studentPortal .welcomeCard h1 span{font-size:26px}.studentPortal .studentInfoStrip .infoTile b{font-size:14px}.studentPortal .studentInfoStrip .infoTile{padding-left:6px;padding-right:5px}.studentPortal .overallLabel{display:none}}
-</style>
 
-<style>
 /* ===== Final UI fixes: portal login + student logout ===== */
 .loginCard{width:min(390px,100%);padding:24px;border-radius:28px;background:rgba(255,255,255,.97);border:1px solid rgba(255,255,255,.35);box-shadow:0 28px 75px rgba(0,16,55,.34);position:relative;overflow:hidden}
 .loginCard:before{content:"";position:absolute;inset:0 0 auto 0;height:5px;background:linear-gradient(90deg,#22a8ff,#7951e8,#19b98a)}
@@ -296,8 +339,6 @@ body{background:#f6f9ff}
 @media(max-width:900px){.hero{padding-top:58px;flex-direction:column;text-align:center}.heroText{display:flex;flex-direction:column;align-items:center}.homeStats{grid-template-columns:1fr 1fr}.homeStat:nth-child(2){border-right:0}.homeStat{border-bottom:1px solid #e7edf6}.features{grid-template-columns:1fr 1fr}.whyGrid,.aboutBox{grid-template-columns:1fr}.journey{grid-template-columns:1fr}.journeyStep:after{display:none}.contactGrid{grid-template-columns:1fr 1fr}.contact{padding-top:55px}}
 @media(max-width:560px){.header{height:66px}.logo{font-size:20px}.nav{display:none}.hero{min-height:auto;padding:52px 5% 72px}.hero h1{font-size:46px;letter-spacing:-1.5px}.hero h2{font-size:18px}.hero p{font-size:14px}.loginCard{width:100%}.homeStats{width:92%;grid-template-columns:1fr 1fr;border-radius:18px}.homeStat{padding:14px 7px}.homeStat b{font-size:22px}.features{padding-top:52px;grid-template-columns:1fr}.homeSection{padding:55px 5%}.title{font-size:28px}.announcementShell{padding:4px 14px}.announcementShell .announcementItem{padding-right:10px}.announcementShell .announcementItem small{position:static;display:block;margin-top:7px}.whyVisual{min-height:330px}.schoolPanel{left:18px;right:18px}.floatCard.one{right:12px}.floatCard.two{left:12px}.floatCard.three{right:12px}.quoteBanner{padding:22px;align-items:flex-start}.quoteBanner p{font-size:15px}.contactGrid{grid-template-columns:1fr}.footer{flex-direction:column;text-align:center;gap:7px}}
 
-</style>
-<style id="portalViewIsolation">
 /* Robust portal isolation: only the selected screen is visible. Portal controls remain clickable. */
 body [data-public-page="true"]{display:block}
 body.admin-active [data-public-page="true"],
@@ -315,9 +356,7 @@ body.portal-active #studentDash{display:block !important}
 body.teacher-active #adminDash,
 body.teacher-active #studentDash{display:none !important}
 body.teacher-active #teacherDash{display:block !important}
-</style>
 
-<style id="homeReferenceDesign">
 .refHeader{position:sticky!important;top:0!important;display:grid!important;grid-template-columns:auto 1fr auto;align-items:center;gap:20px;padding:9px clamp(16px,6.6vw,104px)!important;min-height:78px;background:linear-gradient(110deg,#06295c,#073d80 58%,#062f68)!important;border-bottom:2px solid #22cbed!important;border-radius:0 0 48px 0;box-shadow:0 8px 26px #001b4433!important;z-index:50!important}
 .brandLogo{display:flex;align-items:center;gap:11px;color:#fff;text-decoration:none;min-width:0}.brandMark{width:68px;height:56px;display:grid;place-items:center;flex:0 0 auto}.brandMark svg{width:64px;height:56px}.brandText{display:flex;flex-direction:column;line-height:1}.brandText strong{font-size:29px;letter-spacing:-.7px;white-space:nowrap}.brandText strong em,.contactBrand em{font-style:normal;color:#1dd1f5}.brandText small{font-size:15px;margin-top:7px;color:#e8f5ff;letter-spacing:.3px}.brandText small i,.contactBrand small i{font-style:normal;margin:0 8px;color:#6bdff7}.refNav{display:flex!important;align-items:center;justify-content:center;gap:22px}.refNav a{color:#fff!important;text-decoration:none!important;font-weight:700!important;font-size:14px;padding:11px 2px;white-space:nowrap}.refNav a.active{padding:12px 21px;border-radius:15px;background:linear-gradient(180deg,#1c82f1,#0a5ce2);box-shadow:inset 0 -3px 0 #46d9ff}.refNav a:hover{color:#67defa!important}.refLoginBtn{display:flex;align-items:center;gap:8px;background:linear-gradient(135deg,#21c8f4,#58e5ff)!important;color:#063269!important;padding:12px 17px!important;white-space:nowrap}.loginUser{font-size:14px}.mobileMenuBtn{display:none}
 
@@ -336,10 +375,7 @@ body.teacher-active #teacherDash{display:block !important}
 @media(max-width:600px){.brandMark{width:52px;height:47px}.brandMark svg{width:52px;height:47px}.brandText strong{font-size:20px}.brandText small{font-size:10px;margin-top:5px}.refHero{min-height:510px!important}.heroInner{min-height:510px;padding:28px 17px 25px;align-items:flex-start}.heroImage{background-position:68% center}.heroShade{background:linear-gradient(90deg,#042551ef,#073865c9 62%,#05376366 100%)}.heroTag{font-size:11px;padding:8px 11px}.refHero h1{font-size:37px!important;letter-spacing:-1.2px!important;margin-top:12px!important}.refHero .heroCopy>p{font-size:13px!important;line-height:1.5!important}.heroActions{gap:9px;margin-top:15px}.heroPrimary,.refSecondary{padding:10px 14px;font-size:12px}.portalStripWrap{padding-inline:10px}.portalCard{min-height:90px;grid-template-columns:78px 1fr 28px;padding:9px}.portalIcon{height:70px;font-size:34px}.portalCopy b{font-size:16px}.portalCopy small{font-size:10px}.refStats{grid-template-columns:1fr 1fr!important;padding:17px 12px!important}.refStats .homeStat{justify-content:flex-start}.refStats .homeStat>b{font-size:32px}.refStats .homeStat strong{font-size:20px}.refStats .homeStat small{font-size:10px}.refWhy{padding:26px 14px 20px!important}.whyRefIntro h2{font-size:27px}.whyRefPoint{padding:13px 9px;gap:8px}.whyRefPoint>span{width:43px;height:43px;font-size:20px}.whyRefPoint b{font-size:12px}.whyRefPoint small{font-size:10px}.refQuoteCard{min-height:165px}.refAnnouncements,.refLower,.refQuoteLower{padding:32px 14px!important}.refContact{padding:29px 18px 16px!important;border-radius:27px 27px 0 0}.refContact .contactInner{grid-template-columns:1fr;gap:20px}.contactLinks a{width:49%}.contactMotto{font-size:21px}.refFooter{flex-direction:column!important;text-align:center}}
 @media(max-width:390px){.refLoginBtn{padding:9px 9px!important}.brandText strong{font-size:18px}.brandText small{font-size:9px}.refHero h1{font-size:32px!important}.whyRefPoints{grid-template-columns:1fr}.whyRefPoint,.whyRefPoint:nth-child(2n),.whyRefPoint:nth-last-child(-n+2){border-right:0;border-bottom:1px solid #dbe6f4}.whyRefPoint:last-child{border-bottom:0}}
 .homeSettingsHook{position:absolute!important;width:1px!important;height:1px!important;overflow:hidden!important;clip:rect(0 0 0 0)!important;white-space:nowrap!important;clip-path:inset(50%)!important}
-</style>
 
-
-<style id="homeFinalFixes">
 /* Final Home fixes: premium brand + robust responsive behavior */
 .refHeader{isolation:isolate}
 .refHeader .brandText strong{font-family:"Trebuchet MS","Segoe UI",Arial,sans-serif;font-weight:900;letter-spacing:-1.15px;line-height:.98;text-shadow:0 2px 12px rgba(0,0,0,.18)}
@@ -408,10 +444,7 @@ body.teacher-active #teacherDash{display:block !important}
   .portalCopy b{font-size:14px}
   .portalCopy small{font-size:9px}
 }
-</style>
 
-
-<style id="homeResponsiveCenterPolish">
 /* ===== FINAL RESPONSIVE + CENTERED HOME POLISH ===== */
 html{overflow-x:hidden;scroll-padding-top:82px}
 body{overflow-x:hidden}
@@ -547,10 +580,7 @@ button,a,input,select,textarea{touch-action:manipulation}
 @media(prefers-reduced-motion:reduce){
   *,*::before,*::after{scroll-behavior:auto!important;transition:none!important;animation:none!important}
 }
-</style>
 
-
-<style id="finalHomepagePolish">
 /* ===== Final public homepage polish ===== */
 body.public-active{
   background:
@@ -1136,9 +1166,6 @@ body.public-active{
   #academyInfo .aboutCard{min-height:0!important;padding:23px 20px!important;border-radius:19px!important}
 }
 
-</style>
-
-<style id="userLoginCleanup">
 /* ===== User-requested homepage login cleanup ===== */
 /* Keep only Student Login in the top header, at its existing size. */
 .headerLoginCluster{width:auto!important;margin-left:auto!important;justify-content:flex-end!important}
@@ -1156,10 +1183,7 @@ body.public-active{
   .portalStrip{padding-top:14px!important;gap:10px!important}
   .portalCard{min-height:92px!important;height:auto!important}
 }
-</style>
 
-
-<style id="finalPortalOverlapFix">
 /* ===== Final fix: portal row must never overlap the stats section ===== */
 .portalStripWrap{
   position:relative!important;
@@ -1195,10 +1219,7 @@ body.public-active{
 @media(max-width:600px){
   .refHero,.heroInner{overflow:hidden}
 }
-</style>
 
-
-<style id="premiumHeroUpgrade">
 /* ===== Premium Public Homepage Hero ===== */
 .refHero{
   min-height:500px!important;
@@ -1350,9 +1371,7 @@ body.public-active{
   .refHero .heroActions{grid-template-columns:1fr!important}
   .refHero .heroQuote{font-size:17px!important;padding:16px 17px 21px!important}
 }
-</style>
 
-<style>
 .createdBy{
   font-family:"Segoe UI",Arial,sans-serif;
   font-size:13px;
@@ -1372,8 +1391,7 @@ body.public-active{
   .createdBy{font-size:12px}
   .createdBy strong{font-size:13px}
 }
-</style>
-<style id="faculty-section-style">
+
 /* ===== Faculty Showcase ===== */
 .facultySection{padding:70px 5%;background:linear-gradient(180deg,#f7faff,#eef5ff)}
 .facultyGrid{max-width:1180px;margin:0 auto;display:grid;grid-template-columns:1fr;gap:22px}
@@ -1391,10 +1409,7 @@ body.public-active{
 .principalExpertise b{display:block;margin-bottom:8px;color:#ffd45b}.principalExpertise ul{margin:0;padding-left:19px;line-height:1.7}
 .facultyNote{text-align:center;color:#63748f;margin-top:14px;font-size:13px}
 @media(max-width:650px){.principalCard{padding:24px 19px}.principalTop{gap:15px}.principalAvatar{width:70px;height:70px;flex-basis:70px;border-radius:19px;font-size:34px}.principalCard h3{font-size:24px}.principalQualifications{grid-template-columns:1fr}}
-</style>
 
-
-<style id="principal-compact-fix">
 /* Compact Principal card */
 .facultyGrid{max-width:920px}
 .principalCard{max-width:760px;margin:0 auto;padding:24px}
@@ -1406,10 +1421,7 @@ body.public-active{
 .principalQual{padding:10px 12px;font-size:13px}
 .principalExpertise{margin-top:12px;padding:13px;font-size:13px}
 .principalExpertise ul{line-height:1.5}
-</style>
 
-
-<style id="teacher-2-style">
 /* Faculty Teacher Profile Cards */
 .facultyTeachers{max-width:920px;margin:18px auto 0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
 .teacherProfile{background:#fff;border:1px solid #dfe8f5;border-radius:22px;padding:22px;box-shadow:0 10px 28px rgba(25,60,115,.08);position:relative;overflow:hidden}
@@ -1422,10 +1434,7 @@ body.public-active{
 .teacherQuote{margin:18px 0 0;padding:14px 15px;border-radius:14px;background:#f8f6ff;border-left:4px solid #7b56df;color:#465672;line-height:1.65;font-style:italic;font-size:14px}
 .teacherQuote:before{content:"“";font-size:28px;font-style:normal;font-weight:800;color:#7b56df;line-height:0;vertical-align:-8px;margin-right:4px}
 @media(max-width:650px){.facultyTeachers{grid-template-columns:1fr}.teacherProfile{padding:18px}}
-</style>
 
-
-<style id="faculty-3-6-style">
 /* Additional Faculty Profiles */
 .facultyTeachers{grid-template-columns:repeat(2,minmax(0,1fr))}
 .teacherProfile{min-height:285px}
@@ -1451,10 +1460,7 @@ body.public-active{
 .teacherList li:before{content:"✓";font-weight:900;margin-right:8px;color:#2470cf}
 .teacherBio{margin:15px 0 0;color:#4b5f7c;line-height:1.65;font-size:14px}
 @media(max-width:650px){.facultyTeachers{grid-template-columns:1fr}.teacherProfile{min-height:auto}}
-</style>
 
-
-<style id="faculty-missing-teachers-style">
 .teacherProfile.chemistry:before{background:linear-gradient(90deg,#f08b2f,#f5b73d)}
 .teacherProfile.chemistry .teacherAvatar{background:linear-gradient(145deg,#fff0d8,#ffe1aa)}
 .teacherProfile.chemistry .teacherRole{color:#b96514}
@@ -1476,10 +1482,7 @@ body.public-active{
 .teacherList li:last-child{border-bottom:0}
 .teacherList li:before{content:"✓";font-weight:900;margin-right:8px;color:#2470cf}
 .teacherBio{margin:15px 0 0;color:#4b5f7c;line-height:1.65;font-size:14px}
-</style>
 
-
-<style id="faculty-highlight-final">
 /* ===== Faculty Text Highlight Enhancement ===== */
 .principalDegree,
 .teacherDegree{
@@ -1537,8 +1540,159 @@ body.public-active{
 @media(max-width:650px){
   .principalDegree,.teacherDegree{font-size:16px !important;padding:6px 11px !important}
 }
+
+html,body{max-width:100%;overflow-x:hidden;}
+img,svg,video,canvas{max-width:100%;height:auto;}
+button,input,select,textarea{max-width:100%;}
+@media(max-width:760px){
+  /* Student portal: keep the complete marks table inside the phone viewport. */
+  .studentPortal .studentMarksWrap{width:100%;max-width:100%;overflow:hidden;-webkit-overflow-scrolling:auto;}
+  .studentPortal .studentMarks{width:100%;min-width:0!important;max-width:100%;table-layout:fixed;font-size:10px;}
+  .studentPortal .studentMarks th,.studentPortal .studentMarks td{padding:9px 3px!important;white-space:normal;overflow-wrap:anywhere;word-break:break-word;text-align:center;}
+  .studentPortal .studentMarks th:first-child,.studentPortal .studentMarks td:first-child{text-align:left;}
+  .studentPortal .studentMarks th:nth-child(1),.studentPortal .studentMarks td:nth-child(1){width:20%;}
+  .studentPortal .studentMarks th:nth-child(2),.studentPortal .studentMarks td:nth-child(2){width:15%;}
+  .studentPortal .studentMarks th:nth-child(3),.studentPortal .studentMarks td:nth-child(3){width:15%;}
+  .studentPortal .studentMarks th:nth-child(4),.studentPortal .studentMarks td:nth-child(4){width:17%;}
+  .studentPortal .studentMarks th:nth-child(5),.studentPortal .studentMarks td:nth-child(5){width:18%;}
+  .studentPortal .studentMarks th:nth-child(6),.studentPortal .studentMarks td:nth-child(6){width:15%;}
+  .studentPortal .studentMarks .gradeBadge{min-width:0;padding:4px 5px;font-size:9px;border-radius:14px;}
+  .studentPortal .overallBar{width:100%;max-width:100%;box-sizing:border-box;overflow:hidden;}
+  #studentDash main{padding-bottom:90px;}
+  #studentDash .studentPortalBtn{display:none;}
+  #studentDash .studentHeader{min-width:0;}
+  #studentDash .studentHeader *{min-width:0;}
+  #studentDash .studentHeader .studentName,#studentDash .studentHeader .studentId{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+  #studentDash .studentId,#studentDash .profileValue{overflow-wrap:anywhere;word-break:break-word;}
+}
+@media(max-width:390px){
+  #studentDash .studentHeader{gap:6px;}
+  #studentDash .studentHeader button{padding-left:8px;padding-right:8px;}
+}
+
+/* ===== Student mobile viewport fix ===== */
+@media(max-width:430px){
+  .studentPortal .studentCard{padding:12px!important;}
+  .studentPortal .marksCard{padding:12px!important;}
+  .studentPortal .marksTitleRow{gap:7px;margin-bottom:10px;}
+  .studentPortal .marksTitleRow .classPill{font-size:9px;padding:6px 8px;}
+  .studentPortal .sectionTitleIcon{width:38px;height:38px;font-size:19px;}
+  .studentPortal .sectionTitleRow h2{font-size:16px;}
+  .studentPortal .studentMarks th,.studentPortal .studentMarks td{font-size:9.5px!important;padding:8px 2px!important;}
+  .studentPortal .overallBar{margin-top:11px;padding:12px 9px!important;gap:6px;}
+  .studentPortal .overallMetric{padding:0 6px!important;}
+}
+
+/* ===== Portal cards: extra space before statistics (spacing only) ===== */
+@media(min-width:981px){
+  .portalStripWrap{padding-bottom:42px!important}
+  /* .homeStats has a -38px margin; cancel it for this stats row so it cannot overlap the portal cards. */
+  .refStats{margin-top:0!important}
+}
+</style>
+<style id="studentProfilePolish">
+/* ===== Student Profile Card - polished responsive style ===== */
+#studentDash #studentProfileSection{padding:22px 22px 24px;border:1px solid rgba(38,103,205,.12);background:linear-gradient(145deg,#ffffff 0%,#f7faff 100%);box-shadow:0 12px 30px rgba(35,82,145,.09)}
+#studentDash #studentProfileSection .sectionTitleRow{margin-bottom:18px;align-items:center}
+#studentDash #studentProfileSection .sectionTitleRow h2{margin:0;color:#173f78;font-size:26px;font-weight:800;letter-spacing:-.35px}
+#studentDash #studentProfileSection .profileIcon{width:52px;height:52px;border-radius:16px;display:grid;place-items:center;background:linear-gradient(145deg,#eaf3ff,#dbeaff);color:#1765cf;font-size:25px;box-shadow:0 8px 18px rgba(36,101,202,.12)}
+#studentDash #profileCard{margin-top:0!important;color:#314f76!important}
+#studentDash .profileGrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:11px}
+#studentDash .profileItem{min-width:0;padding:14px 15px;border:1px solid #e0eaf7;border-radius:14px;background:#fff;box-shadow:0 5px 14px rgba(37,78,130,.055);transition:transform .18s ease,box-shadow .18s ease,border-color .18s ease}
+#studentDash .profileItem:hover{transform:translateY(-2px);border-color:#c9dcf5;box-shadow:0 9px 20px rgba(37,78,130,.09)}
+#studentDash .profileLabel{display:block;margin-bottom:5px;color:#7185a3;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.65px}
+#studentDash .profileValue{display:block;color:#193f73;font-size:16px;line-height:1.35;font-weight:700;overflow-wrap:anywhere;word-break:break-word}
+@media(max-width:760px){
+#studentDash #studentProfileSection{padding:17px 14px 18px;border-radius:20px}
+#studentDash #studentProfileSection .sectionTitleRow{margin-bottom:14px}
+#studentDash #studentProfileSection .sectionTitleRow h2{font-size:22px}
+#studentDash #studentProfileSection .profileIcon{width:46px;height:46px;border-radius:14px;font-size:22px}
+#studentDash .profileGrid{grid-template-columns:1fr;gap:8px}
+#studentDash .profileItem{padding:12px 13px;border-radius:12px}
+#studentDash .profileLabel{font-size:10px;margin-bottom:4px}
+#studentDash .profileValue{font-size:14px}
+}
 </style>
 
+<style id="studentFinalQuoteStyle">
+/* ===== Final student motivation quote ===== */
+.studentFinalQuote{
+  position:relative;
+  display:flex;
+  align-items:center;
+  gap:18px;
+  margin-top:18px!important;
+  margin-bottom:24px!important;
+  padding:24px 28px!important;
+  overflow:hidden;
+  border:1px solid rgba(35,102,210,.14)!important;
+  border-radius:22px!important;
+  background:linear-gradient(135deg,#f8fbff 0%,#eef5ff 100%)!important;
+  box-shadow:0 12px 30px rgba(31,78,145,.09)!important;
+}
+.studentFinalQuote:before{
+  content:"";
+  position:absolute;
+  left:0;top:0;bottom:0;
+  width:5px;
+  background:linear-gradient(180deg,#1769df,#4b35c7);
+  border-radius:22px 0 0 22px;
+}
+.finalQuoteMark{
+  flex:0 0 auto;
+  width:48px;height:48px;
+  display:grid;place-items:center;
+  border-radius:15px;
+  background:#e4efff;
+  color:#1769df;
+  font:700 38px/1 Georgia,serif;
+}
+.finalQuoteContent{min-width:0;flex:1}
+.finalQuoteContent p{
+  margin:0;
+  color:#173f7a;
+  font-family:Georgia,"Times New Roman",serif;
+  font-size:19px;
+  font-weight:600;
+  line-height:1.55;
+}
+.finalQuoteContent span{
+  display:block;
+  margin-top:8px;
+  color:#71819a;
+  font-size:13px;
+  font-weight:600;
+}
+.finalQuoteIcon{
+  flex:0 0 auto;
+  width:48px;height:48px;
+  display:grid;place-items:center;
+  border-radius:15px;
+  background:#fff;
+  box-shadow:0 6px 18px rgba(31,78,145,.08);
+  font-size:25px;
+}
+@media(max-width:760px){
+  .studentFinalQuote{
+    gap:12px;
+    margin-top:14px!important;
+    margin-bottom:90px!important;
+    padding:18px 16px!important;
+    border-radius:18px!important;
+  }
+  .studentFinalQuote:before{border-radius:18px 0 0 18px}
+  .finalQuoteMark{width:40px;height:40px;border-radius:12px;font-size:31px}
+  .finalQuoteContent p{font-size:15px;line-height:1.45}
+  .finalQuoteContent span{font-size:12px;margin-top:6px}
+  .finalQuoteIcon{width:40px;height:40px;border-radius:12px;font-size:20px}
+}
+@media(max-width:390px){
+  .studentFinalQuote{gap:9px;padding:16px 12px!important}
+  .finalQuoteMark{width:34px;height:34px;font-size:27px}
+  .finalQuoteContent p{font-size:14px}
+  .finalQuoteIcon{width:34px;height:34px;font-size:18px}
+}
+</style>
 </head>
 <body class="public-active">
 
@@ -1771,7 +1925,7 @@ body.public-active{
       <div><strong>Sajjad <span>Academy</span></strong><small>Learn • Grow • Succeed</small></div>
     </div>
     <div class="studentUser">
-      <div class="studentBell">♧<em id="studentNoticeCount">0</em></div>
+      <div class="studentBell">🔔<em id="studentNoticeCount">0</em></div>
       <div class="studentAvatar">👤</div>
       <div class="studentUserText"><b id="studentTopName">Student</b><span>Student</span></div>
       <button class="studentPortalBtn" onclick="openStudentPasswordChange()">Student Portal <span>⌄</span></button>
@@ -1861,6 +2015,15 @@ body.public-active{
       <section class="studentCard" id="studentProfileSection">
         <div class="sectionTitleRow"><div class="sectionTitleIcon profileIcon">♙</div><h2>Profile</h2></div>
         <div id="profileCard" style="margin-top:12px;color:#536987"></div>
+      </section>
+
+      <section class="studentCard studentFinalQuote" id="studentFinalQuote" aria-label="Student motivation quote">
+        <div class="finalQuoteMark">“</div>
+        <div class="finalQuoteContent">
+          <p>Education is not preparation for life; education is life itself.</p>
+          <span>— John Dewey</span>
+        </div>
+        <div class="finalQuoteIcon" aria-hidden="true">🎓</div>
       </section>
 
       <div class="studentMobileBottom">
@@ -2026,7 +2189,13 @@ async function showStudent(uid){
  document.getElementById("studentIdTile").textContent=sid;
  document.getElementById("studentPhoneTile").textContent=phone;
  document.getElementById("studentClassPill").textContent=`Class ${normalizeClass(cls)==="9"?"9th":normalizeClass(cls)==="10"?"10th":cls} · Section ${sec}`;
- document.getElementById("profileCard").innerHTML=`<p style="margin:0;line-height:1.9"><b>Name:</b> ${esc(name)} &nbsp; <b>Student ID:</b> ${esc(sid)}<br><b>Class:</b> ${esc(cls)} &nbsp; <b>Section:</b> ${esc(sec)} &nbsp; <b>Phone:</b> ${esc(phone)}</p>`;
+ document.getElementById("profileCard").innerHTML=`<div class="profileGrid">`+
+  `<div class="profileItem"><span class="profileLabel">Name</span><span class="profileValue">${esc(name)}</span></div>`+
+  `<div class="profileItem"><span class="profileLabel">Student ID</span><span class="profileValue">${esc(sid)}</span></div>`+
+  `<div class="profileItem"><span class="profileLabel">Class</span><span class="profileValue">${esc(cls)}</span></div>`+
+  `<div class="profileItem"><span class="profileLabel">Section</span><span class="profileValue">${esc(sec)}</span></div>`+
+  `<div class="profileItem"><span class="profileLabel">Phone</span><span class="profileValue">${esc(phone)}</span></div>`+
+  `</div>`;
  const marks=Array.isArray(activeStudent.marks)?activeStudent.marks:[];
  document.getElementById("resultRows").innerHTML=marks.map(m=>{
    const pct=m.total?((Number(m.obtained)/Number(m.total))*100):0;
@@ -2352,14 +2521,7 @@ document.querySelectorAll('.modalBg').forEach(bg=>bg.addEventListener('click',e=
 function toggleHomeMenu(btn){const nav=document.getElementById('homeNav');if(!nav)return;const open=nav.classList.toggle('homeOpen');btn.setAttribute('aria-expanded',open?'true':'false');}
 document.addEventListener('click',function(e){const nav=document.getElementById('homeNav'),btn=document.querySelector('.mobileMenuBtn');if(!nav||!nav.classList.contains('homeOpen'))return;if(!nav.contains(e.target)&&(!btn||!btn.contains(e.target))){nav.classList.remove('homeOpen');if(btn)btn.setAttribute('aria-expanded','false');}else if(nav.contains(e.target)&&e.target.tagName==='A'){nav.classList.remove('homeOpen');if(btn)btn.setAttribute('aria-expanded','false');}});
 </script>
-<style id="portalSpacingOnly">
-/* ===== Portal cards: extra space before statistics (spacing only) ===== */
-@media(min-width:981px){
-  .portalStripWrap{padding-bottom:42px!important}
-  /* .homeStats has a -38px margin; cancel it for this stats row so it cannot overlap the portal cards. */
-  .refStats{margin-top:0!important}
-}
-</style>
+
 
 </body>
 </html>
