@@ -2056,5 +2056,14 @@ document.querySelectorAll('.modalBg').forEach(bg=>bg.addEventListener('click',e=
 function toggleHomeMenu(btn){const nav=document.getElementById('homeNav');if(!nav)return;const open=nav.classList.toggle('homeOpen');btn.setAttribute('aria-expanded',open?'true':'false');}
 document.addEventListener('click',function(e){const nav=document.getElementById('homeNav'),btn=document.querySelector('.mobileMenuBtn');if(!nav||!nav.classList.contains('homeOpen'))return;if(!nav.contains(e.target)&&(!btn||!btn.contains(e.target))){nav.classList.remove('homeOpen');if(btn)btn.setAttribute('aria-expanded','false');}else if(nav.contains(e.target)&&e.target.tagName==='A'){nav.classList.remove('homeOpen');if(btn)btn.setAttribute('aria-expanded','false');}});
 </script>
+<style id="portalSpacingOnly">
+/* ===== Portal cards: extra space before statistics (spacing only) ===== */
+@media(min-width:981px){
+  .portalStripWrap{padding-bottom:42px!important}
+  /* .homeStats has a -38px margin; cancel it for this stats row so it cannot overlap the portal cards. */
+  .refStats{margin-top:0!important}
+}
+</style>
+
 </body>
 </html>
