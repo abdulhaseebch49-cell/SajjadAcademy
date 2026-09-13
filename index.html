@@ -1478,7 +1478,8 @@ button,input,select,textarea{max-width:100%;}
   /* .homeStats has a -38px margin; cancel it for this stats row so it cannot overlap the portal cards. */
   .refStats{margin-top:0!important}
 }
-/* ===== Student Profile Card - polished responsive style ===== */
+</style>
+<style id="studentProfilePolish">
 /* ===== Student Profile Card - polished responsive style ===== */
 #studentDash #studentProfileSection{padding:22px 22px 24px;border:1px solid rgba(38,103,205,.12);background:linear-gradient(145deg,#ffffff 0%,#f7faff 100%);box-shadow:0 12px 30px rgba(35,82,145,.09)}
 #studentDash #studentProfileSection .sectionTitleRow{margin-bottom:18px;align-items:center}
@@ -1500,7 +1501,8 @@ button,input,select,textarea{max-width:100%;}
 #studentDash .profileLabel{font-size:10px;margin-bottom:4px}
 #studentDash .profileValue{font-size:14px}
 }
-/* ===== Final student motivation quote ===== */
+</style>
+<style id="studentFinalQuoteStyle">
 /* ===== Final student motivation quote ===== */
 .studentFinalQuote{
   position:relative;
@@ -1577,26 +1579,6 @@ button,input,select,textarea{max-width:100%;}
   .finalQuoteMark{width:34px;height:34px;font-size:27px}
   .finalQuoteContent p{font-size:14px}
   .finalQuoteIcon{width:34px;height:34px;font-size:18px}
-}
-/* ===== Final code audit: student layout safety ===== */
-#studentDash,#studentDash *{box-sizing:border-box;}
-#studentDash .studentMain{min-width:0;overflow-x:hidden;}
-#studentDash .studentGrid,#studentDash .studentRightColumn,#studentDash .studentCard{min-width:0;max-width:100%;}
-#studentDash .sectionTitleRow{min-width:0;max-width:100%;}
-#studentDash .sectionTitleRow h2{min-width:0;overflow-wrap:anywhere;}
-@media(max-width:760px){
-  #studentDash .marksTitleRow{flex-wrap:wrap;}
-  #studentDash .marksTitleRow .classPill{margin-left:auto;max-width:100%;white-space:normal;text-align:center;}
-  #studentDash .overallBar{display:grid;grid-template-columns:auto minmax(0,1fr) auto auto auto;align-items:center;min-width:0;}
-  #studentDash .overallLabel{min-width:0;}
-  #studentDash .overallMetric,#studentDash .overallGradeWrap{min-width:0;max-width:100%;}
-  #studentDash .overallMetric b,#studentDash .overallMetric span,#studentDash .overallGrade,#studentDash .overallGradeWrap small{overflow-wrap:anywhere;}
-}
-@media(max-width:430px){
-  #studentDash .studentMain{padding-left:10px!important;padding-right:10px!important;}
-  #studentDash .studentCard{padding-left:11px!important;padding-right:11px!important;}
-  #studentDash .overallBar{grid-template-columns:30px minmax(0,1fr) auto auto;column-gap:5px;}
-  #studentDash .overallMetric{padding-left:4px!important;padding-right:4px!important;}
 }
 </style>
 </head>
