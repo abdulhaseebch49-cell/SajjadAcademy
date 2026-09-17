@@ -2640,12 +2640,100 @@ button,input,select,textarea{max-width:100%;}
   <div class="adminStatCard"><div class="adminStatIcon violet">10</div><div><span>10th Class</span><b id="adminStatClass10">0</b><small>Registered students</small></div></div>
   <div class="adminStatCard"><div class="adminStatIcon green">📊</div><div><span>Marks Added</span><b id="adminStatMarks">0</b><small>Students with results</small></div></div>
 </div>
-<div class="adminQuickBar"><div><b>⚡ Quick Actions</b><span>Frequently used admin controls</span></div><button onclick="adminGo('addStudentCard')">➕ Add Student</button><button onclick="adminGo('announcementCard')">📢 Announcement</button><button onclick="adminGo('studentListCard')">👥 Students</button><button onclick="adminGo('marksOverviewCard')">📊 Marks</button><button onclick="adminGo('adminStudentDirectory')">🔎 All Students</button></div>
+<div class="adminQuickBar"><div><b>⚡ Quick Actions</b><span>Frequently used admin controls</span></div><button onclick="adminGo('addStudentCard')">➕ Add Student</button><button onclick="adminGo('announcementCard')">📢 Announcement</button><button onclick="adminGo('studentListCard')">👥 Students</button><button onclick="adminGo('marksOverviewCard')">📊 Marks</button><button onclick="adminGo('quizManagementCard')">📝 Quizzes</button><button onclick="adminGo('adminStudentDirectory')">🔎 All Students</button></div>
 <div class="adminInsightGrid"><div class="adminInsight"><div class="insightHead"><div><span>STUDENT DISTRIBUTION</span><h3>Class & Section Summary</h3></div><span class="liveBadge">● Live</span></div><div class="classSummaryRow"><div class="summaryClass"><b>9th Class</b><strong id="adminSummary9">0</strong><div class="summarySections"><span>A: <b id="adminSummary9A">0</b></span><span>B: <b id="adminSummary9B">0</b></span><span>C: <b id="adminSummary9C">0</b></span></div></div><div class="summaryClass"><b>10th Class</b><strong id="adminSummary10">0</strong><div class="summarySections"><span>A: <b id="adminSummary10A">0</b></span><span>B: <b id="adminSummary10B">0</b></span><span>C: <b id="adminSummary10C">0</b></span></div></div></div></div><div class="adminInsight"><div class="insightHead"><div><span>PORTAL STATUS</span><h3>Current Records</h3></div><span class="statusDot">Ready</span></div><div class="statusList"><div><span>Students with marks</span><b id="adminStatusMarks">0</b></div><div><span>Password changed</span><b id="adminStatusPasswords">0</b></div><div><span>Not assigned section</span><b id="adminStatusUnassigned">0</b></div><div><span>Announcements</span><b id="adminStatusAnnouncements">0</b></div></div></div></div>
 <div class="card adminSectionCard" id="addStudentCard"><div class="sectionHeader"><div><span class="sectionEyebrow">STUDENT MANAGEMENT</span><h2>➕ Add New Student</h2><p>New student ka basic record aur login password create karein.</p></div><span class="sectionIcon">👤+</span></div><div class="form"><input id="sId" placeholder="Student ID (e.g. SA001)"><input id="sName" placeholder="Student name"><input id="sPhone" placeholder="Phone"><div style="display:grid;grid-template-columns:1fr 1fr;gap:8px"><select id="sClass"><option value="">Select Class</option><option value="9">9th</option><option value="10">10th</option></select><select id="sSection"><option value="">Select Section</option><option value="A">Section A</option><option value="B">Section B</option><option value="C">Section C</option></select></div><input id="sPass" type="password" placeholder="Password"><button class="primary" onclick="addStudent()">➕ Add Student</button><div class="msg" id="adminMsg"></div></div></div>
 <div class="card adminSectionCard" id="announcementCard"><div class="sectionHeader"><div><span class="sectionEyebrow">COMMUNICATION</span><h2>📢 Announcements</h2><p>Students ke liye latest notice publish aur manage karein.</p></div><span class="sectionIcon">📢</span></div><div class="form"><input id="aTitle" placeholder="Announcement title"><textarea id="aMessage" placeholder="Announcement details..." style="min-height:100px;resize:vertical"></textarea><button class="primary" onclick="addAnnouncement()">📢 Add Announcement</button><div class="msg" id="announcementMsg"></div></div><div class="tableWrap"><table><thead><tr><th>Announcement</th><th>Date</th><th>Action</th></tr></thead><tbody id="adminAnnouncementRows"></tbody></table></div></div>
 <div class="card adminSectionCard" id="studentListCard"><div class="sectionHeader"><div><span class="sectionEyebrow">STUDENT RECORDS</span><h2>👥 Student List</h2><p>Search karke student ko edit, delete ya marks manage karein.</p></div><span class="sectionIcon">👥</span></div><input id="search" placeholder="🔎 Search by student name, ID, class or section..." oninput="renderStudents()" style="width:100%;padding:13px;border:1px solid #ccd7e8;border-radius:12px"><div class="tableWrap"><table><thead><tr><th>ID</th><th>Name</th><th>Class</th><th>Section</th><th>Actions</th></tr></thead><tbody id="studentRows"></tbody></table></div></div>
 <div class="card adminSectionCard" id="passwordStatusCard"><div class="sectionHeader"><div><span class="sectionEyebrow">SECURITY</span><h2>🔐 Student Password Status</h2><p>Check karein kis student ne apna password change kiya hai.</p></div><span class="sectionIcon">🔐</span></div><div class="tableWrap"><table><thead><tr><th>Student ID</th><th>Name</th><th>Password Status</th></tr></thead><tbody id="passwordRows"></tbody></table></div></div><div class="card adminSectionCard" id="marksOverviewCard"><div class="sectionHeader"><div><span class="sectionEyebrow">ACADEMIC RESULTS</span><h2>📊 Marks Overview</h2><p>9th aur 10th class ke section-wise marks ka status.</p></div><span class="sectionIcon">📊</span></div><div id="adminMarksOverview" class="marksOverview"></div></div>
+
+<!-- ===== QUIZ MANAGEMENT (Admin) ===== -->
+<div class="card adminSectionCard" id="quizManagementCard">
+  <div class="sectionHeader">
+    <div>
+      <span class="sectionEyebrow">QUIZ SYSTEM</span>
+      <h2>📝 Quiz Management</h2>
+      <p>Create, edit, delete quizzes. Students ke results bhi yahan se dekh sakte hain.</p>
+    </div>
+    <span class="sectionIcon">📝</span>
+  </div>
+
+  <!-- Create / Edit Quiz Form -->
+  <div id="quizFormArea" style="background:#f7faff;border:1px solid #dce8f5;border-radius:16px;padding:18px;margin-bottom:18px">
+    <h3 style="margin:0 0 12px;color:#12366b" id="quizFormTitle">➕ Create New Quiz</h3>
+    <div class="form">
+      <input id="quizTitle" placeholder="Quiz Title (e.g. Chemistry Chapter 5)">
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px">
+        <select id="quizClass"><option value="">Select Class</option><option value="9">9th</option><option value="10">10th</option></select>
+        <select id="quizSection"><option value="">All Sections</option><option value="A">Section A</option><option value="B">Section B</option><option value="C">Section C</option></select>
+        <input id="quizSubject" placeholder="Subject">
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:8px">
+        <input id="quizTimeLimit" type="number" min="1" placeholder="Time Limit (minutes)">
+        <input id="quizTotalMarks" type="number" min="1" placeholder="Total Marks">
+      </div>
+      <label style="display:flex;align-items:center;gap:8px;margin:10px 0;font-weight:700;color:#335b93">
+        <input type="checkbox" id="quizIsActive" checked> Active (students can see & attempt)
+      </label>
+
+      <div style="margin:16px 0 8px;font-weight:800;color:#12366b">Questions</div>
+      <div id="quizQuestionsList"></div>
+      <button type="button" class="smallBtn" onclick="addQuizQuestion()" style="margin:8px 0">➕ Add Question</button>
+
+      <div style="display:flex;gap:10px;margin-top:14px;flex-wrap:wrap">
+        <button class="primary" id="quizSaveBtn" onclick="saveQuiz()">💾 Save Quiz</button>
+        <button class="smallBtn" onclick="resetQuizForm()">Clear Form</button>
+      </div>
+      <div class="msg" id="quizFormMsg"></div>
+    </div>
+  </div>
+
+  <!-- Existing Quizzes List -->
+  <h3 style="margin:0 0 10px;color:#12366b">📋 All Quizzes</h3>
+  <div class="tableWrap">
+    <table>
+      <thead>
+        <tr>
+          <th>Title</th>
+          <th>Class / Section</th>
+          <th>Subject</th>
+          <th>Questions</th>
+          <th>Status</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody id="adminQuizRows">
+        <tr><td colspan="6" style="text-align:center;color:#718096">Loading quizzes...</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Quiz Results -->
+  <h3 style="margin:22px 0 10px;color:#12366b">📊 Quiz Results</h3>
+  <div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:12px">
+    <select id="resultsQuizSelect" onchange="loadQuizResults()" style="min-width:220px;padding:10px;border-radius:10px;border:1px solid #ccd7e8">
+      <option value="">Select Quiz to view results</option>
+    </select>
+  </div>
+  <div class="tableWrap">
+    <table>
+      <thead>
+        <tr>
+          <th>Student</th>
+          <th>ID</th>
+          <th>Score</th>
+          <th>Percentage</th>
+          <th>Submitted</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody id="adminQuizResultRows">
+        <tr><td colspan="6" style="text-align:center;color:#718096">Select a quiz above</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
 <div class="card studentDirectoryCard" id="adminStudentDirectory"><div class="directoryHeader"><div class="directoryTitle"><div class="directoryIcon">👥</div><div><h2>All Students</h2><p>9th aur 10th class ke tamam students ko ek jagah se manage karein.</p></div></div><div class="directoryStats"><div class="directoryStat"><b id="adminDirTotal">0</b><span>All Students</span></div><div class="directoryStat"><b id="adminDir9">0</b><span>9th Class</span></div><div class="directoryStat"><b id="adminDir10">0</b><span>10th Class</span></div></div></div><div class="directoryToolbar"><div class="directoryField"><label>SEARCH STUDENT</label><input id="adminDirectorySearch" placeholder="🔎 Name or Student ID" oninput="renderStudentDirectory('admin')"></div><div class="directoryField"><label>SELECT CLASS</label><select id="adminDirectoryClass" onchange="renderStudentDirectory('admin')"><option value="all">All Classes</option><option value="9">9th Class</option><option value="10">10th Class</option></select></div><div class="directoryField"><label>SELECT SECTION</label><select id="adminDirectorySection" onchange="renderStudentDirectory('admin')"><option value="all">All Sections</option><option value="A">Section A</option><option value="B">Section B</option><option value="C">Section C</option><option value="UNASSIGNED">Not Assigned</option></select></div><button class="filterReset" onclick="resetDirectoryFilters('admin')">↺ Reset</button></div><div id="adminDirectoryResults" class="directoryResults"></div><div id="adminStudentDirectoryBody"></div></div></div>
 <div class="studentPortal" id="studentDash">
   <div class="studentTop">
@@ -2665,6 +2753,7 @@ button,input,select,textarea{max-width:100%;}
     <aside class="studentSide">
       <a class="active" href="#studentHomeSection">⌂ <span>Home</span></a>
       <a href="#studentMarksSection">▥ <span>Marks</span></a>
+      <a href="#studentQuizSection">📝 <span>Quizzes</span></a>
       <a href="#studentProfileSection">♙ <span>Profile</span></a>
       <a href="#" onclick="openStudentPasswordChange();return false">⚙ <span>Settings</span></a>
     </aside>
@@ -2735,6 +2824,21 @@ button,input,select,textarea{max-width:100%;}
           </section>
         </aside>
       </div>
+      <!-- ===== STUDENT QUIZZES ===== -->
+      <section class="studentCard" id="studentQuizSection">
+        <div class="sectionTitleRow">
+          <div class="sectionTitleIcon" style="background:linear-gradient(135deg,#eaf3ff,#dce8ff);color:#2368dc">📝</div>
+          <h2>Available Quizzes</h2>
+        </div>
+        <div id="studentQuizList" style="margin-top:12px">
+          <p style="color:#69778d;text-align:center;padding:20px">Loading quizzes...</p>
+        </div>
+        <div id="studentQuizHistory" style="margin-top:22px">
+          <h3 style="margin:0 0 10px;color:#12366b;font-size:17px">📌 My Previous Attempts</h3>
+          <div id="studentQuizHistoryList"><p style="color:#69778d;font-size:13px">No attempts yet.</p></div>
+        </div>
+      </section>
+
       <section class="studentCard" id="studentProfileSection">
         <div class="sectionTitleRow"><div class="sectionTitleIcon profileIcon">♙</div><h2>Profile</h2></div>
         <div id="profileCard" style="margin-top:12px;color:#536987"></div>
@@ -2750,8 +2854,8 @@ button,input,select,textarea{max-width:100%;}
       <div class="studentMobileBottom">
         <a class="active" href="#studentHomeSection">⌂<span>Home</span></a>
         <a href="#studentMarksSection">▥<span>Marks</span></a>
+        <a href="#studentQuizSection">📝<span>Quizzes</span></a>
         <a href="#studentProfileSection">♙<span>Profile</span></a>
-        <a href="#" onclick="openStudentPasswordChange();return false">⚙<span>Settings</span></a>
         <a href="#" class="logoutMobile" onclick="studentLogout();return false">↪<span>Logout</span></a>
       </div>
     </main>
@@ -2786,6 +2890,35 @@ button,input,select,textarea{max-width:100%;}
     <div class="tableWrap"><table class="markTable"><thead><tr><th>#</th><th>Student</th><th>ID</th><th>Section</th><th>Obtained / Total</th></tr></thead><tbody id="teacherEntryRows"></tbody></table></div>
     <div class="saveBar"><span id="teacherSaveMsg" style="color:#667">Ready.</span><button class="primary" onclick="saveTeacherMarks()">💾 Save All Marks</button></div>
   </div>
+
+  <!-- Teacher Quiz Results (read-only) -->
+  <div class="card" id="teacherQuizResultsCard">
+    <h2 style="margin:0 0 6px">📝 Quiz Results</h2>
+    <p style="color:#667;margin:0 0 12px">Students ke quiz scores yahan se dekh sakte hain (read-only).</p>
+    <div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:12px">
+      <select id="teacherResultsQuizSelect" onchange="loadTeacherQuizResults()" style="min-width:220px;padding:10px;border-radius:10px;border:1px solid #ccd7e8">
+        <option value="">Select Quiz</option>
+      </select>
+    </div>
+    <div class="tableWrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Student</th>
+            <th>ID</th>
+            <th>Class</th>
+            <th>Score</th>
+            <th>Percentage</th>
+            <th>Submitted</th>
+          </tr>
+        </thead>
+        <tbody id="teacherQuizResultRows">
+          <tr><td colspan="6" style="text-align:center;color:#718096">Select a quiz above</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
   <div class="card studentDirectoryCard" id="teacherStudentDirectory"><div class="directoryHeader"><div class="directoryTitle"><div class="directoryIcon">🎓</div><div><h2>All Students</h2><p>Class-wise student list — yahan se student ke marks manage karein.</p></div></div><div class="directoryStats"><div class="directoryStat"><b id="teacherDirTotal">0</b><span>All Students</span></div><div class="directoryStat"><b id="teacherDir9">0</b><span>9th Class</span></div><div class="directoryStat"><b id="teacherDir10">0</b><span>10th Class</span></div></div></div><div class="directoryToolbar"><div class="directoryField"><label>SEARCH STUDENT</label><input id="teacherDirectorySearch" placeholder="🔎 Name or Student ID" oninput="renderStudentDirectory('teacher')"></div><div class="directoryField"><label>SELECT CLASS</label><select id="teacherDirectoryClass" onchange="renderStudentDirectory('teacher')"><option value="all">All Classes</option><option value="9">9th Class</option><option value="10">10th Class</option></select></div><div class="directoryField"><label>SELECT SECTION</label><select id="teacherDirectorySection" onchange="renderStudentDirectory('teacher')"><option value="all">All Sections</option><option value="A">Section A</option><option value="B">Section B</option><option value="C">Section C</option><option value="UNASSIGNED">Not Assigned</option></select></div><button class="filterReset" onclick="resetDirectoryFilters('teacher')">↺ Reset</button></div><div id="teacherDirectoryResults" class="directoryResults"></div><div id="teacherStudentDirectoryBody"></div></div>
 </div>
 <div class="modalBg" id="marksModal"><div class="modal"><button class="x" onclick="closeMarks()">×</button><h2>Manage Marks</h2><p id="marksStudentName"></p><div class="form"><input id="mSubject" placeholder="Subject"><input id="mObtained" type="number" placeholder="Obtained marks"><input id="mTotal" type="number" placeholder="Total marks"><button class="primary" onclick="saveMark()">Add / Save Mark</button><div class="msg" id="marksMsg"></div></div><div class="tableWrap"><table><thead><tr><th>Subject</th><th>Obt.</th><th>Total</th><th>Action</th></tr></thead><tbody id="marksRows"></tbody></table></div></div></div>
@@ -2794,6 +2927,26 @@ button,input,select,textarea{max-width:100%;}
 <div class="modalBg" id="resetGuideModal"><div class="modal"><button class="x" onclick="closeResetGuide()">×</button><h2>🔑 Free Password Reset</h2><div id="resetGuideText" style="color:#536987;line-height:1.75"></div><div style="margin-top:15px;padding:15px;border-radius:14px;background:linear-gradient(135deg,#eef7ff,#f7fbff);border:1px solid #cfe0f5;color:#29486f;font-size:13px"><b style="color:#1453bb">💻 Computer par ye steps karein:</b><ol style="margin:10px 0 0;padding-left:22px;line-height:1.8"><li>Desktop par <b>Sajjad-Academy-Password-Reset</b> folder open karein.</li><li>Folder open karke keyboard se <b>Ctrl + L</b> press karein.</li>
 <li>Upar address bar select ho jayegi. Wahan <b>powershell</b> likhein aur <b>Enter</b> press karein.</li><li>Ye command chalayein:<br><code style="display:inline-block;margin-top:5px;padding:7px 9px;background:#0b1f3a;color:#fff;border-radius:8px;font-size:12px">node reset-password.js</code></li><li><b>Student ID</b> mein neeche diya hua ID enter karein.</li><li><b>New Password</b> mein naya password enter karein.</li><li>Jab <b>Password successfully reset ho gaya!</b> aaye, student ko naya password de dein.</li><li>Student portal mein login karke <b>🔑 Change Password</b> se apna permanent password bana sakta hai.</li></ol></div><div style="margin-top:14px;padding:12px 14px;border-radius:12px;background:#fff8e7;border:1px solid #f3d58a;color:#7a5a00;font-size:13px">⚠️ <b>Important:</b> Ye free method aapke computer par local reset script use karta hai. <b>serviceAccountKey.json</b> ko kabhi GitHub par upload/share na karein.</div><button class="primary" style="width:100%;margin-top:15px" onclick="closeResetGuide()">Done</button></div></div>
 <div class="modalBg" id="settingsModal"><div class="modal"><button class="x" onclick="closeSettings()">×</button><h2>⚙️ Website Settings</h2><div class="form"><label><b>Academy Name</b></label><input id="setName"><label><b>Phone</b></label><input id="setPhone"><label><b>WhatsApp</b></label><input id="setWhatsapp"><label><b>Email</b></label><input id="setEmail"><label><b>Address</b></label><input id="setAddress"><div class="settingsNote">ℹ️ Website settings mein sirf wohi cheezen hain jo abhi portal mein available hain. Images/pictures ki zaroorat nahi.</div><button class="primary" style="width:100%;margin-top:12px" onclick="saveSettings()">💾 Save Website Settings</button><div class="msg" id="settingsMsg"></div></div></div></div>
+
+<!-- ===== TAKE QUIZ MODAL ===== -->
+<div class="modalBg" id="takeQuizModal">
+  <div class="modal" style="width:min(720px,100%);max-height:94vh">
+    <button class="x" onclick="closeTakeQuiz()">×</button>
+    <div id="takeQuizHeader" style="margin-bottom:14px">
+      <h2 id="takeQuizTitle" style="margin:0 0 6px">Quiz</h2>
+      <div style="display:flex;gap:14px;flex-wrap:wrap;color:#536987;font-size:13px">
+        <span id="takeQuizMeta"></span>
+        <span id="takeQuizTimer" style="font-weight:800;color:#c5304b"></span>
+      </div>
+    </div>
+    <div id="takeQuizBody" style="max-height:55vh;overflow:auto;padding-right:4px"></div>
+    <div style="margin-top:16px;display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap">
+      <div class="msg" id="takeQuizMsg"></div>
+      <button class="primary" id="submitQuizBtn" onclick="submitQuiz()">✅ Submit Quiz</button>
+    </div>
+  </div>
+</div>
+
 <script type="module">
 import {initializeApp} from "https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
 import {getAuth,signInWithEmailAndPassword,createUserWithEmailAndPassword,signOut,EmailAuthProvider,reauthenticateWithCredential,updatePassword} from "https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
@@ -2846,6 +2999,7 @@ async function showAdmin(){
   await loadStudents();
   renderMarksOverview("adminMarksOverview");
   await loadAnnouncements();
+  try{ resetQuizForm(); await loadQuizzes(); }catch(e){ console.warn(e); }
 }
 async function loadStudents(){const snap=await getDocs(collection(db,"students"));students=snap.docs.map(d=>({id:d.id,...d.data()}));if(document.getElementById("studentRows")){renderStudents();renderMarksOverview("adminMarksOverview");renderStudentDirectory('admin');updateAdminStats()}}
 window.loadStudents=loadStudents;
@@ -2911,6 +3065,11 @@ async function showStudent(uid){
  await loadAnnouncements();
  const count=announcements.length;
  document.getElementById("studentNoticeCount").textContent=count;
+ try{
+   const snap=await getDocs(collection(db,'quizzes'));
+   quizzesCache=snap.docs.map(d=>({id:d.id,...d.data()}));
+   await loadStudentQuizzes();
+ }catch(e){console.warn(e)}
 }window.openStudentPasswordChange=()=>{document.getElementById("studentPasswordModal").style.display="flex";["currentStudentPassword","newStudentPassword","confirmStudentPassword"].forEach(id=>document.getElementById(id).value="");document.getElementById("studentPasswordMsg").textContent=""};
 window.closeStudentPasswordChange=()=>document.getElementById("studentPasswordModal").style.display="none";
 window.changeStudentPassword=async()=>{const current=document.getElementById("currentStudentPassword").value,newPw=document.getElementById("newStudentPassword").value,confirm=document.getElementById("confirmStudentPassword").value,msg=document.getElementById("studentPasswordMsg");if(!current||!newPw||!confirm){msg.textContent="Sab fields fill karein.";return}if(newPw.length<6){msg.textContent="New password 6+ characters ka hona chahiye.";return}if(newPw!==confirm){msg.textContent="Passwords match nahi kar rahi.";return}try{const user=auth.currentUser,credential=EmailAuthProvider.credential(user.email,current);await reauthenticateWithCredential(user,credential);await updatePassword(user,newPw);await updateDoc(doc(db,"students",user.uid),{passwordChanged:true});msg.style.color="#087443";msg.textContent="Password successfully change ho gaya hai."}catch(e){msg.textContent=e.message.replace("Firebase: ","")}};
@@ -2987,12 +3146,13 @@ window.showTeacher=async function showTeacher(user,data){
   closeLogin();
   setView("teacher");
   window.scrollTo(0,0);
-  document.getElementById('teacherWelcome').textContent='Welcome, '+(data?.name||user.email||'Teacher')+' — marks access only';
+  document.getElementById('teacherWelcome').textContent='Welcome, '+(data?.name||user.email||'Teacher')+' — marks & quiz results';
   await loadStudents();
   teacherStudentsCache=[...students];
   renderMarksOverview("teacherMarksOverview");
   renderStudentDirectory('teacher');
   prepareTeacherEntry();
+  try{ await loadQuizzesForTeacher(); }catch(e){ console.warn(e); }
 };
 window.prepareTeacherEntry=function prepareTeacherEntry(){
   renderTeacherEntry();
@@ -3169,6 +3329,593 @@ window.studentLogout=async()=>{
   }
 };
 window.logout=async()=>{await signOut(auth);location.reload()};
+
+/* ============================================================
+   QUIZ SYSTEM (Admin create/edit/delete + Student attempt + Results)
+   Collections used:
+   - quizzes
+   - quizAttempts
+   ============================================================ */
+let quizzesCache = [];
+let editingQuizId = null;
+let currentTakingQuiz = null;
+let quizTimerInterval = null;
+let quizTimeLeft = 0;
+
+function genQId(){ return 'q' + Date.now() + Math.floor(Math.random()*1000); }
+
+window.addQuizQuestion = function(data){
+  const list = document.getElementById('quizQuestionsList');
+  if(!list) return;
+  const id = data?.id || genQId();
+  const qText = data?.question || '';
+  const opts = data?.options || ['','','',''];
+  const correct = data?.correctAnswer || '';
+  const marks = data?.marks || 1;
+  const div = document.createElement('div');
+  div.className = 'quizQItem';
+  div.dataset.qid = id;
+  div.style.cssText = 'background:#fff;border:1px solid #dce8f5;border-radius:14px;padding:14px;margin-bottom:12px';
+  div.innerHTML = `
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+      <b style="color:#12366b">Question</b>
+      <button type="button" class="smallBtn danger" onclick="this.closest('.quizQItem').remove()">Delete</button>
+    </div>
+    <textarea class="qText" placeholder="Question text" style="width:100%;min-height:60px;padding:10px;border:1px solid #ccd7e8;border-radius:10px;resize:vertical">${esc(qText)}</textarea>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:8px">
+      <input class="qOpt" data-i="0" placeholder="Option A" value="${esc(opts[0]||'')}">
+      <input class="qOpt" data-i="1" placeholder="Option B" value="${esc(opts[1]||'')}">
+      <input class="qOpt" data-i="2" placeholder="Option C" value="${esc(opts[2]||'')}">
+      <input class="qOpt" data-i="3" placeholder="Option D" value="${esc(opts[3]||'')}">
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 100px;gap:8px;margin-top:8px">
+      <select class="qCorrect">
+        <option value="">Correct Answer</option>
+        <option value="0" ${correct==='0'||correct===opts[0]?'selected':''}>Option A</option>
+        <option value="1" ${correct==='1'||correct===opts[1]?'selected':''}>Option B</option>
+        <option value="2" ${correct==='2'||correct===opts[2]?'selected':''}>Option C</option>
+        <option value="3" ${correct==='3'||correct===opts[3]?'selected':''}>Option D</option>
+      </select>
+      <input class="qMarks" type="number" min="1" value="${marks}" placeholder="Marks">
+    </div>
+  `;
+  list.appendChild(div);
+};
+
+window.resetQuizForm = function(){
+  editingQuizId = null;
+  document.getElementById('quizFormTitle').textContent = '➕ Create New Quiz';
+  document.getElementById('quizSaveBtn').textContent = '💾 Save Quiz';
+  ['quizTitle','quizSubject','quizTimeLimit','quizTotalMarks'].forEach(id=>{
+    const el = document.getElementById(id); if(el) el.value = '';
+  });
+  document.getElementById('quizClass').value = '';
+  document.getElementById('quizSection').value = '';
+  document.getElementById('quizIsActive').checked = true;
+  document.getElementById('quizQuestionsList').innerHTML = '';
+  document.getElementById('quizFormMsg').textContent = '';
+  addQuizQuestion(); // one empty question by default
+};
+
+function collectQuizQuestions(){
+  const items = [...document.querySelectorAll('#quizQuestionsList .quizQItem')];
+  const questions = [];
+  for(const item of items){
+    const question = item.querySelector('.qText')?.value.trim() || '';
+    const options = [...item.querySelectorAll('.qOpt')].map(i=>i.value.trim());
+    const correctIdx = item.querySelector('.qCorrect')?.value;
+    const marks = Number(item.querySelector('.qMarks')?.value) || 1;
+    if(!question) continue;
+    if(options.filter(Boolean).length < 2) throw new Error('Har question mein kam az kam 2 options hon.');
+    if(correctIdx === '' || correctIdx === null) throw new Error('Har question ka correct answer select karein.');
+    questions.push({
+      id: item.dataset.qid || genQId(),
+      question,
+      options,
+      correctAnswer: options[Number(correctIdx)] || options[0],
+      correctIndex: Number(correctIdx),
+      marks
+    });
+  }
+  if(!questions.length) throw new Error('Kam az kam 1 question add karein.');
+  return questions;
+}
+
+window.saveQuiz = async function(){
+  const msg = document.getElementById('quizFormMsg');
+  const title = document.getElementById('quizTitle').value.trim();
+  const className = document.getElementById('quizClass').value;
+  const section = document.getElementById('quizSection').value;
+  const subject = document.getElementById('quizSubject').value.trim();
+  const timeLimit = Number(document.getElementById('quizTimeLimit').value) || 0;
+  const totalMarksInput = Number(document.getElementById('quizTotalMarks').value) || 0;
+  const isActive = document.getElementById('quizIsActive').checked;
+  if(!title || !className || !subject){
+    msg.style.color = '#d33';
+    msg.textContent = 'Title, Class aur Subject required hain.';
+    return;
+  }
+  try{
+    const questions = collectQuizQuestions();
+    const calcTotal = questions.reduce((s,q)=>s+(Number(q.marks)||1),0);
+    const payload = {
+      title,
+      className,
+      section: section || '',
+      subject,
+      timeLimit,
+      totalMarks: totalMarksInput || calcTotal,
+      isActive,
+      questions,
+      updatedAt: Date.now()
+    };
+    if(editingQuizId){
+      await updateDoc(doc(db,'quizzes',editingQuizId), payload);
+      msg.style.color = '#087443';
+      msg.textContent = 'Quiz update ho gaya.';
+    } else {
+      payload.createdAt = Date.now();
+      payload.createdBy = auth.currentUser?.uid || '';
+      await addDoc(collection(db,'quizzes'), payload);
+      msg.style.color = '#087443';
+      msg.textContent = 'Quiz successfully create ho gaya.';
+    }
+    await loadQuizzes();
+    resetQuizForm();
+  }catch(e){
+    msg.style.color = '#d33';
+    msg.textContent = e.message.replace('Firebase: ','');
+  }
+};
+
+window.loadQuizzes = async function(){
+  try{
+    const snap = await getDocs(collection(db,'quizzes'));
+    quizzesCache = snap.docs.map(d=>({id:d.id, ...d.data()})).sort((a,b)=>(b.createdAt||0)-(a.createdAt||0));
+    renderAdminQuizzes();
+    fillResultsQuizSelect();
+  }catch(e){
+    console.warn('loadQuizzes', e);
+  }
+};
+
+function renderAdminQuizzes(){
+  const tbody = document.getElementById('adminQuizRows');
+  if(!tbody) return;
+  if(!quizzesCache.length){
+    tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;color:#718096">No quizzes yet. Create one above.</td></tr>';
+    return;
+  }
+  tbody.innerHTML = quizzesCache.map(q=>{
+    const sec = q.section ? ` / Sec ${esc(q.section)}` : '';
+    const status = q.isActive
+      ? '<span style="color:#087443;font-weight:700">● Active</span>'
+      : '<span style="color:#b45309;font-weight:700">○ Inactive</span>';
+    return `<tr>
+      <td><b>${esc(q.title)}</b></td>
+      <td>${esc(q.className==='9'?'9th':q.className==='10'?'10th':q.className)}${sec}</td>
+      <td>${esc(q.subject||'')}</td>
+      <td>${(q.questions||[]).length}</td>
+      <td>${status}</td>
+      <td>
+        <button class="smallBtn" onclick="editQuiz('${q.id}')">Edit</button>
+        <button class="smallBtn green" onclick="toggleQuizActive('${q.id}')">${q.isActive?'Deactivate':'Activate'}</button>
+        <button class="smallBtn danger" onclick="deleteQuiz('${q.id}')">Delete</button>
+      </td>
+    </tr>`;
+  }).join('');
+}
+
+window.editQuiz = function(id){
+  const q = quizzesCache.find(x=>x.id===id);
+  if(!q) return;
+  editingQuizId = id;
+  document.getElementById('quizFormTitle').textContent = '✏️ Edit Quiz';
+  document.getElementById('quizSaveBtn').textContent = '💾 Update Quiz';
+  document.getElementById('quizTitle').value = q.title || '';
+  document.getElementById('quizClass').value = q.className || '';
+  document.getElementById('quizSection').value = q.section || '';
+  document.getElementById('quizSubject').value = q.subject || '';
+  document.getElementById('quizTimeLimit').value = q.timeLimit || '';
+  document.getElementById('quizTotalMarks').value = q.totalMarks || '';
+  document.getElementById('quizIsActive').checked = !!q.isActive;
+  const list = document.getElementById('quizQuestionsList');
+  list.innerHTML = '';
+  (q.questions||[]).forEach(qq=>addQuizQuestion(qq));
+  if(!(q.questions||[]).length) addQuizQuestion();
+  document.getElementById('quizManagementCard')?.scrollIntoView({behavior:'smooth'});
+};
+
+window.toggleQuizActive = async function(id){
+  const q = quizzesCache.find(x=>x.id===id);
+  if(!q) return;
+  try{
+    await updateDoc(doc(db,'quizzes',id), {isActive: !q.isActive, updatedAt: Date.now()});
+    await loadQuizzes();
+  }catch(e){ alert(e.message); }
+};
+
+window.deleteQuiz = async function(id){
+  if(!confirm('Delete this quiz permanently?')) return;
+  try{
+    await deleteDoc(doc(db,'quizzes',id));
+    await loadQuizzes();
+  }catch(e){ alert(e.message); }
+};
+
+function fillResultsQuizSelect(){
+  const sel = document.getElementById('resultsQuizSelect');
+  if(!sel) return;
+  const current = sel.value;
+  sel.innerHTML = '<option value="">Select Quiz to view results</option>' +
+    quizzesCache.map(q=>`<option value="${q.id}">${esc(q.title)} (${q.className==='9'?'9th':'10th'})</option>`).join('');
+  if(current) sel.value = current;
+}
+
+/** Build best-score rows for a quiz: all class students, 0 if no attempt, max of 2 attempts if attempted */
+async function buildQuizResultRows(quizId, {forAdmin=false}={}){
+  const quiz = quizzesCache.find(x=>x.id===quizId);
+  if(!quiz) return {rowsHtml:'', error:'Quiz not found'};
+  const totalMarks = quiz.totalMarks || (quiz.questions||[]).reduce((s,q)=>s+(Number(q.marks)||1),0) || 0;
+  const qClass = normalizeClass(quiz.className);
+  const qSec = normalizeSection(quiz.section||'');
+
+  // Ensure students list is available
+  if(!students.length){
+    try{ await loadStudents(); }catch(e){}
+  }
+
+  const classStudents = students.filter(s=>{
+    if(normalizeClass(s.className) !== qClass) return false;
+    if(qSec && normalizeSection(s.section) !== qSec) return false;
+    return true;
+  });
+
+  const snap = await getDocs(collection(db,'quizAttempts'));
+  const attempts = snap.docs
+    .map(d=>({id:d.id, ...d.data()}))
+    .filter(a=>a.quizId===quizId);
+
+  // Best attempt per student (highest score)
+  const bestByUid = {};
+  attempts.forEach(a=>{
+    const uid = a.studentUid || a.studentId || a.id;
+    if(!bestByUid[uid] || Number(a.score||0) > Number(bestByUid[uid].score||0)){
+      bestByUid[uid] = a;
+    }
+  });
+
+  // Also map by studentId string for matching
+  const bestByStudentId = {};
+  attempts.forEach(a=>{
+    const sid = String(a.studentId||'').toUpperCase();
+    if(!sid) return;
+    if(!bestByStudentId[sid] || Number(a.score||0) > Number(bestByStudentId[sid].score||0)){
+      bestByStudentId[sid] = a;
+    }
+  });
+
+  const rows = classStudents.map(s=>{
+    const best = bestByUid[s.id] || bestByStudentId[String(s.studentId||'').toUpperCase()] || null;
+    const score = best ? Number(best.score||0) : 0;
+    const tot = best ? (best.totalMarks||totalMarks) : totalMarks;
+    const pct = tot ? ((score/tot)*100).toFixed(1) : '0.0';
+    const date = best?.submittedAt
+      ? new Date(best.submittedAt).toLocaleString('en-PK',{dateStyle:'medium',timeStyle:'short'})
+      : '—';
+    const attemptNote = best
+      ? (attempts.filter(a=>(a.studentUid===s.id)||(String(a.studentId||'').toUpperCase()===String(s.studentId||'').toUpperCase())).length > 1
+          ? ' (best of 2)' : '')
+      : ' (not attempted → 0)';
+    const cls = normalizeClass(s.className)==='9'?'9th':normalizeClass(s.className)==='10'?'10th':(s.className||'—');
+    const sec = normalizeSection(s.section) ? ` / ${normalizeSection(s.section)}` : '';
+    if(forAdmin){
+      return `<tr style="${best?'':'background:#fff8f0'}">
+        <td>${esc(s.name||'')}</td>
+        <td>${esc(s.studentId||'')}</td>
+        <td><b>${score}</b> / ${tot}${attemptNote}</td>
+        <td>${pct}%</td>
+        <td>${date}</td>
+        <td>${best?`<button class="smallBtn danger" onclick="deleteQuizAttempt('${best.id}')">Delete best</button>`:'—'}</td>
+      </tr>`;
+    }
+    return `<tr style="${best?'':'background:#fff8f0'}">
+      <td>${esc(s.name||'')}</td>
+      <td>${esc(s.studentId||'')}</td>
+      <td>${esc(cls)}${sec}</td>
+      <td><b>${score}</b> / ${tot}${best?'':' <small style="color:#b45309">0</small>'}</td>
+      <td>${pct}%</td>
+      <td>${date}</td>
+    </tr>`;
+  });
+
+  // Also include attempts from students not in list (edge case)
+  const listedUids = new Set(classStudents.map(s=>s.id));
+  const listedSids = new Set(classStudents.map(s=>String(s.studentId||'').toUpperCase()));
+  Object.values(bestByUid).forEach(a=>{
+    if(listedUids.has(a.studentUid)) return;
+    if(listedSids.has(String(a.studentId||'').toUpperCase())) return;
+    const score = Number(a.score||0);
+    const tot = a.totalMarks||totalMarks;
+    const pct = tot ? ((score/tot)*100).toFixed(1) : '0.0';
+    const date = a.submittedAt ? new Date(a.submittedAt).toLocaleString('en-PK',{dateStyle:'medium',timeStyle:'short'}) : '—';
+    if(forAdmin){
+      rows.push(`<tr>
+        <td>${esc(a.studentName||'')}</td>
+        <td>${esc(a.studentId||'')}</td>
+        <td><b>${score}</b> / ${tot}</td>
+        <td>${pct}%</td>
+        <td>${date}</td>
+        <td><button class="smallBtn danger" onclick="deleteQuizAttempt('${a.id}')">Delete</button></td>
+      </tr>`);
+    } else {
+      rows.push(`<tr>
+        <td>${esc(a.studentName||'')}</td>
+        <td>${esc(a.studentId||'')}</td>
+        <td>—</td>
+        <td><b>${score}</b> / ${tot}</td>
+        <td>${pct}%</td>
+        <td>${date}</td>
+      </tr>`);
+    }
+  });
+
+  if(!rows.length){
+    return {rowsHtml: `<tr><td colspan="${forAdmin?6:6}" style="text-align:center;color:#718096">Is class/section mein koi student nahi mila.</td></tr>`};
+  }
+  return {rowsHtml: rows.join('')};
+}
+
+window.loadQuizResults = async function(){
+  const quizId = document.getElementById('resultsQuizSelect')?.value;
+  const tbody = document.getElementById('adminQuizResultRows');
+  if(!tbody) return;
+  if(!quizId){
+    tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;color:#718096">Select a quiz above</td></tr>';
+    return;
+  }
+  tbody.innerHTML = '<tr><td colspan="6" style="text-align:center">Loading...</td></tr>';
+  try{
+    const {rowsHtml, error} = await buildQuizResultRows(quizId, {forAdmin:true});
+    if(error){ tbody.innerHTML = `<tr><td colspan="6" style="color:#d33">${esc(error)}</td></tr>`; return; }
+    tbody.innerHTML = rowsHtml;
+  }catch(e){
+    tbody.innerHTML = `<tr><td colspan="6" style="color:#d33">${esc(e.message)}</td></tr>`;
+  }
+};
+
+window.deleteQuizAttempt = async function(id){
+  if(!confirm('Delete this attempt?')) return;
+  try{
+    await deleteDoc(doc(db,'quizAttempts',id));
+    await loadQuizResults();
+  }catch(e){ alert(e.message); }
+};
+
+/* ---------- Teacher: view quiz results (read-only) ---------- */
+window.loadQuizzesForTeacher = async function(){
+  try{
+    const snap = await getDocs(collection(db,'quizzes'));
+    quizzesCache = snap.docs.map(d=>({id:d.id,...d.data()})).sort((a,b)=>(b.createdAt||0)-(a.createdAt||0));
+    const sel = document.getElementById('teacherResultsQuizSelect');
+    if(!sel) return;
+    sel.innerHTML = '<option value="">Select Quiz</option>' +
+      quizzesCache.map(q=>`<option value="${q.id}">${esc(q.title)} (${q.className==='9'?'9th':q.className==='10'?'10th':q.className})</option>`).join('');
+  }catch(e){ console.warn(e); }
+};
+
+window.loadTeacherQuizResults = async function(){
+  const quizId = document.getElementById('teacherResultsQuizSelect')?.value;
+  const tbody = document.getElementById('teacherQuizResultRows');
+  if(!tbody) return;
+  if(!quizId){
+    tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;color:#718096">Select a quiz above</td></tr>';
+    return;
+  }
+  tbody.innerHTML = '<tr><td colspan="6" style="text-align:center">Loading...</td></tr>';
+  try{
+    const {rowsHtml, error} = await buildQuizResultRows(quizId, {forAdmin:false});
+    if(error){ tbody.innerHTML = `<tr><td colspan="6" style="color:#d33">${esc(error)}</td></tr>`; return; }
+    tbody.innerHTML = rowsHtml;
+  }catch(e){
+    tbody.innerHTML = `<tr><td colspan="6" style="color:#d33">${esc(e.message)}</td></tr>`;
+  }
+};
+
+/* ---------- Student side ---------- */
+window.loadStudentQuizzes = async function(){
+  const list = document.getElementById('studentQuizList');
+  const history = document.getElementById('studentQuizHistoryList');
+  if(!list || !activeStudent) return;
+  try{
+    const snap = await getDocs(collection(db,'quizzes'));
+    const all = snap.docs.map(d=>({id:d.id,...d.data()}));
+    quizzesCache = all; // so startQuiz can find quiz locally
+    const myClass = normalizeClass(activeStudent.className);
+    const mySec = normalizeSection(activeStudent.section);
+    const available = all.filter(q=>{
+      if(!q.isActive) return false;
+      if(normalizeClass(q.className) !== myClass) return false;
+      if(q.section && normalizeSection(q.section) !== mySec) return false;
+      return true;
+    }).sort((a,b)=>(b.createdAt||0)-(a.createdAt||0));
+
+    // load all my attempts first (for count + history)
+    const attSnap = await getDocs(collection(db,'quizAttempts'));
+    const myAttempts = attSnap.docs
+      .map(d=>({id:d.id,...d.data()}))
+      .filter(a=>a.studentUid === activeStudent.id)
+      .sort((a,b)=>(b.submittedAt||0)-(a.submittedAt||0));
+
+    if(!available.length){
+      list.innerHTML = '<p style="color:#69778d;text-align:center;padding:18px">Abhi koi active quiz nahi hai.</p>';
+    } else {
+      list.innerHTML = available.map(q=>{
+        const qCount = (q.questions||[]).length;
+        const time = q.timeLimit ? `${q.timeLimit} min` : 'No limit';
+        const used = myAttempts.filter(a=>a.quizId===q.id).length;
+        const left = Math.max(0, 2 - used);
+        const btn = left > 0
+          ? `<button class="primary" style="padding:10px 16px" onclick="startQuiz('${q.id}')">Start Quiz (${left} left)</button>`
+          : `<button class="smallBtn" style="padding:10px 16px;opacity:.7;cursor:not-allowed" disabled>Max 2 attempts used</button>`;
+        return `<div style="border:1px solid #dce8f5;border-radius:14px;padding:14px 16px;margin-bottom:10px;background:#fff;display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap">
+          <div>
+            <b style="color:#12366b;font-size:16px">${esc(q.title)}</b>
+            <div style="font-size:12px;color:#667895;margin-top:4px">${esc(q.subject||'')} • ${qCount} questions • ${time} • ${q.totalMarks||qCount} marks • Attempts: ${used}/2</div>
+          </div>
+          ${btn}
+        </div>`;
+      }).join('');
+    }
+
+    if(!myAttempts.length){
+      history.innerHTML = '<p style="color:#69778d;font-size:13px">No attempts yet.</p>';
+    } else {
+      // Group by quizId → show best score + attempt count
+      const byQuiz = {};
+      myAttempts.forEach(a=>{
+        const key = a.quizId || a.quizTitle || a.id;
+        if(!byQuiz[key]) byQuiz[key] = {title:a.quizTitle||'Quiz', attempts:[]};
+        byQuiz[key].attempts.push(a);
+      });
+      history.innerHTML = Object.values(byQuiz).map(g=>{
+        const best = g.attempts.reduce((m,a)=> Number(a.score||0) > Number(m.score||0) ? a : m, g.attempts[0]);
+        const pct = best.totalMarks ? ((best.score/best.totalMarks)*100).toFixed(1) : '0';
+        const date = best.submittedAt ? new Date(best.submittedAt).toLocaleString('en-PK',{dateStyle:'medium',timeStyle:'short'}) : '';
+        const n = g.attempts.length;
+        return `<div style="border:1px solid #e5ebf3;border-radius:12px;padding:12px 14px;margin-bottom:8px;display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap">
+          <div>
+            <b>${esc(g.title)}</b>
+            <div style="font-size:12px;color:#718096">${date} • ${n} attempt${n>1?'s':''}${n>1?' (best saved)':''}</div>
+          </div>
+          <div style="font-weight:800;color:#1765d5">${best.score||0}/${best.totalMarks||0} (${pct}%)</div>
+        </div>`;
+      }).join('');
+    }
+  }catch(e){
+    list.innerHTML = `<p style="color:#d33">${esc(e.message)}</p>`;
+  }
+};
+
+window.startQuiz = async function(quizId){
+  let q = quizzesCache.find(x=>x.id===quizId);
+  if(!q){
+    try{
+      const snap = await getDoc(doc(db,'quizzes',quizId));
+      if(snap.exists()) q = {id: snap.id, ...snap.data()};
+    }catch(e){}
+  }
+  if(!q){ alert('Quiz not found'); return; }
+  // Max 2 attempts per student per quiz
+  try{
+    const attSnap = await getDocs(collection(db,'quizAttempts'));
+    const attemptCount = attSnap.docs.filter(d=>{
+      const a = d.data();
+      return a.quizId===quizId && a.studentUid===activeStudent.id;
+    }).length;
+    if(attemptCount >= 2){
+      alert('Aap is quiz ke maximum 2 attempts use kar chuke hain. Phir se attempt nahi kar sakte.');
+      return;
+    }
+    if(attemptCount === 1){
+      if(!confirm('Aap ne ye quiz 1 baar attempt ki hai. 1 attempt aur bacha hai. Continue karein?')) return;
+    }
+  }catch(e){}
+
+  currentTakingQuiz = {id: quizId, ...q};
+  const body = document.getElementById('takeQuizBody');
+  document.getElementById('takeQuizTitle').textContent = q.title || 'Quiz';
+  document.getElementById('takeQuizMeta').textContent = `${q.subject||''} • ${(q.questions||[]).length} questions • ${q.totalMarks||0} marks`;
+  document.getElementById('takeQuizMsg').textContent = '';
+  body.innerHTML = (q.questions||[]).map((qq,i)=>{
+    const opts = (qq.options||[]).map((o,oi)=>`
+      <label style="display:flex;align-items:center;gap:10px;padding:10px 12px;border:1px solid #e2e9f5;border-radius:10px;margin-bottom:6px;cursor:pointer;background:#fafcff">
+        <input type="radio" name="q_${qq.id||i}" value="${oi}">
+        <span>${esc(o)}</span>
+      </label>
+    `).join('');
+    return `<div style="margin-bottom:18px;padding-bottom:14px;border-bottom:1px solid #edf2f8">
+      <div style="font-weight:800;color:#12366b;margin-bottom:10px">${i+1}. ${esc(qq.question)} <small style="color:#718096;font-weight:600">(${qq.marks||1} mark)</small></div>
+      ${opts}
+    </div>`;
+  }).join('') || '<p>No questions.</p>';
+
+  // timer
+  if(quizTimerInterval) clearInterval(quizTimerInterval);
+  quizTimeLeft = (Number(q.timeLimit)||0) * 60;
+  const timerEl = document.getElementById('takeQuizTimer');
+  if(quizTimeLeft > 0){
+    const tick = ()=>{
+      const m = Math.floor(quizTimeLeft/60);
+      const s = quizTimeLeft % 60;
+      timerEl.textContent = `⏱ ${m}:${String(s).padStart(2,'0')}`;
+      if(quizTimeLeft <= 0){
+        clearInterval(quizTimerInterval);
+        submitQuiz(true);
+        return;
+      }
+      quizTimeLeft--;
+    };
+    tick();
+    quizTimerInterval = setInterval(tick, 1000);
+  } else {
+    timerEl.textContent = '';
+  }
+  document.getElementById('takeQuizModal').style.display = 'flex';
+};
+
+window.closeTakeQuiz = function(){
+  if(quizTimerInterval) clearInterval(quizTimerInterval);
+  currentTakingQuiz = null;
+  document.getElementById('takeQuizModal').style.display = 'none';
+};
+
+window.submitQuiz = async function(auto=false){
+  if(!currentTakingQuiz || !activeStudent) return;
+  const msg = document.getElementById('takeQuizMsg');
+  const questions = currentTakingQuiz.questions || [];
+  let score = 0;
+  const answers = {};
+  questions.forEach((qq,i)=>{
+    const name = `q_${qq.id||i}`;
+    const selected = document.querySelector(`input[name="${name}"]:checked`);
+    const selIdx = selected ? Number(selected.value) : -1;
+    answers[qq.id||i] = selIdx;
+    const correctIdx = typeof qq.correctIndex === 'number' ? qq.correctIndex : (qq.options||[]).indexOf(qq.correctAnswer);
+    if(selIdx === correctIdx) score += Number(qq.marks)||1;
+  });
+  const totalMarks = currentTakingQuiz.totalMarks || questions.reduce((s,q)=>s+(Number(q.marks)||1),0);
+  try{
+    await addDoc(collection(db,'quizAttempts'), {
+      quizId: currentTakingQuiz.id,
+      quizTitle: currentTakingQuiz.title || '',
+      studentUid: activeStudent.id,
+      studentId: activeStudent.studentId || '',
+      studentName: activeStudent.name || '',
+      className: activeStudent.className || '',
+      section: activeStudent.section || '',
+      answers,
+      score,
+      totalMarks,
+      percentage: totalMarks ? (score/totalMarks)*100 : 0,
+      submittedAt: Date.now(),
+      autoSubmitted: !!auto
+    });
+    if(quizTimerInterval) clearInterval(quizTimerInterval);
+    msg.style.color = '#087443';
+    msg.textContent = `Submitted! Score: ${score} / ${totalMarks}`;
+    document.getElementById('submitQuizBtn').disabled = true;
+    setTimeout(()=>{
+      closeTakeQuiz();
+      document.getElementById('submitQuizBtn').disabled = false;
+      loadStudentQuizzes();
+    }, 1800);
+  }catch(e){
+    msg.style.color = '#d33';
+    msg.textContent = e.message.replace('Firebase: ','');
+  }
+};
+
 loadPublicSettings();loadAnnouncements();
 // Small usability safeguards: Enter submits login, Escape closes open modals, and clicking the dark backdrop closes a modal.
 document.addEventListener('keydown',e=>{
