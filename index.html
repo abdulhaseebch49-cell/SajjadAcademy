@@ -2367,6 +2367,19 @@ button,input,select,textarea{max-width:100%;}
 }
 
 </style>
+<style id="pwaInstallButtonStyles">
+.pwaInstallSection{padding:16px 14px 22px;background:#fff;text-align:center}
+.pwaInstallBox{width:min(760px,100%);margin:0 auto;padding:16px 18px;border:2px solid #b9d7ff;border-radius:20px;background:linear-gradient(135deg,#f5faff,#eef6ff);box-shadow:0 10px 28px rgba(27,86,160,.10);display:flex;align-items:center;justify-content:center;gap:14px;flex-wrap:wrap}
+.pwaInstallText{text-align:left;flex:1 1 320px;min-width:220px}
+.pwaInstallText strong{display:block;color:#103b79;font-size:18px;margin-bottom:4px}
+.pwaInstallText span{display:block;color:#42628b;font-size:12px;line-height:1.45}
+#installAppBtn{border:0;border-radius:999px;padding:12px 22px;background:linear-gradient(135deg,#1768dc,#5b35d6);color:#fff;font-weight:900;font-size:14px;cursor:pointer;box-shadow:0 8px 18px rgba(39,83,190,.22);transition:transform .18s,box-shadow .18s;white-space:nowrap}
+#installAppBtn:hover{transform:translateY(-2px);box-shadow:0 12px 24px rgba(39,83,190,.28)}
+#installAppBtn:active{transform:translateY(0)}
+@media(max-width:600px){.pwaInstallSection{padding:12px 10px 18px}.pwaInstallBox{padding:14px 12px;gap:10px}.pwaInstallText{text-align:center;min-width:0}.pwaInstallText strong{font-size:16px}.pwaInstallText span{font-size:11px}#installAppBtn{width:100%;padding:12px 16px}}
+</style>
+
+<link rel="manifest" href="manifest.json">
 </head>
 <body class="public-active">
 <header data-public-page="true" class="header refHeader">
@@ -2404,6 +2417,15 @@ button,input,select,textarea{max-width:100%;}
     <button class="portalCard portalStudent" onclick="openLogin('student')"><span class="portalIcon">🎓</span><span class="portalCopy"><b>Student Portal</b><small>View marks, attendance,<br>assignments &amp; more</small></span><span class="portalArrow">→</span></button>
     <button class="portalCard portalTeacher" onclick="openLogin('teacher')"><span class="portalIcon">👨‍🏫</span><span class="portalCopy"><b>Teacher Portal</b><small>Manage classes, marks,<br>announcements &amp; more</small></span><span class="portalArrow">→</span></button>
     <button class="portalCard portalAdmin" onclick="openLogin('admin')"><span class="portalIcon">⚙</span><span class="portalCopy"><b>Admin Portal</b><small>Manage students, marks,<br>classes &amp; track performance</small></span><span class="portalArrow">→</span></button>
+  </div>
+</section>
+<section data-public-page="true" class="pwaInstallSection" aria-label="Install Sajjad Academy App">
+  <div class="pwaInstallBox">
+    <div class="pwaInstallText">
+      <strong>📱 Install Sajjad Academy App</strong>
+      <span>Install Sajjad Academy on your phone or computer for quick access like an app.</span>
+    </div>
+    <button id="installAppBtn" type="button">📲 Install App</button>
   </div>
 </section>
 <section data-public-page="true" class="homeStats refStats">
@@ -3153,6 +3175,66 @@ document.querySelectorAll('.modalBg').forEach(bg=>bg.addEventListener('click',e=
 <script>
 function toggleHomeMenu(btn){const nav=document.getElementById('homeNav');if(!nav)return;const open=nav.classList.toggle('homeOpen');btn.setAttribute('aria-expanded',open?'true':'false');}
 document.addEventListener('click',function(e){const nav=document.getElementById('homeNav'),btn=document.querySelector('.mobileMenuBtn');if(!nav||!nav.classList.contains('homeOpen'))return;if(!nav.contains(e.target)&&(!btn||!btn.contains(e.target))){nav.classList.remove('homeOpen');if(btn)btn.setAttribute('aria-expanded','false');}else if(nav.contains(e.target)&&e.target.tagName==='A'){nav.classList.remove('homeOpen');if(btn)btn.setAttribute('aria-expanded','false');}});
+</script>
+
+<script id="pwaInstallButtonScript">
+(function(){
+  let deferredInstallPrompt = null;
+  const installButton = document.getElementById("installAppBtn");
+
+  if (!installButton) return;
+
+  function hideInstallButton(){
+    installButton.style.display = "none";
+  }
+
+  function isStandalone(){
+    return window.matchMedia && window.matchMedia("(display-mode: standalone)").matches || window.navigator.standalone === true;
+  }
+
+  if (isStandalone()) {
+    hideInstallButton();
+  }
+
+  window.addEventListener("beforeinstallprompt", function(event){
+    event.preventDefault();
+    deferredInstallPrompt = event;
+    installButton.style.display = "inline-block";
+  });
+
+  installButton.addEventListener("click", async function(){
+    if (deferredInstallPrompt) {
+      deferredInstallPrompt.prompt();
+      try { await deferredInstallPrompt.userChoice; } catch(e) {}
+      deferredInstallPrompt = null;
+      hideInstallButton();
+      return;
+    }
+
+    const ua = navigator.userAgent || "";
+    const isIOS = /iPad|iPhone|iPod/.test(ua) || (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1);
+
+    if (isIOS) {
+      alert("iPhone/iPad par: Safari me Share (↑) dabayen → Add to Home Screen → Add.");
+    } else {
+      alert("Chrome/Edge me browser menu (⋮) kholen aur 'Install Sajjad Academy' ya 'Add to Home screen' select karein.");
+    }
+  });
+
+  window.addEventListener("appinstalled", function(){
+    deferredInstallPrompt = null;
+    hideInstallButton();
+  });
+})();
+</script>
+
+<script>
+if ("serviceWorker" in navigator) {
+  window.addEventListener("load", () => {
+    navigator.serviceWorker.register("service-worker.js")
+      .catch(err => console.warn("Sajjad Academy service worker registration failed:", err));
+  });
+}
 </script>
 </body>
 </html>
