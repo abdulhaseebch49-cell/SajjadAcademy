@@ -2379,7 +2379,8 @@ button,input,select,textarea{max-width:100%;}
 @media(max-width:600px){.pwaInstallSection{padding:12px 10px 18px}.pwaInstallBox{padding:14px 12px;gap:10px}.pwaInstallText{text-align:center;min-width:0}.pwaInstallText strong{font-size:16px}.pwaInstallText span{font-size:11px}#installAppBtn{width:100%;padding:12px 16px}}
 </style>
 
-<link rel="manifest" href="/manifest.json">
+<link rel="manifest" href="./manifest.json">
+<link rel="apple-touch-icon" href="./icons/icon-192.png">
 <meta name="theme-color" content="#0b3d91">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -3183,39 +3184,39 @@ document.addEventListener('click',function(e){const nav=document.getElementById(
 
 <script id="pwaInstallButtonScript">
 (function(){
-  let deferredInstallPrompt = null;
   const installButton = document.getElementById("installAppBtn");
   if (!installButton) return;
+
+  let deferredInstallPrompt = null;
 
   function isStandalone(){
     return (window.matchMedia && window.matchMedia("(display-mode: standalone)").matches) ||
            window.navigator.standalone === true;
   }
+
   function hideInstallButton(){
     installButton.style.display = "none";
   }
-  function showInstallButton(){
-    installButton.style.display = "inline-block";
-  }
 
-  // Keep the button hidden until Chromium confirms that this page is installable.
-  // This avoids showing a button that cannot open an install prompt.
-  installButton.style.display = "none";
-
+  // Keep the button visible on normal web pages so users always have a
+  // clear installation path. The native prompt is used when available.
   if (isStandalone()) {
     hideInstallButton();
+  } else {
+    installButton.style.display = "inline-block";
   }
 
   window.addEventListener("beforeinstallprompt", function(event){
     event.preventDefault();
     deferredInstallPrompt = event;
-    showInstallButton();
+    installButton.style.display = "inline-block";
   });
 
   installButton.addEventListener("click", async function(){
     if (deferredInstallPrompt) {
       const promptEvent = deferredInstallPrompt;
       deferredInstallPrompt = null;
+
       try {
         await promptEvent.prompt();
         await promptEvent.userChoice;
@@ -3231,10 +3232,17 @@ document.addEventListener('click',function(e){const nav=document.getElementById(
       (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1);
 
     if (isIOS) {
-      alert("iPhone/iPad par Safari me Share (↑) dabayen → Add to Home Screen → Add.");
-    } else {
-      alert("Agar Install option nazar nahi aa raha, Chrome/Edge ke menu (⋮) me 'Install page as app' ya Edge me More tools → Apps → Install this site as an app use karein.");
+      alert("iPhone/iPad: Safari me Share (↑) dabayen → Add to Home Screen → Add.");
+      return;
     }
+
+    const isAndroid = /Android/i.test(ua);
+    if (isAndroid) {
+      alert("Android Chrome: ⋮ menu kholen → Add to Home screen / Install app select karein.");
+      return;
+    }
+
+    alert("Chrome/Edge: address bar ke Install icon ko click karein. Agar icon na ho to ⋮ menu → Install page as app / Apps → Install this site as an app select karein.");
   });
 
   window.addEventListener("appinstalled", function(){
@@ -3247,7 +3255,7 @@ document.addEventListener('click',function(e){const nav=document.getElementById(
 <script>
 if ("serviceWorker" in navigator) {
   window.addEventListener("load", () => {
-    navigator.serviceWorker.register("service-worker.js")
+    navigator.serviceWorker.register("./service-worker.js", { scope: "./" })
       .catch(err => console.warn("Sajjad Academy service worker registration failed:", err));
   });
 }
