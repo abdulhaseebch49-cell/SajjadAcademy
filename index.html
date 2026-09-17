@@ -2379,7 +2379,11 @@ button,input,select,textarea{max-width:100%;}
 @media(max-width:600px){.pwaInstallSection{padding:12px 10px 18px}.pwaInstallBox{padding:14px 12px;gap:10px}.pwaInstallText{text-align:center;min-width:0}.pwaInstallText strong{font-size:16px}.pwaInstallText span{font-size:11px}#installAppBtn{width:100%;padding:12px 16px}}
 </style>
 
-<link rel="manifest" href="manifest.json">
+<link rel="manifest" href="/manifest.json">
+<meta name="theme-color" content="#0b3d91">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
 </head>
 <body class="public-active">
 <header data-public-page="true" class="header refHeader">
@@ -3181,16 +3185,22 @@ document.addEventListener('click',function(e){const nav=document.getElementById(
 (function(){
   let deferredInstallPrompt = null;
   const installButton = document.getElementById("installAppBtn");
-
   if (!installButton) return;
 
+  function isStandalone(){
+    return (window.matchMedia && window.matchMedia("(display-mode: standalone)").matches) ||
+           window.navigator.standalone === true;
+  }
   function hideInstallButton(){
     installButton.style.display = "none";
   }
-
-  function isStandalone(){
-    return window.matchMedia && window.matchMedia("(display-mode: standalone)").matches || window.navigator.standalone === true;
+  function showInstallButton(){
+    installButton.style.display = "inline-block";
   }
+
+  // Keep the button hidden until Chromium confirms that this page is installable.
+  // This avoids showing a button that cannot open an install prompt.
+  installButton.style.display = "none";
 
   if (isStandalone()) {
     hideInstallButton();
@@ -3199,25 +3209,31 @@ document.addEventListener('click',function(e){const nav=document.getElementById(
   window.addEventListener("beforeinstallprompt", function(event){
     event.preventDefault();
     deferredInstallPrompt = event;
-    installButton.style.display = "inline-block";
+    showInstallButton();
   });
 
   installButton.addEventListener("click", async function(){
     if (deferredInstallPrompt) {
-      deferredInstallPrompt.prompt();
-      try { await deferredInstallPrompt.userChoice; } catch(e) {}
+      const promptEvent = deferredInstallPrompt;
       deferredInstallPrompt = null;
+      try {
+        await promptEvent.prompt();
+        await promptEvent.userChoice;
+      } catch (e) {
+        console.warn("Sajjad Academy install prompt error:", e);
+      }
       hideInstallButton();
       return;
     }
 
     const ua = navigator.userAgent || "";
-    const isIOS = /iPad|iPhone|iPod/.test(ua) || (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1);
+    const isIOS = /iPad|iPhone|iPod/.test(ua) ||
+      (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1);
 
     if (isIOS) {
-      alert("iPhone/iPad par: Safari me Share (↑) dabayen → Add to Home Screen → Add.");
+      alert("iPhone/iPad par Safari me Share (↑) dabayen → Add to Home Screen → Add.");
     } else {
-      alert("Chrome/Edge me browser menu (⋮) kholen aur 'Install Sajjad Academy' ya 'Add to Home screen' select karein.");
+      alert("Agar Install option nazar nahi aa raha, Chrome/Edge ke menu (⋮) me 'Install page as app' ya Edge me More tools → Apps → Install this site as an app use karein.");
     }
   });
 
