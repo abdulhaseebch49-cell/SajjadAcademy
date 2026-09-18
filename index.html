@@ -2689,21 +2689,32 @@ button,input,select,textarea{max-width:100%;}
   </div>
 
   <!-- Existing Quizzes List -->
-  <h3 style="margin:0 0 10px;color:#12366b">📋 All Quizzes</h3>
-  <div class="tableWrap">
+  <div style="display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;margin:0 0 10px">
+    <h3 style="margin:0;color:#12366b">📋 All Quizzes</h3>
+    <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center">
+      <label style="font-size:13px;color:#536987;display:flex;align-items:center;gap:6px;cursor:pointer">
+        <input type="checkbox" id="adminQuizSelectAll" onchange="toggleSelectAllQuizzes(this.checked)"> Select all
+      </label>
+      <button class="smallBtn danger" id="adminBulkDeleteBtn" onclick="bulkDeleteQuizzes()" style="display:none">🗑 Delete selected</button>
+    </div>
+  </div>
+  <p style="margin:0 0 10px;font-size:12px;color:#6b7c95">Select old quizzes to delete them with their attempt records (keeps storage clean).</p>
+  <div class="tableWrap" style="max-height:360px;overflow:auto;border:1px solid #e5ebf3;border-radius:12px">
     <table>
       <thead>
         <tr>
+          <th style="width:36px"></th>
           <th>Title</th>
           <th>Class / Section</th>
           <th>Subject</th>
           <th>Questions</th>
+          <th>Total Marks</th>
           <th>Status</th>
           <th>Actions</th>
         </tr>
       </thead>
       <tbody id="adminQuizRows">
-        <tr><td colspan="6" style="text-align:center;color:#718096">Loading quizzes...</td></tr>
+        <tr><td colspan="8" style="text-align:center;color:#718096">Loading quizzes...</td></tr>
       </tbody>
     </table>
   </div>
@@ -2826,16 +2837,44 @@ button,input,select,textarea{max-width:100%;}
       </div>
       <!-- ===== STUDENT QUIZZES ===== -->
       <section class="studentCard" id="studentQuizSection">
-        <div class="sectionTitleRow">
-          <div class="sectionTitleIcon" style="background:linear-gradient(135deg,#eaf3ff,#dce8ff);color:#2368dc">📝</div>
-          <h2>Available Quizzes</h2>
+        <div style="margin:0 0 16px;padding:16px 16px;border-radius:18px;background:linear-gradient(120deg,#0b3d8c 0%,#1765d5 55%,#0d9b8a 100%);color:#fff;box-shadow:0 12px 28px #1765d535;display:flex;align-items:center;gap:14px;flex-wrap:wrap">
+          <div style="width:52px;height:52px;border-radius:16px;background:#ffffff22;border:1px solid #ffffff35;display:flex;align-items:center;justify-content:center;font-size:26px;flex-shrink:0">📝</div>
+          <div style="min-width:0;flex:1">
+            <div style="font-size:11px;font-weight:800;letter-spacing:.08em;opacity:.9;margin-bottom:4px">STUDENT QUIZZES</div>
+            <h2 style="margin:0;font-size:22px;font-weight:900;color:#fff;line-height:1.2">Available Quizzes</h2>
+            <p style="margin:6px 0 0;font-size:13px;color:#dceeff;font-weight:500;line-height:1.4">Attempt active quizzes · Max 2 tries · Best score is saved</p>
+          </div>
         </div>
-        <div id="studentQuizList" style="margin-top:12px">
-          <p style="color:#69778d;text-align:center;padding:20px">Loading quizzes...</p>
+        <div id="studentQuizList" style="margin-top:14px;max-height:320px;overflow-y:auto;padding-right:4px">
+          <div style="text-align:center;padding:28px 16px;color:#7a8ba3">
+            <div style="font-size:28px;margin-bottom:8px">⏳</div>
+            <div style="font-weight:600">Loading quizzes...</div>
+          </div>
         </div>
-        <div id="studentQuizHistory" style="margin-top:22px">
-          <h3 style="margin:0 0 10px;color:#12366b;font-size:17px">📌 My Previous Attempts</h3>
-          <div id="studentQuizHistoryList"><p style="color:#69778d;font-size:13px">No attempts yet.</p></div>
+        <div id="studentQuizSeeMoreWrap" style="display:none;text-align:center;margin-top:10px">
+          <button type="button" class="smallBtn" id="studentQuizSeeMoreBtn" onclick="toggleStudentQuizListExpand()">See more</button>
+        </div>
+        <div id="studentQuizTotalCard" style="display:none;margin-top:16px;padding:14px 16px;border-radius:16px;background:linear-gradient(135deg,#eef6ff,#e8f8ef);border:1px solid #d0e4f5">
+          <div style="font-size:12px;color:#536987;font-weight:700;letter-spacing:.02em">QUIZ TOTAL (BEST SCORES)</div>
+          <div style="display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;margin-top:6px">
+            <div style="font-size:22px;font-weight:900;color:#12366b" id="studentQuizTotalScore">0 / 0</div>
+            <div style="font-size:14px;font-weight:800;color:#1765d5" id="studentQuizTotalPct">0%</div>
+          </div>
+          <div style="font-size:12px;color:#6b7c95;margin-top:4px" id="studentQuizTotalMeta">0 quizzes attempted</div>
+        </div>
+        <div id="studentQuizHistory" style="margin-top:24px">
+          <div style="display:flex;align-items:center;gap:12px;margin-bottom:12px;padding:12px 14px;border-radius:14px;background:linear-gradient(135deg,#fff8ee,#fff3e0);border:1px solid #f0d9b0">
+            <div style="width:40px;height:40px;border-radius:12px;background:linear-gradient(135deg,#ffd89a,#f6b73c);display:flex;align-items:center;justify-content:center;font-size:18px;box-shadow:0 4px 12px #f6b73c33">📌</div>
+            <div>
+              <h3 style="margin:0;color:#8a5a00;font-size:17px;font-weight:800">My Previous Attempts</h3>
+              <p style="margin:2px 0 0;font-size:12px;color:#a67c2d;font-weight:600">Best score from up to 2 attempts</p>
+            </div>
+          </div>
+          <div id="studentQuizHistoryList" style="max-height:280px;overflow-y:auto;padding-right:4px">
+            <div style="text-align:center;padding:18px;border:1px dashed #d8e2f0;border-radius:14px;color:#8a9bb3;font-size:13px">
+              No attempts yet. Your best scores will appear here.
+            </div>
+          </div>
         </div>
       </section>
 
@@ -2930,16 +2969,16 @@ button,input,select,textarea{max-width:100%;}
 
 <!-- ===== TAKE QUIZ MODAL ===== -->
 <div class="modalBg" id="takeQuizModal">
-  <div class="modal" style="width:min(720px,100%);max-height:94vh">
+  <div class="modal" style="width:min(720px,100%);max-height:94vh;overflow:auto;box-sizing:border-box">
     <button class="x" onclick="closeTakeQuiz()">×</button>
-    <div id="takeQuizHeader" style="margin-bottom:14px">
-      <h2 id="takeQuizTitle" style="margin:0 0 6px">Quiz</h2>
+    <div id="takeQuizHeader" style="margin-bottom:14px;padding-right:28px">
+      <h2 id="takeQuizTitle" style="margin:0 0 6px;overflow-wrap:anywhere;word-break:break-word">Quiz</h2>
       <div style="display:flex;gap:14px;flex-wrap:wrap;color:#536987;font-size:13px">
-        <span id="takeQuizMeta"></span>
+        <span id="takeQuizMeta" style="overflow-wrap:anywhere"></span>
         <span id="takeQuizTimer" style="font-weight:800;color:#c5304b"></span>
       </div>
     </div>
-    <div id="takeQuizBody" style="max-height:55vh;overflow:auto;padding-right:4px"></div>
+    <div id="takeQuizBody" style="max-height:55vh;overflow:auto;padding-right:4px;max-width:100%;box-sizing:border-box;overflow-wrap:anywhere;word-break:break-word"></div>
     <div style="margin-top:16px;display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap">
       <div class="msg" id="takeQuizMsg"></div>
       <button class="primary" id="submitQuizBtn" onclick="submitQuiz()">✅ Submit Quiz</button>
@@ -2950,7 +2989,7 @@ button,input,select,textarea{max-width:100%;}
 <script type="module">
 import {initializeApp} from "https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
 import {getAuth,signInWithEmailAndPassword,createUserWithEmailAndPassword,signOut,EmailAuthProvider,reauthenticateWithCredential,updatePassword} from "https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
-import {getFirestore,doc,getDoc,setDoc,updateDoc,deleteDoc,collection,getDocs,addDoc} from "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
+import {getFirestore,doc,getDoc,setDoc,updateDoc,deleteDoc,collection,getDocs,addDoc,query,where} from "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
 const firebaseConfig={apiKey:"AIzaSyCm8xQIZRiIpAcoaVdCegerAV4XV9QUfJo",authDomain:"sajjad-academy.firebaseapp.com",projectId:"sajjad-academy",storageBucket:"sajjad-academy.firebasestorage.app",messagingSenderId:"784589371437",appId:"1:784589371437:web:02e3a54958e8d1209120a4"};
 const app=initializeApp(firebaseConfig),auth=getAuth(app),db=getFirestore(app);
 const secondary=initializeApp(firebaseConfig,"studentCreator"),secondaryAuth=getAuth(secondary);
@@ -3355,18 +3394,18 @@ window.addQuizQuestion = function(data){
   const div = document.createElement('div');
   div.className = 'quizQItem';
   div.dataset.qid = id;
-  div.style.cssText = 'background:#fff;border:1px solid #dce8f5;border-radius:14px;padding:14px;margin-bottom:12px';
+  div.style.cssText = 'background:#fff;border:1px solid #dce8f5;border-radius:14px;padding:14px;margin-bottom:12px;max-width:100%;box-sizing:border-box';
   div.innerHTML = `
     <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
       <b style="color:#12366b">Question</b>
       <button type="button" class="smallBtn danger" onclick="this.closest('.quizQItem').remove()">Delete</button>
     </div>
-    <textarea class="qText" placeholder="Question text" style="width:100%;min-height:60px;padding:10px;border:1px solid #ccd7e8;border-radius:10px;resize:vertical">${esc(qText)}</textarea>
+    <textarea class="qText" placeholder="Question text" style="width:100%;min-height:60px;padding:10px;border:1px solid #ccd7e8;border-radius:10px;resize:vertical;box-sizing:border-box;overflow-wrap:anywhere">${esc(qText)}</textarea>
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:8px">
-      <input class="qOpt" data-i="0" placeholder="Option A" value="${esc(opts[0]||'')}">
-      <input class="qOpt" data-i="1" placeholder="Option B" value="${esc(opts[1]||'')}">
-      <input class="qOpt" data-i="2" placeholder="Option C" value="${esc(opts[2]||'')}">
-      <input class="qOpt" data-i="3" placeholder="Option D" value="${esc(opts[3]||'')}">
+      <textarea class="qOpt" data-i="0" placeholder="Option A" rows="2" style="width:100%;padding:10px;border:1px solid #ccd7e8;border-radius:10px;resize:vertical;box-sizing:border-box;overflow-wrap:anywhere;font:inherit">${esc(opts[0]||'')}</textarea>
+      <textarea class="qOpt" data-i="1" placeholder="Option B" rows="2" style="width:100%;padding:10px;border:1px solid #ccd7e8;border-radius:10px;resize:vertical;box-sizing:border-box;overflow-wrap:anywhere;font:inherit">${esc(opts[1]||'')}</textarea>
+      <textarea class="qOpt" data-i="2" placeholder="Option C" rows="2" style="width:100%;padding:10px;border:1px solid #ccd7e8;border-radius:10px;resize:vertical;box-sizing:border-box;overflow-wrap:anywhere;font:inherit">${esc(opts[2]||'')}</textarea>
+      <textarea class="qOpt" data-i="3" placeholder="Option D" rows="2" style="width:100%;padding:10px;border:1px solid #ccd7e8;border-radius:10px;resize:vertical;box-sizing:border-box;overflow-wrap:anywhere;font:inherit">${esc(opts[3]||'')}</textarea>
     </div>
     <div style="display:grid;grid-template-columns:1fr 100px;gap:8px;margin-top:8px">
       <select class="qCorrect">
@@ -3482,8 +3521,11 @@ window.loadQuizzes = async function(){
 function renderAdminQuizzes(){
   const tbody = document.getElementById('adminQuizRows');
   if(!tbody) return;
+  const selectAll = document.getElementById('adminQuizSelectAll');
+  if(selectAll) selectAll.checked = false;
+  updateBulkDeleteBtn();
   if(!quizzesCache.length){
-    tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;color:#718096">No quizzes yet. Create one above.</td></tr>';
+    tbody.innerHTML = '<tr><td colspan="8" style="text-align:center;color:#718096">No quizzes yet. Create one above.</td></tr>';
     return;
   }
   tbody.innerHTML = quizzesCache.map(q=>{
@@ -3491,11 +3533,16 @@ function renderAdminQuizzes(){
     const status = q.isActive
       ? '<span style="color:#087443;font-weight:700">● Active</span>'
       : '<span style="color:#b45309;font-weight:700">○ Inactive</span>';
+    const created = q.createdAt ? new Date(q.createdAt).toLocaleDateString('en-PK',{day:'numeric',month:'short',year:'numeric'}) : '';
+    const qCount = (q.questions||[]).length;
+    const tMarks = q.totalMarks || (q.questions||[]).reduce((s,qq)=>s+(Number(qq.marks)||1),0) || qCount;
     return `<tr>
-      <td><b>${esc(q.title)}</b></td>
+      <td><input type="checkbox" class="adminQuizCheck" value="${q.id}" onchange="updateBulkDeleteBtn()"></td>
+      <td><b>${esc(q.title)}</b>${created?`<div style="font-size:11px;color:#8a9bb3;margin-top:2px">${created}</div>`:''}</td>
       <td>${esc(q.className==='9'?'9th':q.className==='10'?'10th':q.className)}${sec}</td>
       <td>${esc(q.subject||'')}</td>
-      <td>${(q.questions||[]).length}</td>
+      <td>${qCount}</td>
+      <td><b>${tMarks}</b></td>
       <td>${status}</td>
       <td>
         <button class="smallBtn" onclick="editQuiz('${q.id}')">Edit</button>
@@ -3504,6 +3551,92 @@ function renderAdminQuizzes(){
       </td>
     </tr>`;
   }).join('');
+}
+
+window.toggleSelectAllQuizzes = function(checked){
+  document.querySelectorAll('.adminQuizCheck').forEach(c=>{ c.checked = !!checked; });
+  updateBulkDeleteBtn();
+};
+
+window.updateBulkDeleteBtn = function(){
+  const n = document.querySelectorAll('.adminQuizCheck:checked').length;
+  const btn = document.getElementById('adminBulkDeleteBtn');
+  if(!btn) return;
+  if(n > 0){
+    btn.style.display = '';
+    btn.textContent = `🗑 Delete selected (${n})`;
+  } else {
+    btn.style.display = 'none';
+  }
+};
+
+/**
+ * On delete:
+ * 1) Class/section students → best attempt score (or 0 if never attempted)
+ *    save into students.marks so total marks remain on portal
+ * 2) Delete all quizAttempts for this quiz
+ * 3) Delete quiz document
+ */
+async function deleteQuizAndAttempts(quizId){
+  const quiz = quizzesCache.find(x=>x.id===quizId);
+  let quizData = quiz;
+  if(!quizData){
+    try{
+      const snap = await getDoc(doc(db,'quizzes', quizId));
+      if(snap.exists()) quizData = {id:snap.id, ...snap.data()};
+    }catch(e){}
+  }
+  const totalMarks = quizData
+    ? (quizData.totalMarks || (quizData.questions||[]).reduce((s,q)=>s+(Number(q.marks)||1),0) || 0)
+    : 0;
+  const subjectLabel = quizData
+    ? (`Quiz: ${quizData.title||'Untitled'}${quizData.subject?` (${quizData.subject})`:''}`)
+    : 'Quiz';
+  const qClass = quizData ? normalizeClass(quizData.className) : '';
+  const qSec = quizData ? normalizeSection(quizData.section||'') : '';
+
+  if(!students.length){
+    try{ await loadStudents(); }catch(e){}
+  }
+
+  const attSnap = await getDocs(collection(db,'quizAttempts'));
+  const related = attSnap.docs.filter(d => d.data().quizId === quizId);
+  const bestByUid = {};
+  const bestBySid = {};
+  related.forEach(d=>{
+    const a = {id:d.id, ...d.data()};
+    const uid = a.studentUid;
+    const sid = String(a.studentId||'').toUpperCase();
+    if(uid && (!bestByUid[uid] || Number(a.score||0) > Number(bestByUid[uid].score||0))) bestByUid[uid] = a;
+    if(sid && (!bestBySid[sid] || Number(a.score||0) > Number(bestBySid[sid].score||0))) bestBySid[sid] = a;
+  });
+
+  // Save final marks: attempted → best score, not attempted → 0
+  const classStudents = students.filter(s=>{
+    if(qClass && normalizeClass(s.className) !== qClass) return false;
+    if(qSec && normalizeSection(s.section) !== qSec) return false;
+    return true;
+  });
+
+  for(const s of classStudents){
+    const best = bestByUid[s.id] || bestBySid[String(s.studentId||'').toUpperCase()] || null;
+    const obtained = best ? Number(best.score||0) : 0;
+    const tot = best ? Number(best.totalMarks||totalMarks) : totalMarks;
+    const arr = Array.isArray(s.marks) ? [...s.marks] : [];
+    // Replace existing entry for same quiz subject if re-deleted edge case
+    const idx = arr.findIndex(m => String(m.subject||'') === subjectLabel);
+    const item = { subject: subjectLabel, obtained, total: tot || 0 };
+    if(idx >= 0) arr[idx] = item; else arr.push(item);
+    try{
+      await updateDoc(doc(db,'students', s.id), { marks: arr });
+      s.marks = arr;
+    }catch(e){ console.warn('marks save on quiz delete', s.id, e); }
+  }
+
+  for(const d of related){
+    await deleteDoc(doc(db,'quizAttempts', d.id));
+  }
+  await deleteDoc(doc(db,'quizzes', quizId));
 }
 
 window.editQuiz = function(id){
@@ -3536,10 +3669,25 @@ window.toggleQuizActive = async function(id){
 };
 
 window.deleteQuiz = async function(id){
-  if(!confirm('Delete this quiz permanently?')) return;
+  if(!confirm('Delete this quiz?\n\n• Jis student ne attempt kiya → uska best score Marks mein save hoga\n• Jis ne attempt nahi kiya → 0 marks save hongi\n• Quiz + attempts delete ho jayenge')) return;
   try{
-    await deleteDoc(doc(db,'quizzes',id));
+    await deleteQuizAndAttempts(id);
     await loadQuizzes();
+    try{ await loadStudents(); }catch(e){}
+  }catch(e){ alert(e.message); }
+};
+
+window.bulkDeleteQuizzes = async function(){
+  const ids = [...document.querySelectorAll('.adminQuizCheck:checked')].map(c=>c.value);
+  if(!ids.length){ alert('Pehle quizzes select karein.'); return; }
+  if(!confirm(`Delete ${ids.length} selected quiz(zes)?\n\nHar quiz ke liye:\n• Attempted → best score Marks mein\n• Not attempted → 0 marks\n• Phir quiz + attempts delete\n\nUndo nahi ho sakta.`)) return;
+  try{
+    for(const id of ids){
+      await deleteQuizAndAttempts(id);
+    }
+    alert(`${ids.length} quiz(zes) deleted. Marks updated (0 for non-attempts).`);
+    await loadQuizzes();
+    try{ await loadStudents(); }catch(e){}
   }catch(e){ alert(e.message); }
 };
 
@@ -3552,31 +3700,24 @@ function fillResultsQuizSelect(){
   if(current) sel.value = current;
 }
 
-/** Build best-score rows for a quiz: all class students, 0 if no attempt, max of 2 attempts if attempted */
+/** Build result rows: only students who attempted (best of 2).
+ *  Non-attempt 0 is applied only when Admin DELETES the quiz (saved to student marks).
+ */
 async function buildQuizResultRows(quizId, {forAdmin=false}={}){
   const quiz = quizzesCache.find(x=>x.id===quizId);
   if(!quiz) return {rowsHtml:'', error:'Quiz not found'};
   const totalMarks = quiz.totalMarks || (quiz.questions||[]).reduce((s,q)=>s+(Number(q.marks)||1),0) || 0;
-  const qClass = normalizeClass(quiz.className);
-  const qSec = normalizeSection(quiz.section||'');
 
-  // Ensure students list is available
   if(!students.length){
     try{ await loadStudents(); }catch(e){}
   }
-
-  const classStudents = students.filter(s=>{
-    if(normalizeClass(s.className) !== qClass) return false;
-    if(qSec && normalizeSection(s.section) !== qSec) return false;
-    return true;
-  });
 
   const snap = await getDocs(collection(db,'quizAttempts'));
   const attempts = snap.docs
     .map(d=>({id:d.id, ...d.data()}))
     .filter(a=>a.quizId===quizId);
 
-  // Best attempt per student (highest score)
+  // Best attempt per student
   const bestByUid = {};
   attempts.forEach(a=>{
     const uid = a.studentUid || a.studentId || a.id;
@@ -3585,84 +3726,46 @@ async function buildQuizResultRows(quizId, {forAdmin=false}={}){
     }
   });
 
-  // Also map by studentId string for matching
-  const bestByStudentId = {};
-  attempts.forEach(a=>{
-    const sid = String(a.studentId||'').toUpperCase();
-    if(!sid) return;
-    if(!bestByStudentId[sid] || Number(a.score||0) > Number(bestByStudentId[sid].score||0)){
-      bestByStudentId[sid] = a;
-    }
-  });
+  const bestList = Object.values(bestByUid).sort((a,b)=>(b.submittedAt||0)-(a.submittedAt||0));
 
-  const rows = classStudents.map(s=>{
-    const best = bestByUid[s.id] || bestByStudentId[String(s.studentId||'').toUpperCase()] || null;
-    const score = best ? Number(best.score||0) : 0;
-    const tot = best ? (best.totalMarks||totalMarks) : totalMarks;
+  if(!bestList.length){
+    return {rowsHtml: `<tr><td colspan="6" style="text-align:center;color:#718096">No attempts yet. Non-attempt students will get <b>0</b> only when this quiz is deleted.</td></tr>`};
+  }
+
+  const rows = bestList.map(best=>{
+    const score = Number(best.score||0);
+    const tot = Number(best.totalMarks||totalMarks) || 0;
     const pct = tot ? ((score/tot)*100).toFixed(1) : '0.0';
-    const date = best?.submittedAt
+    const date = best.submittedAt
       ? new Date(best.submittedAt).toLocaleString('en-PK',{dateStyle:'medium',timeStyle:'short'})
       : '—';
-    const attemptNote = best
-      ? (attempts.filter(a=>(a.studentUid===s.id)||(String(a.studentId||'').toUpperCase()===String(s.studentId||'').toUpperCase())).length > 1
-          ? ' (best of 2)' : '')
-      : ' (not attempted → 0)';
-    const cls = normalizeClass(s.className)==='9'?'9th':normalizeClass(s.className)==='10'?'10th':(s.className||'—');
-    const sec = normalizeSection(s.section) ? ` / ${normalizeSection(s.section)}` : '';
+    const nAttempts = attempts.filter(a=>
+      (a.studentUid && a.studentUid===best.studentUid) ||
+      (String(a.studentId||'').toUpperCase()===String(best.studentId||'').toUpperCase())
+    ).length;
+    const attemptNote = nAttempts > 1 ? ' (best of 2)' : '';
+    const cls = best.className==='9'?'9th':best.className==='10'?'10th':(best.className||'—');
+    const sec = best.section ? ` / ${esc(best.section)}` : '';
     if(forAdmin){
-      return `<tr style="${best?'':'background:#fff8f0'}">
-        <td>${esc(s.name||'')}</td>
-        <td>${esc(s.studentId||'')}</td>
+      return `<tr>
+        <td>${esc(best.studentName||'')}</td>
+        <td>${esc(best.studentId||'')}</td>
         <td><b>${score}</b> / ${tot}${attemptNote}</td>
         <td>${pct}%</td>
         <td>${date}</td>
-        <td>${best?`<button class="smallBtn danger" onclick="deleteQuizAttempt('${best.id}')">Delete best</button>`:'—'}</td>
+        <td><button class="smallBtn danger" onclick="deleteQuizAttempt('${best.id}')">Delete best</button></td>
       </tr>`;
     }
-    return `<tr style="${best?'':'background:#fff8f0'}">
-      <td>${esc(s.name||'')}</td>
-      <td>${esc(s.studentId||'')}</td>
+    return `<tr>
+      <td>${esc(best.studentName||'')}</td>
+      <td>${esc(best.studentId||'')}</td>
       <td>${esc(cls)}${sec}</td>
-      <td><b>${score}</b> / ${tot}${best?'':' <small style="color:#b45309">0</small>'}</td>
+      <td><b>${score}</b> / ${tot}</td>
       <td>${pct}%</td>
       <td>${date}</td>
     </tr>`;
   });
 
-  // Also include attempts from students not in list (edge case)
-  const listedUids = new Set(classStudents.map(s=>s.id));
-  const listedSids = new Set(classStudents.map(s=>String(s.studentId||'').toUpperCase()));
-  Object.values(bestByUid).forEach(a=>{
-    if(listedUids.has(a.studentUid)) return;
-    if(listedSids.has(String(a.studentId||'').toUpperCase())) return;
-    const score = Number(a.score||0);
-    const tot = a.totalMarks||totalMarks;
-    const pct = tot ? ((score/tot)*100).toFixed(1) : '0.0';
-    const date = a.submittedAt ? new Date(a.submittedAt).toLocaleString('en-PK',{dateStyle:'medium',timeStyle:'short'}) : '—';
-    if(forAdmin){
-      rows.push(`<tr>
-        <td>${esc(a.studentName||'')}</td>
-        <td>${esc(a.studentId||'')}</td>
-        <td><b>${score}</b> / ${tot}</td>
-        <td>${pct}%</td>
-        <td>${date}</td>
-        <td><button class="smallBtn danger" onclick="deleteQuizAttempt('${a.id}')">Delete</button></td>
-      </tr>`);
-    } else {
-      rows.push(`<tr>
-        <td>${esc(a.studentName||'')}</td>
-        <td>${esc(a.studentId||'')}</td>
-        <td>—</td>
-        <td><b>${score}</b> / ${tot}</td>
-        <td>${pct}%</td>
-        <td>${date}</td>
-      </tr>`);
-    }
-  });
-
-  if(!rows.length){
-    return {rowsHtml: `<tr><td colspan="${forAdmin?6:6}" style="text-align:center;color:#718096">Is class/section mein koi student nahi mila.</td></tr>`};
-  }
   return {rowsHtml: rows.join('')};
 }
 
@@ -3723,14 +3826,46 @@ window.loadTeacherQuizResults = async function(){
 };
 
 /* ---------- Student side ---------- */
+window.toggleStudentQuizListExpand = function(){
+  const list = document.getElementById('studentQuizList');
+  const btn = document.getElementById('studentQuizSeeMoreBtn');
+  if(!list) return;
+  window._studentQuizListExpanded = !window._studentQuizListExpanded;
+  if(window._studentQuizListExpanded){
+    list.style.maxHeight = 'none';
+    if(btn) btn.textContent = 'Show less';
+  } else {
+    list.style.maxHeight = '320px';
+    if(btn) btn.textContent = 'See more';
+    list.scrollTop = 0;
+  }
+};
+
 window.loadStudentQuizzes = async function(){
   const list = document.getElementById('studentQuizList');
   const history = document.getElementById('studentQuizHistoryList');
   if(!list || !activeStudent) return;
   try{
-    const snap = await getDocs(collection(db,'quizzes'));
-    const all = snap.docs.map(d=>({id:d.id,...d.data()}));
-    quizzesCache = all; // so startQuiz can find quiz locally
+    // Parallel load: quizzes + only THIS student's attempts (fast)
+    let attSnap;
+    try{
+      const qAttempts = query(collection(db,'quizAttempts'), where('studentUid','==', activeStudent.id));
+      const [snap, aSnap] = await Promise.all([
+        getDocs(collection(db,'quizzes')),
+        getDocs(qAttempts)
+      ]);
+      attSnap = aSnap;
+      var all = snap.docs.map(d=>({id:d.id,...d.data()}));
+    }catch(qErr){
+      // Fallback if index missing: still parallel, filter client-side
+      const [snap, aSnap] = await Promise.all([
+        getDocs(collection(db,'quizzes')),
+        getDocs(collection(db,'quizAttempts'))
+      ]);
+      attSnap = { docs: aSnap.docs.filter(d => d.data().studentUid === activeStudent.id) };
+      var all = snap.docs.map(d=>({id:d.id,...d.data()}));
+    }
+    quizzesCache = all;
     const myClass = normalizeClass(activeStudent.className);
     const mySec = normalizeSection(activeStudent.section);
     const available = all.filter(q=>{
@@ -3740,55 +3875,114 @@ window.loadStudentQuizzes = async function(){
       return true;
     }).sort((a,b)=>(b.createdAt||0)-(a.createdAt||0));
 
-    // load all my attempts first (for count + history)
-    const attSnap = await getDocs(collection(db,'quizAttempts'));
     const myAttempts = attSnap.docs
       .map(d=>({id:d.id,...d.data()}))
       .filter(a=>a.studentUid === activeStudent.id)
       .sort((a,b)=>(b.submittedAt||0)-(a.submittedAt||0));
 
+    const seeMoreWrap = document.getElementById('studentQuizSeeMoreWrap');
+    const totalCard = document.getElementById('studentQuizTotalCard');
+    window._studentQuizListExpanded = false;
+
     if(!available.length){
-      list.innerHTML = '<p style="color:#69778d;text-align:center;padding:18px">Abhi koi active quiz nahi hai.</p>';
+      list.style.maxHeight = '';
+      list.innerHTML = `
+        <div style="text-align:center;padding:32px 18px;border-radius:18px;background:linear-gradient(160deg,#f7faff 0%,#eef4ff 100%);border:1px dashed #c5d6f0">
+          <div style="width:64px;height:64px;margin:0 auto 14px;border-radius:20px;background:linear-gradient(135deg,#e8f0ff,#d6e6ff);display:flex;align-items:center;justify-content:center;font-size:28px;box-shadow:0 8px 20px #1a56c418">📝</div>
+          <div style="font-weight:800;font-size:16px;color:#1a3d6e;margin-bottom:6px">No active quizzes right now</div>
+          <div style="font-size:13px;color:#6b7c95;line-height:1.55;max-width:260px;margin:0 auto">Please check back later. New quizzes will appear here when your teacher or admin publishes them.</div>
+        </div>`;
+      if(seeMoreWrap) seeMoreWrap.style.display = 'none';
     } else {
+      list.style.maxHeight = available.length > 3 ? '320px' : '';
       list.innerHTML = available.map(q=>{
         const qCount = (q.questions||[]).length;
         const time = q.timeLimit ? `${q.timeLimit} min` : 'No limit';
         const used = myAttempts.filter(a=>a.quizId===q.id).length;
         const left = Math.max(0, 2 - used);
         const btn = left > 0
-          ? `<button class="primary" style="padding:10px 16px" onclick="startQuiz('${q.id}')">Start Quiz (${left} left)</button>`
-          : `<button class="smallBtn" style="padding:10px 16px;opacity:.7;cursor:not-allowed" disabled>Max 2 attempts used</button>`;
-        return `<div style="border:1px solid #dce8f5;border-radius:14px;padding:14px 16px;margin-bottom:10px;background:#fff;display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap">
-          <div>
-            <b style="color:#12366b;font-size:16px">${esc(q.title)}</b>
-            <div style="font-size:12px;color:#667895;margin-top:4px">${esc(q.subject||'')} • ${qCount} questions • ${time} • ${q.totalMarks||qCount} marks • Attempts: ${used}/2</div>
+          ? `<button class="primary" style="padding:11px 18px;border-radius:12px;font-weight:700;box-shadow:0 6px 16px #1765d530" onclick="startQuiz('${q.id}')">Start Quiz · ${left} left</button>`
+          : `<button class="smallBtn" style="padding:11px 16px;border-radius:12px;opacity:.75;cursor:not-allowed;background:#f1f5f9;color:#64748b" disabled>Max 2 attempts used</button>`;
+        return `<div style="border:1px solid #d6e4f7;border-radius:16px;padding:16px 16px;margin-bottom:12px;background:linear-gradient(135deg,#ffffff,#f8fbff);box-shadow:0 6px 18px #1a3d6e08;display:flex;justify-content:space-between;align-items:center;gap:14px;flex-wrap:wrap">
+          <div style="display:flex;gap:12px;align-items:flex-start;min-width:0">
+            <div style="width:42px;height:42px;flex-shrink:0;border-radius:14px;background:linear-gradient(135deg,#e8f1ff,#d4e4ff);display:flex;align-items:center;justify-content:center;font-size:18px">📘</div>
+            <div style="min-width:0">
+              <b style="color:#12366b;font-size:16px;display:block">${esc(q.title)}</b>
+              <div style="font-size:12px;color:#667895;margin-top:5px;line-height:1.45">
+                <span style="display:inline-block;background:#eef4ff;color:#2b5bb0;padding:2px 8px;border-radius:999px;margin:2px 4px 2px 0;font-weight:600">${esc(q.subject||'Quiz')}</span>
+                <span style="margin-right:6px">${qCount} Qs</span>
+                <span style="margin-right:6px">⏱ ${time}</span>
+                <span style="margin-right:6px">${q.totalMarks||qCount} marks</span>
+                <span style="color:${left? '#087443':'#b45309'};font-weight:700">${used}/2 attempts</span>
+              </div>
+            </div>
           </div>
           ${btn}
         </div>`;
       }).join('');
+      if(seeMoreWrap){
+        if(available.length > 3){
+          seeMoreWrap.style.display = '';
+          const btn = document.getElementById('studentQuizSeeMoreBtn');
+          if(btn) btn.textContent = 'See more';
+        } else {
+          seeMoreWrap.style.display = 'none';
+        }
+      }
+    }
+
+    // Group attempts by quiz for history + totals
+    const byQuiz = {};
+    myAttempts.forEach(a=>{
+      const key = a.quizId || a.quizTitle || a.id;
+      if(!byQuiz[key]) byQuiz[key] = {title:a.quizTitle||'Quiz', attempts:[]};
+      byQuiz[key].attempts.push(a);
+    });
+    const bestList = Object.values(byQuiz).map(g=>{
+      const best = g.attempts.reduce((m,a)=> Number(a.score||0) > Number(m.score||0) ? a : m, g.attempts[0]);
+      return { title:g.title, best, n:g.attempts.length };
+    });
+
+    // Total marks card (sum of best scores)
+    if(totalCard){
+      if(!bestList.length){
+        totalCard.style.display = 'none';
+      } else {
+        let sumScore = 0, sumTotal = 0;
+        bestList.forEach(({best})=>{
+          sumScore += Number(best.score||0);
+          sumTotal += Number(best.totalMarks||0);
+        });
+        const pct = sumTotal ? ((sumScore/sumTotal)*100).toFixed(1) : '0';
+        document.getElementById('studentQuizTotalScore').textContent = `${sumScore} / ${sumTotal}`;
+        document.getElementById('studentQuizTotalPct').textContent = `${pct}%`;
+        document.getElementById('studentQuizTotalMeta').textContent = `${bestList.length} quiz${bestList.length>1?'zes':''} attempted · best scores only`;
+        totalCard.style.display = '';
+      }
     }
 
     if(!myAttempts.length){
-      history.innerHTML = '<p style="color:#69778d;font-size:13px">No attempts yet.</p>';
+      history.innerHTML = `
+        <div style="text-align:center;padding:20px 14px;border:1px dashed #d8e2f0;border-radius:14px;color:#8a9bb3;font-size:13px;background:#fafcff">
+          No attempts yet. Your best scores will appear here.
+        </div>`;
     } else {
-      // Group by quizId → show best score + attempt count
-      const byQuiz = {};
-      myAttempts.forEach(a=>{
-        const key = a.quizId || a.quizTitle || a.id;
-        if(!byQuiz[key]) byQuiz[key] = {title:a.quizTitle||'Quiz', attempts:[]};
-        byQuiz[key].attempts.push(a);
-      });
-      history.innerHTML = Object.values(byQuiz).map(g=>{
-        const best = g.attempts.reduce((m,a)=> Number(a.score||0) > Number(m.score||0) ? a : m, g.attempts[0]);
+      history.innerHTML = bestList.map(g=>{
+        const best = g.best;
         const pct = best.totalMarks ? ((best.score/best.totalMarks)*100).toFixed(1) : '0';
         const date = best.submittedAt ? new Date(best.submittedAt).toLocaleString('en-PK',{dateStyle:'medium',timeStyle:'short'}) : '';
-        const n = g.attempts.length;
-        return `<div style="border:1px solid #e5ebf3;border-radius:12px;padding:12px 14px;margin-bottom:8px;display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap">
-          <div>
-            <b>${esc(g.title)}</b>
-            <div style="font-size:12px;color:#718096">${date} • ${n} attempt${n>1?'s':''}${n>1?' (best saved)':''}</div>
+        const n = g.n;
+        const pctNum = Number(pct);
+        const badgeColor = pctNum >= 80 ? '#087443' : pctNum >= 50 ? '#1765d5' : '#b45309';
+        const badgeBg = pctNum >= 80 ? '#e8f8ef' : pctNum >= 50 ? '#eef4ff' : '#fff6e8';
+        return `<div style="border:1px solid #e2ebf5;border-radius:14px;padding:14px 15px;margin-bottom:10px;background:#fff;display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;box-shadow:0 4px 12px #12366b06">
+          <div style="min-width:0">
+            <b style="color:#12366b;font-size:15px">${esc(g.title)}</b>
+            <div style="font-size:12px;color:#718096;margin-top:4px">${date} · ${n} attempt${n>1?'s':''}${n>1?' · best saved':''}</div>
           </div>
-          <div style="font-weight:800;color:#1765d5">${best.score||0}/${best.totalMarks||0} (${pct}%)</div>
+          <div style="background:${badgeBg};color:${badgeColor};font-weight:800;padding:8px 12px;border-radius:12px;font-size:14px;white-space:nowrap">
+            ${best.score||0}/${best.totalMarks||0} · ${pct}%
+          </div>
         </div>`;
       }).join('');
     }
@@ -3806,13 +4000,17 @@ window.startQuiz = async function(quizId){
     }catch(e){}
   }
   if(!q){ alert('Quiz not found'); return; }
-  // Max 2 attempts per student per quiz
+  // Max 2 attempts — only this student's docs (fast query)
   try{
-    const attSnap = await getDocs(collection(db,'quizAttempts'));
-    const attemptCount = attSnap.docs.filter(d=>{
-      const a = d.data();
-      return a.quizId===quizId && a.studentUid===activeStudent.id;
-    }).length;
+    let attemptCount = 0;
+    try{
+      const qA = query(collection(db,'quizAttempts'), where('studentUid','==', activeStudent.id), where('quizId','==', quizId));
+      const attSnap = await getDocs(qA);
+      attemptCount = attSnap.size;
+    }catch(e){
+      const attSnap = await getDocs(query(collection(db,'quizAttempts'), where('studentUid','==', activeStudent.id)));
+      attemptCount = attSnap.docs.filter(d=>d.data().quizId===quizId).length;
+    }
     if(attemptCount >= 2){
       alert('Aap is quiz ke maximum 2 attempts use kar chuke hain. Phir se attempt nahi kar sakte.');
       return;
@@ -3829,13 +4027,13 @@ window.startQuiz = async function(quizId){
   document.getElementById('takeQuizMsg').textContent = '';
   body.innerHTML = (q.questions||[]).map((qq,i)=>{
     const opts = (qq.options||[]).map((o,oi)=>`
-      <label style="display:flex;align-items:center;gap:10px;padding:10px 12px;border:1px solid #e2e9f5;border-radius:10px;margin-bottom:6px;cursor:pointer;background:#fafcff">
-        <input type="radio" name="q_${qq.id||i}" value="${oi}">
-        <span>${esc(o)}</span>
+      <label style="display:flex;align-items:flex-start;gap:10px;padding:12px 14px;border:1px solid #e2e9f5;border-radius:12px;margin-bottom:8px;cursor:pointer;background:#fafcff;max-width:100%;box-sizing:border-box;overflow-wrap:anywhere;word-break:break-word">
+        <input type="radio" name="q_${qq.id||i}" value="${oi}" style="margin-top:3px;flex-shrink:0">
+        <span style="flex:1;min-width:0;line-height:1.45;overflow-wrap:anywhere;word-break:break-word;white-space:normal">${esc(o)}</span>
       </label>
     `).join('');
-    return `<div style="margin-bottom:18px;padding-bottom:14px;border-bottom:1px solid #edf2f8">
-      <div style="font-weight:800;color:#12366b;margin-bottom:10px">${i+1}. ${esc(qq.question)} <small style="color:#718096;font-weight:600">(${qq.marks||1} mark)</small></div>
+    return `<div style="margin-bottom:18px;padding-bottom:14px;border-bottom:1px solid #edf2f8;max-width:100%;box-sizing:border-box">
+      <div style="font-weight:800;color:#12366b;margin-bottom:10px;line-height:1.45;overflow-wrap:anywhere;word-break:break-word;white-space:normal">${i+1}. ${esc(qq.question)} <small style="color:#718096;font-weight:600">(${qq.marks||1} mark)</small></div>
       ${opts}
     </div>`;
   }).join('') || '<p>No questions.</p>';
