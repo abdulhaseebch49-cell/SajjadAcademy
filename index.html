@@ -1443,12 +1443,50 @@ button,input,select,textarea{max-width:100%;}
   .studentPortal .studentMarks .gradeBadge{min-width:0;padding:4px 5px;font-size:9px;border-radius:14px;}
   .studentPortal .overallBar{width:100%;max-width:100%;box-sizing:border-box;overflow:hidden;}
   #studentDash main{padding-bottom:90px;}
-  #studentDash .studentPortalBtn{display:none;}
+  /* Keep a compact password shortcut visible on phones. */
+  #studentDash .studentPortalBtn{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    width:40px;
+    min-width:40px;
+    height:40px;
+    padding:0!important;
+    font-size:0!important;
+    border-radius:12px!important;
+    flex:0 0 auto;
+  }
+  #studentDash .studentPortalBtn:before{content:"🔑";font-size:18px;line-height:1;}
+  #studentDash .studentPortalBtn span{display:none;}
   #studentDash .studentHeader{min-width:0;}
   #studentDash .studentHeader *{min-width:0;}
   #studentDash .studentHeader .studentName,#studentDash .studentHeader .studentId{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
   #studentDash .studentId,#studentDash .profileValue{overflow-wrap:anywhere;word-break:break-word;}
 }
+
+/* ===== Student password change: mobile-friendly access + safer form ===== */
+.studentPasswordAction{margin-top:15px;padding:14px;border:1px solid #d8e6f8;border-radius:16px;background:linear-gradient(135deg,#f5f9ff,#eef5ff);display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap}
+.studentPasswordAction .passwordActionText{min-width:0;flex:1}
+.studentPasswordAction .passwordActionText strong{display:block;color:#143b76;font-size:15px}
+.studentPasswordAction .passwordActionText span{display:block;color:#71829d;font-size:12px;line-height:1.5;margin-top:3px}
+.studentPasswordAction button{border:0;border-radius:12px;padding:11px 15px;background:linear-gradient(135deg,#1261dc,#5a43df);color:#fff;font-weight:800;cursor:pointer;box-shadow:0 7px 16px rgba(24,86,205,.18);white-space:nowrap}
+.studentPasswordAction button:hover{transform:translateY(-1px)}
+#studentPasswordModal .modal{width:min(500px,100%)}
+#studentPasswordModal .passwordHint{margin:8px 0 0;color:#73839c;font-size:12px;line-height:1.45}
+#studentPasswordModal .passwordField{position:relative}
+#studentPasswordModal .passwordField input{padding-right:44px}
+#studentPasswordModal .passwordToggle{position:absolute;right:8px;bottom:8px;width:34px;height:34px;border:0;border-radius:9px;background:#edf3ff;color:#2457ad;cursor:pointer;font-size:16px}
+@media(max-width:760px){
+  #studentPasswordModal{padding:10px!important}
+  #studentPasswordModal .modal{width:100%;max-width:430px;max-height:90vh;padding:20px 15px;border-radius:20px}
+  #studentPasswordModal .modal h2{font-size:21px}
+  #studentPasswordModal .form input{min-height:48px;font-size:16px;padding:12px 13px}
+  #studentPasswordModal .passwordField input{padding-right:48px}
+  .studentPasswordAction{align-items:stretch}
+  .studentPasswordAction .passwordActionText{flex:1 1 100%}
+  .studentPasswordAction button{width:100%;min-height:46px}
+}
+
 @media(max-width:390px){
   #studentDash .studentHeader{gap:6px;}
   #studentDash .studentHeader button{padding-left:8px;padding-right:8px;}
@@ -1995,6 +2033,12 @@ button,input,select,textarea{max-width:100%;}
   box-shadow:0 0 0 4px rgba(62,133,244,.12),0 6px 16px rgba(25,70,140,.07)!important;
   transform:translateY(-1px);
 }
+#loginModal .loginPasswordField{position:relative;width:100%;margin-bottom:13px}
+#loginModal .loginPasswordField input{margin:0!important;padding-right:52px!important}
+#loginModal .loginPasswordToggle{position:absolute;right:9px;top:50%;transform:translateY(-50%);width:38px;height:38px;border:0;border-radius:10px;background:#eef4ff;color:#31578f;display:grid;place-items:center;cursor:pointer;font-size:18px;line-height:1;transition:background .2s,color .2s,transform .15s}
+#loginModal .loginPasswordToggle:hover{background:#dce9ff;color:#174a9c}
+#loginModal .loginPasswordToggle:active{transform:translateY(-50%) scale(.96)}
+#loginModal .loginPasswordToggle:focus-visible{outline:3px solid rgba(62,133,244,.22);outline-offset:2px}
 #loginModal .form .primary{
   width:100%!important;
   min-height:51px;
@@ -3030,7 +3074,7 @@ button,input,select,textarea{max-width:100%;}
   <div class="contactMotto">Together for a <span>Brighter Future</span><i></i></div>
 </div></section>
 <footer data-public-page="true" class="footer refFooter"><span>© 2026 Sajjad Academy. All rights reserved.</span><span>Education is the key to success 🎓</span><span id="contactWhatsapp" class="waHidden">+92 300 1234567</span><span class="createdBy">Created by <strong>Abdul Haseeb Sajjad</strong></span></footer>
-<div class="modalBg" id="loginModal"><div class="modal"><button class="x" onclick="closeLogin()">×</button><h2 id="loginTitle">Student Login</h2><div class="form"><input id="loginEmail" placeholder="Student ID"><input id="loginPassword" type="password" placeholder="Password"><button class="primary" style="width:100%" onclick="doLogin()">Login</button><div class="msg" id="loginMsg"></div></div></div></div>
+<div class="modalBg" id="loginModal"><div class="modal"><button class="x" onclick="closeLogin()">×</button><h2 id="loginTitle">Student Login</h2><div class="form"><input id="loginEmail" placeholder="Student ID" autocomplete="username"><div class="loginPasswordField"><input id="loginPassword" type="password" placeholder="Password" autocomplete="current-password" aria-label="Password"><button type="button" class="loginPasswordToggle" id="loginPasswordToggle" onclick="toggleLoginPassword(this)" aria-label="Show password" title="Show password">👁</button></div><button class="primary" style="width:100%" onclick="doLogin()">Login</button><div class="msg" id="loginMsg"></div></div></div></div>
 <div class="dash" id="adminDash">
 <div class="adminTopbar"><div class="adminBrand"><div class="adminBrandIcon">🛡️</div><div><span>SAJJAD ACADEMY</span><h1>Admin Control Center</h1><p>Students, marks aur announcements ko ek simple dashboard se manage karein.</p></div></div><div class="adminTopActions"><button class="adminAction" onclick="openSettings()">⚙️ Settings</button><button class="adminAction" onclick="openPasswordChange()">🔑 Password</button><button class="adminAction dangerAction" onclick="logout()">↪ Logout</button></div></div>
 <div class="adminStatsGrid">
@@ -3155,7 +3199,7 @@ button,input,select,textarea{max-width:100%;}
       <div class="studentBell">🔔<em id="studentNoticeCount">0</em></div>
       <div class="studentAvatar">👤</div>
       <div class="studentUserText"><b id="studentTopName">Student</b><span>Student</span></div>
-      <button class="studentPortalBtn" onclick="openStudentPasswordChange()">Student Portal <span>⌄</span></button>
+      <button class="studentPortalBtn" onclick="openStudentPasswordChange()" title="Change Password" aria-label="Change Password">Student Portal <span>⌄</span></button>
       <button class="studentLogoutBtn" onclick="studentLogout()" title="Logout">↪ <span>Logout</span></button>
     </div>
   </div>
@@ -3280,6 +3324,13 @@ button,input,select,textarea{max-width:100%;}
       <section class="studentCard" id="studentProfileSection">
         <div class="sectionTitleRow"><div class="sectionTitleIcon profileIcon">♙</div><h2>Profile</h2></div>
         <div id="profileCard" style="margin-top:12px;color:#536987"></div>
+        <div class="studentPasswordAction" aria-label="Student password settings">
+          <div class="passwordActionText">
+            <strong>🔐 Account Password</strong>
+            <span>Apna current password verify karke naya password set karein. Ye option mobile par bhi available hai.</span>
+          </div>
+          <button type="button" onclick="openStudentPasswordChange()">🔑 Change Password</button>
+        </div>
       </section>
       <section class="studentCard studentFinalQuote" id="studentFinalQuote" aria-label="Student motivation quote">
         <div class="finalQuoteMark">“</div>
@@ -3361,7 +3412,21 @@ button,input,select,textarea{max-width:100%;}
 </div>
 <div class="modalBg" id="marksModal"><div class="modal"><button class="x" onclick="closeMarks()">×</button><h2>Manage Marks</h2><p id="marksStudentName"></p><div class="form"><input id="mSubject" placeholder="Subject"><input id="mObtained" type="number" placeholder="Obtained marks"><input id="mTotal" type="number" placeholder="Total marks"><button class="primary" onclick="saveMark()">Add / Save Mark</button><div class="msg" id="marksMsg"></div></div><div class="tableWrap"><table><thead><tr><th>Subject</th><th>Obt.</th><th>Total</th><th>Action</th></tr></thead><tbody id="marksRows"></tbody></table></div></div></div>
 <div class="modalBg" id="passwordModal"><div class="modal"><button class="x" onclick="closePasswordChange()">×</button><h2>🔑 Change Admin Password</h2><div class="form"><label><b>Current Password</b></label><input id="currentAdminPassword" type="password"><label><b>New Password</b></label><input id="newAdminPassword" type="password"><label><b>Confirm New Password</b></label><input id="confirmAdminPassword" type="password"><button class="primary" style="width:100%;margin-top:10px" onclick="changeAdminPassword()">🔐 Update Password</button><div class="msg" id="passwordMsg"></div></div></div></div>
-<div class="modalBg" id="studentPasswordModal"><div class="modal"><button class="x" onclick="closeStudentPasswordChange()">×</button><h2>🔑 Change Password</h2><div class="form"><label><b>Current Password</b></label><input id="currentStudentPassword" type="password"><label><b>New Password</b></label><input id="newStudentPassword" type="password"><label><b>Confirm New Password</b></label><input id="confirmStudentPassword" type="password"><button class="primary" style="width:100%;margin-top:10px" onclick="changeStudentPassword()">🔐 Update Password</button><div class="msg" id="studentPasswordMsg"></div></div></div></div>
+<div class="modalBg" id="studentPasswordModal"><div class="modal">
+  <button class="x" onclick="closeStudentPasswordChange()" aria-label="Close password form">×</button>
+  <h2>🔑 Change Password</h2>
+  <p class="passwordHint">Current password verify karna zaroori hai. New password kam az kam 6 characters ka hona chahiye.</p>
+  <div class="form">
+    <label><b>Current Password</b></label>
+    <div class="passwordField"><input id="currentStudentPassword" type="password" autocomplete="current-password" placeholder="Enter current password"><button type="button" class="passwordToggle" onclick="toggleStudentPasswordField('currentStudentPassword',this)" aria-label="Show current password">👁</button></div>
+    <label><b>New Password</b></label>
+    <div class="passwordField"><input id="newStudentPassword" type="password" autocomplete="new-password" placeholder="Enter new password"><button type="button" class="passwordToggle" onclick="toggleStudentPasswordField('newStudentPassword',this)" aria-label="Show new password">👁</button></div>
+    <label><b>Confirm New Password</b></label>
+    <div class="passwordField"><input id="confirmStudentPassword" type="password" autocomplete="new-password" placeholder="Re-enter new password"><button type="button" class="passwordToggle" onclick="toggleStudentPasswordField('confirmStudentPassword',this)" aria-label="Show confirmed password">👁</button></div>
+    <button class="primary" id="studentPasswordUpdateBtn" type="button" style="width:100%;margin-top:10px" onclick="changeStudentPassword()">🔐 Update Password</button>
+    <div class="msg" id="studentPasswordMsg" role="status" aria-live="polite"></div>
+  </div>
+</div></div>
 <div class="modalBg" id="resetGuideModal"><div class="modal"><button class="x" onclick="closeResetGuide()">×</button><h2>🔑 Free Password Reset</h2><div id="resetGuideText" style="color:#536987;line-height:1.75"></div><div style="margin-top:15px;padding:15px;border-radius:14px;background:linear-gradient(135deg,#eef7ff,#f7fbff);border:1px solid #cfe0f5;color:#29486f;font-size:13px"><b style="color:#1453bb">💻 Computer par ye steps karein:</b><ol style="margin:10px 0 0;padding-left:22px;line-height:1.8"><li>Desktop par <b>Sajjad-Academy-Password-Reset</b> folder open karein.</li><li>Folder open karke keyboard se <b>Ctrl + L</b> press karein.</li>
 <li>Upar address bar select ho jayegi. Wahan <b>powershell</b> likhein aur <b>Enter</b> press karein.</li><li>Ye command chalayein:<br><code style="display:inline-block;margin-top:5px;padding:7px 9px;background:#0b1f3a;color:#fff;border-radius:8px;font-size:12px">node reset-password.js</code></li><li><b>Student ID</b> mein neeche diya hua ID enter karein.</li><li><b>New Password</b> mein naya password enter karein.</li><li>Jab <b>Password successfully reset ho gaya!</b> aaye, student ko naya password de dein.</li><li>Student portal mein login karke <b>🔑 Change Password</b> se apna permanent password bana sakta hai.</li></ol></div><div style="margin-top:14px;padding:12px 14px;border-radius:12px;background:#fff8e7;border:1px solid #f3d58a;color:#7a5a00;font-size:13px">⚠️ <b>Important:</b> Ye free method aapke computer par local reset script use karta hai. <b>serviceAccountKey.json</b> ko kabhi GitHub par upload/share na karein.</div><button class="primary" style="width:100%;margin-top:15px" onclick="closeResetGuide()">Done</button></div></div>
 <div class="modalBg" id="settingsModal"><div class="modal"><button class="x" onclick="closeSettings()">×</button><h2>⚙️ Website Settings</h2><div class="form"><label><b>Academy Name</b></label><input id="setName"><label><b>Phone</b></label><input id="setPhone"><label><b>WhatsApp</b></label><input id="setWhatsapp"><label><b>Email</b></label><input id="setEmail"><label><b>Address</b></label><input id="setAddress"><div class="settingsNote">ℹ️ Website settings mein sirf wohi cheezen hain jo abhi portal mein available hain. Images/pictures ki zaroorat nahi.</div><button class="primary" style="width:100%;margin-top:12px" onclick="saveSettings()">💾 Save Website Settings</button><div class="msg" id="settingsMsg"></div></div></div></div>
@@ -3395,7 +3460,29 @@ const secondary=initializeApp(firebaseConfig,"studentCreator"),secondaryAuth=get
 let mode="student",students=[],activeStudent=null,editingMark=-1,announcements=[];
 function esc(v){return String(v??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[c]))}
 window.esc=esc;
-window.openLogin=m=>{mode=m;document.getElementById("loginTitle").textContent=m==="admin"?"Admin Login":m==="teacher"?"Teacher Login":"Student Login";document.getElementById("loginEmail").placeholder=m==="admin"?"Admin email":m==="teacher"?"Teacher email":"Student ID";document.getElementById("loginMsg").textContent="";document.getElementById("loginModal").style.display="flex"};
+window.toggleLoginPassword=(button)=>{
+  const field=document.getElementById("loginPassword");
+  if(!field)return;
+  const showing=field.type==="text";
+  field.type=showing?"password":"text";
+  if(button){
+    button.textContent=showing?"👁":"🙈";
+    button.setAttribute("aria-label",showing?"Show password":"Hide password");
+    button.setAttribute("title",showing?"Show password":"Hide password");
+  }
+};
+window.openLogin=m=>{
+  mode=m;
+  document.getElementById("loginTitle").textContent=m==="admin"?"Admin Login":m==="teacher"?"Teacher Login":"Student Login";
+  document.getElementById("loginEmail").placeholder=m==="admin"?"Admin email":m==="teacher"?"Teacher email":"Student ID";
+  document.getElementById("loginMsg").textContent="";
+  const pw=document.getElementById("loginPassword");
+  const toggle=document.getElementById("loginPasswordToggle");
+  if(pw){pw.value="";pw.type="password";}
+  if(toggle){toggle.textContent="👁";toggle.setAttribute("aria-label","Show password");toggle.setAttribute("title","Show password");}
+  document.getElementById("loginModal").style.display="flex";
+  setTimeout(()=>document.getElementById("loginEmail")?.focus(),80);
+};
 window.closeLogin=()=>document.getElementById("loginModal").style.display="none";
 window.doLogin=async()=>{
  const id=document.getElementById("loginEmail").value.trim(),pw=document.getElementById("loginPassword").value,msg=document.getElementById("loginMsg"),btn=document.querySelector("#loginModal .primary");
@@ -3508,9 +3595,83 @@ async function showStudent(uid){
    quizzesCache=snap.docs.map(d=>({id:d.id,...d.data()}));
    await loadStudentQuizzes();
  }catch(e){console.warn(e)}
-}window.openStudentPasswordChange=()=>{document.getElementById("studentPasswordModal").style.display="flex";["currentStudentPassword","newStudentPassword","confirmStudentPassword"].forEach(id=>document.getElementById(id).value="");document.getElementById("studentPasswordMsg").textContent=""};
-window.closeStudentPasswordChange=()=>document.getElementById("studentPasswordModal").style.display="none";
-window.changeStudentPassword=async()=>{const current=document.getElementById("currentStudentPassword").value,newPw=document.getElementById("newStudentPassword").value,confirm=document.getElementById("confirmStudentPassword").value,msg=document.getElementById("studentPasswordMsg");if(!current||!newPw||!confirm){msg.textContent="Sab fields fill karein.";return}if(newPw.length<6){msg.textContent="New password 6+ characters ka hona chahiye.";return}if(newPw!==confirm){msg.textContent="Passwords match nahi kar rahi.";return}try{const user=auth.currentUser,credential=EmailAuthProvider.credential(user.email,current);await reauthenticateWithCredential(user,credential);await updatePassword(user,newPw);await updateDoc(doc(db,"students",user.uid),{passwordChanged:true});msg.style.color="#087443";msg.textContent="Password successfully change ho gaya hai."}catch(e){msg.textContent=e.message.replace("Firebase: ","")}};
+}
+window.toggleStudentPasswordField=(fieldId,button)=>{
+  const field=document.getElementById(fieldId);
+  if(!field)return;
+  const showing=field.type==='text';
+  field.type=showing?'password':'text';
+  if(button)button.textContent=showing?'👁':'🙈';
+};
+window.openStudentPasswordChange=()=>{
+  const modal=document.getElementById("studentPasswordModal");
+  const msg=document.getElementById("studentPasswordMsg");
+  const btn=document.getElementById("studentPasswordUpdateBtn");
+  if(!modal)return;
+  modal.style.display="flex";
+  ["currentStudentPassword","newStudentPassword","confirmStudentPassword"].forEach(id=>{
+    const el=document.getElementById(id);
+    if(el){el.value="";el.type="password";}
+  });
+  document.querySelectorAll('#studentPasswordModal .passwordToggle').forEach(b=>b.textContent='👁');
+  if(msg){msg.textContent="";msg.style.color="#d33";}
+  if(btn){btn.disabled=false;btn.textContent="🔐 Update Password";btn.style.opacity="1";}
+  setTimeout(()=>document.getElementById("currentStudentPassword")?.focus(),80);
+};
+window.closeStudentPasswordChange=()=>{
+  const modal=document.getElementById("studentPasswordModal");
+  if(modal)modal.style.display="none";
+};
+function studentPasswordErrorMessage(e){
+  const code=e?.code||'';
+  const map={
+    'auth/invalid-credential':'Current password ghalat hai. Dobara check karein.',
+    'auth/wrong-password':'Current password ghalat hai. Dobara check karein.',
+    'auth/user-mismatch':'Current password verify nahi ho saka. Dobara try karein.',
+    'auth/requires-recent-login':'Security verification expire ho gayi hai. Student portal se logout karke dobara login karein, phir password change karein.',
+    'auth/weak-password':'New password kam az kam 6 characters ka hona chahiye.',
+    'auth/network-request-failed':'Internet connection check karke dobara try karein.',
+    'auth/too-many-requests':'Bohat zyada attempts ho gaye hain. Thori dair baad dobara try karein.'
+  };
+  if(map[code])return map[code];
+  return String(e?.message||'Password change nahi ho saka. Dobara try karein.').replace(/^Firebase:\s*/,'');
+}
+window.changeStudentPassword=async()=>{
+  const current=document.getElementById("currentStudentPassword")?.value||'';
+  const newPw=document.getElementById("newStudentPassword")?.value||'';
+  const confirm=document.getElementById("confirmStudentPassword")?.value||'';
+  const msg=document.getElementById("studentPasswordMsg");
+  const btn=document.getElementById("studentPasswordUpdateBtn");
+  const setMsg=(text,color="#d33")=>{if(msg){msg.style.color=color;msg.textContent=text;}};
+  if(!current||!newPw||!confirm){setMsg("Sab fields fill karein.");return;}
+  if(newPw.length<6){setMsg("New password kam az kam 6 characters ka hona chahiye.");return;}
+  if(newPw!==confirm){setMsg("New password aur confirm password match nahi kar rahi.");return;}
+  if(current===newPw){setMsg("New password current password se different honi chahiye.");return;}
+  const user=auth.currentUser;
+  if(!user){setMsg("Student session expire ho gayi hai. Dobara login karein.");return;}
+  const email=user.email||(activeStudent?.studentId?String(activeStudent.studentId).toLowerCase()+"@students.sajjadacademy.local":"");
+  if(!email){setMsg("Student account email identify nahi ho saka. Dobara login karein.");return;}
+  try{
+    if(btn){btn.disabled=true;btn.textContent="⏳ Updating...";btn.style.opacity=".75";}
+    setMsg("Current password verify ki ja rahi hai...","#667");
+    const credential=EmailAuthProvider.credential(email,current);
+    await reauthenticateWithCredential(user,credential);
+    setMsg("New password save ki ja rahi hai...","#667");
+    await updatePassword(user,newPw);
+    try{
+      await updateDoc(doc(db,"students",user.uid),{passwordChanged:true});
+      if(activeStudent)activeStudent.passwordChanged=true;
+      setMsg("✅ Password successfully change ho gaya hai. Ab aap new password se next login kar sakte hain.","#087443");
+    }catch(profileError){
+      setMsg("✅ Password change ho gaya hai, lekin profile status update nahi ho saka. Admin panel mein password status thori dair baad refresh karein.","#087443");
+      console.warn("Student passwordChanged status update failed:",profileError);
+    }
+  }catch(e){
+    setMsg(studentPasswordErrorMessage(e));
+  }finally{
+    if(btn){btn.disabled=false;btn.textContent="🔐 Update Password";btn.style.opacity="1";}
+  }
+};
 window.openPasswordChange=()=>{document.getElementById("passwordModal").style.display="flex";["currentAdminPassword","newAdminPassword","confirmAdminPassword"].forEach(id=>document.getElementById(id).value="");document.getElementById("passwordMsg").textContent=""};
 window.closePasswordChange=()=>document.getElementById("passwordModal").style.display="none";
 window.changeAdminPassword=async()=>{const current=document.getElementById("currentAdminPassword").value,newPw=document.getElementById("newAdminPassword").value,confirm=document.getElementById("confirmAdminPassword").value,msg=document.getElementById("passwordMsg");if(!current||!newPw||!confirm){msg.textContent="Sab fields fill karein.";return}if(newPw.length<6){msg.textContent="New password 6+ characters ka hona chahiye.";return}if(newPw!==confirm){msg.textContent="Passwords match nahi kar rahi.";return}try{const user=auth.currentUser,credential=EmailAuthProvider.credential(user.email,current);await reauthenticateWithCredential(user,credential);await updatePassword(user,newPw);msg.style.color="#087443";msg.textContent="Admin password successfully change ho gayi hai."}catch(e){msg.textContent=e.message.replace("Firebase: ","")}};
